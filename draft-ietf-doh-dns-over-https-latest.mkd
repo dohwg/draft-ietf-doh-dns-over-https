@@ -62,9 +62,8 @@ firewalls, and authentication systems where required for transit.
 This document describes how to run DNS service over HTTP using
 https:// URIs.
 
-\[ This paragraph is to be removed when this document is published as an RFC \]
-Comments on this draft can be sent to the DNS over HTTP mailing list at
-<https://www.ietf.org/mailman/listinfo/dnsoverhttp>.
+\[\[ There is a repository for this draft at 
+<https://github.com/paulehoffman/draft-ietf-doh-dns-over-https> \]\].
 
 --- middle
 
