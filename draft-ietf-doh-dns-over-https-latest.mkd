@@ -416,6 +416,14 @@ DNS queries. Sections 10.6 (Compression) and 10.7 (Padding) of
 {{RFC7540}} provide some further advice on mitigations within an
 HTTP/2 context.
 
+\[\[ From the WG charter:
+
+The working group will analyze the security and privacy issues that
+could arise from accessing DNS over HTTPS. In particular, the working
+group will consider the interaction of DNS and HTTP caching.
+
+\]\]
+
 A server that is acting both as a normal web server and a DNS API
 server is in a position to choose which DNS names it forces a
 client to resolve (through its web service) and also be the one to
@@ -427,6 +435,14 @@ discovered, or because the client was told to trust the DNS API
 server by an untrusted party. Instead, a client MUST only trust DNS
 API server that is configured as trustworthy.
 
+\[\[ From the WG charter:
+
+The working group may define mechanisms for discovery of DOH servers
+similar to existing mechanisms for discovering other DNS servers if
+the chairs determine that there is both sufficient interest and
+working group consensus.
+
+\]\]
 
 # Acknowledgments
 
