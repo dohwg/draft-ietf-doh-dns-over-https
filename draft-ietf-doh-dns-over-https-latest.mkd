@@ -125,7 +125,7 @@ security model of the web {{CORS}} and also integrate the caching mechanisms of 
 with those of HTTP. These applications may be interested in using a
 different media type than traditional clients.
 
-\[ This paragraph is to be removed when this document is published as an RFC \]
+\[\[ This paragraph is to be removed when this document is published as an RFC \]\]
 Note that these use cases are different than those in a
 similar protocol described at
 {{I-D.ietf-dnsop-dns-wireformat-http}}. The use case for that protocol
