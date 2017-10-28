@@ -111,7 +111,7 @@ described in BCP 14, RFC 2119 {{RFC2119}}.
 
 There are two primary use cases for this protocol.
 
-The primary one is to prevent on-path network devices from interfering
+The primary use case is to prevent on-path network devices from interfering
 with native DNS operations. This interference includes, but is not
 limited to, spoofing DNS responses, blocking DNS requests, and
 tracking. HTTP authentication and proxy friendliness are expected to
@@ -120,8 +120,8 @@ TLS ({{RFC7858}}) would not.
 
 A secondary use case is web applications that want to access DNS
 information. Standardizing an HTTPS mechanism allows this to be done
-in a way consistent with the cross-origin resource sharing {{CORS}}
-security model of the web and also integrate the caching mechanisms of DNS
+in a way consistent with the cross-origin resource sharing
+security model of the web {{CORS}} and also integrate the caching mechanisms of DNS
 with those of HTTP. These applications may be interested in using a
 different media type than traditional clients.
 
@@ -149,7 +149,7 @@ The protocol described here bases its design on the following protocol requireme
   contain one or more EDNS extensions, including those not yet defined.
 
 * The protocol must use a secure transport that meets the
-  requirements for modern https://.
+  requirements for modern HTTPS.
 
 ## Non-requirements
 
@@ -190,12 +190,12 @@ implementations.
 
 The DNS API Client SHOULD include an HTTP "Accept:" request header to
 say what type of content can be understood in response. The client
-MUST be prepared to process "application/dns-udpwireformat" {{dnswire}
+MUST be prepared to process "application/dns-udpwireformat" {{dnswire}}
 responses but MAY process any other type it receives.
 
 In order to maximize cache friendliness, DNS API clients using media
 formats that include DNS ID, such as application/dns-udpwireformat,
-should use a DNS ID of 0 in every DNS request.  HTTP semantics correlate
+can use a DNS ID of 0 in every DNS request.  HTTP semantics correlate
 the request and response, thus eliminating the need for the ID in a
 media type such as application/dns-udpwireformat.
 
@@ -206,8 +206,11 @@ that other HTTP/2 clients use (or don't use) them.
 
 The media type is "application/dns-udpwireformat".
 The body is the DNS on-the-wire format is defined in {{RFC1035}}.
-The body MUST be encoded with base64url {{RFC4648}}.
+
+When using the GET method, the body MUST be encoded with base64url {{RFC4648}}.
 Padding characters for base64url MUST NOT be included.
+
+When using the POST method, the body is not encoded.
 
 DNS API clients using the DNS wire format MAY have one or more EDNS(0)
 extensions {{RFC6891}} in the request.
@@ -269,7 +272,7 @@ that a media type gives is solely up to the format, and not defined in
 this protocol.
 
 At the time this is published, the response types are works in progress. The
-only known response type is "application/dns-udpwireformat", but it is likely that
+only known response type is "application/dns-udpwireformat", but it is possible that
 at least one JSON-based response format will be defined in the future.
 
 The DNS response for "application/dns-udpwireformat" in {{dnswire}}
@@ -331,17 +334,15 @@ abcd 8180 0001 0001 0000 0000 0377 7777
 
 # HTTP Integration
 
-In order to satisfy the security requirements of DNS over HTTPS, this
-protocol MUST use HTTP/2 {{RFC7540}} or its successors. HTTP/2
-enforces a modern TLS profile necessary for achieving the security
-requirements of this protocol.
-
 This protocol MUST be used with https scheme URI {{RFC7230}}.
 
-The messages in classic UDP based DNS {{RFC1035}} are inherently unordered and have low
+This protocol MUST use HTTP/2 {{RFC7540}} or its successors in order
+to satisfy the security requirements of DNS over HTTPS.
+Further,
+the messages in classic UDP based DNS {{RFC1035}} are inherently unordered and have low
 overhead. A competitive HTTP transport needs to support
-reordering, priority, parallelism, and header compression. For this
-additional reason, this protocol MUST use HTTP/2 {{RFC7540}} or its
+reordering, priority, parallelism, and header compression, all of which
+are supported by HTTP/2 {{RFC7540}} or its
 successors.
 
 # IANA Considerations {#iana}
@@ -405,9 +406,9 @@ Change controller:  IESG
 
 # Security Considerations {#Security}
 
-Running DNS over https:// relies on the security of the underlying
+Running DNS over HTTPS relies on the security of the underlying
 HTTP connection. By requiring at least {{RFC7540}} levels of support
-for TLS this protocol expects to use current best practices for secure
+for TLS, this protocol expects to use current best practices for secure
 transport.
 
 Session level encryption has well known weaknesses with respect to
