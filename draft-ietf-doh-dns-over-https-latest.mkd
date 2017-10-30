@@ -195,7 +195,7 @@ responses but MAY process any other type it receives.
 
 In order to maximize cache friendliness, DNS API clients using media
 formats that include DNS ID, such as application/dns-udpwireformat,
-can use a DNS ID of 0 in every DNS request.  HTTP semantics correlate
+should use a DNS ID of 0 in every DNS request.  HTTP semantics correlate
 the request and response, thus eliminating the need for the ID in a
 media type such as application/dns-udpwireformat.
 
