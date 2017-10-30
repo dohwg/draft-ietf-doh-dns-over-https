@@ -62,7 +62,7 @@ firewalls, and authentication systems where required for transit.
 This document describes how to run DNS service over HTTP using
 https:// URIs.
 
-\[\[ There is a repository for this draft at 
+\[\[ There is a repository for this draft at
 <https://github.com/paulehoffman/draft-ietf-doh-dns-over-https> \]\].
 
 --- middle
@@ -115,8 +115,8 @@ The primary use case is to prevent on-path network devices from interfering
 with native DNS operations. This interference includes, but is not
 limited to, spoofing DNS responses, blocking DNS requests, and
 tracking. HTTP authentication and proxy friendliness are expected to
-make this protocol function in some environments where DNS directly on
-TLS ({{RFC7858}}) would not.
+make this protocol function in some environments where unsecured DNS
+({{?DNS=RFC1035}}) or DNS directly on TLS ({{RFC7858}}) would not.
 
 A secondary use case is web applications that want to access DNS
 information. Standardizing an HTTPS mechanism allows this to be done
