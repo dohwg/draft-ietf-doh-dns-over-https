@@ -163,15 +163,19 @@ The protocol described here bases its design on the following protocol requireme
 
 # The HTTP Request
 
+To make a DNS API query, a DNS API client sends an HTTP request to the
+URI of the DNS API.
+
 The URI scheme MUST be https.
 
-The path SHOULD be "/.well-known/dns-query" but a different path can
-be used if the DNS API Client has prior knowledge about a DNS API
-service on a different path at the origin being used. (See {{iana}}
-for the registration of this in the well-known URI registry.) Using
-the well-known path allows automated discovery of a DNS API Service,
-and also helps contextualize DNS Query requests pushed over an active
-HTTP/2 connection.
+A client can be configured with a DNS API URI, or it can discover the
+URI.  This document defines a well-known URI path of
+"/.well-known/dns-query" so that a discovery process that produces a
+domain name or domain name and port can be used to construct the DNS
+API URI.  (See {{iana}} for the registration of this in the well-known
+URI registry.)  DNS API servers SHOULD use this well-known path to
+help contextualize DNS Query requests that use server push
+{{!RFC7540}}.
 
 A DNS API Client encodes the DNS query into the HTTP request using
 either the HTTP GET or POST methods.
