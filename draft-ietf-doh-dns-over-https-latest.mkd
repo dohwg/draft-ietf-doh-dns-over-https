@@ -221,16 +221,15 @@ extensions {{RFC6891}} in the request.
 
 ## Examples
 
-For example, assume a DNS API server is following this specification
-on origin https://dnsserver.example.net/ and the well-known path. The
-DNS API client chooses to send its requests in
+These examples use HTTP/2 style formatting from {{RFC7540}}.
+
+For this example assume a DNS API server is following this
+specification on origin https://dnsserver.example.net/ and the
+well-known path. The DNS API client chooses to send its requests in
 appliation/dns-udpwirefomat but indicates it can parse replies in that
-format or as a JSON-based content type.
-
-The examples uses HTTP/2 formatting from {{RFC7540}}.
-
-A query for the IN A records for "www.example.com" with recursion
-turned on using the GET method and a wireformat request would be:
+format or as a hypothetical JSON-based content type. The
+application/simpledns+json type used by this example is currently
+fictitous.
 
 <!--
 Raw hex for query
