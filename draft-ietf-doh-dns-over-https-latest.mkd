@@ -35,6 +35,7 @@ normative:
   RFC5246:
   RFC5785:
   RFC7230:
+  RFC7234:
   RFC7540:
   RFC7858:
 
@@ -288,10 +289,22 @@ responses. Responses may be returned in a different temporal order than
 requests were made using the protocols native multi-streaming
 functionality.
 
-In the HTTP responses, the HTTP cache headers SHOULD be set to expire
-at the same time as the shortest DNS TTL in the response. Because DNS
-provides only caching but not revalidation semantics, DNS over HTTP
-responses should not carry revalidation response headers
+A DNS response may contain a set of DNS Resource Records each with its
+own Time To Live (TTL) freshness information. The freshness lifetime
+({{RFC7234} Section 4.2) of the HTTP response should be coordinated
+with the Resource Record bearing the smallest TTL in the response. The
+freshness lifetime SHOULD be set to expire at the same time
+as the DNS Record has a 0 TTL. The response freshness lifetime MUST
+NOT be greater than that indicated by the DNS Record with the smallest
+TTL in the response.
+
+A DNS API Client that receives a response without an explicit
+fresheness lifetime MUST NOT assign that response a heuristic
+freshness ({{RFC7234}} Section 4.2.2.) greater than that indicated by
+the DNS Record with the smallest TTL in the response.
+
+Because DNS provides only caching but not revalidation semantics, DNS
+over HTTP responses should not carry revalidation response headers
 (such as Last-Modified: or Etag:) or return 304 responses.
 
 A DNS API Server MUST be able to process application/dns-udpwireformat
