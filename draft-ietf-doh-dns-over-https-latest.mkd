@@ -186,11 +186,12 @@ the media type of the message. POST-ed requests are smaller than their
 GET equivalents.
 
 When using the GET method, the URI path MUST contain a query parameter
-of the form content-type=TTT and another of the form body=BBBB, where
-"TTT" is the media type of the format used for the body parameter, and
-"BBB" is the content of the body encoded with base64url
-{{RFC4648}}. Using the GET method is friendlier to many HTTP cache
-implementations.
+of the form ct=TTT and another of the form rb=BBBB. The ct parameter
+name is a short identifier of Content-Type and "TTT" is the media type
+of the format used for the body parameter. The rb parameter name is a
+short identifer of the Request Body and "BBB" is the content of the
+body encoded with base64url {{RFC4648}}. Using the GET method is
+friendlier to many HTTP cache implementations.
 
 The DNS API Client SHOULD include an HTTP "Accept:" request header to
 say what type of content can be understood in response. The client
@@ -245,8 +246,8 @@ abcd0100
 :scheme = https
 :authority = dnsserver.example.net
 :path = /.well-known/dns-query?  (no CR)
-        content-type=application/dns-udpwireformat&  (no CR)
-        body=q80BAAABAAAAAAAAA3d3dwdleGFtcGxlA2NvbQAAAQAB
+        ct=application/dns-udpwireformat&  (no CR)
+        rb=q80BAAABAAAAAAAAA3d3dwdleGFtcGxlA2NvbQAAAQAB
 accept = application/dns-udpwireformat, application/simpledns+json
 ~~~~~
 
