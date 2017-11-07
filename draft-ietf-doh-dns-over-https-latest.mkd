@@ -291,15 +291,15 @@ functionality.
 
 A DNS response may contain a set of DNS Resource Records each with its
 own Time To Live (TTL) freshness information. The freshness lifetime
-({{RFC7234} Section 4.2) of the HTTP response should be coordinated
+({{RFC7234}} Section 4.2) of the HTTP response should be coordinated
 with the Resource Record bearing the smallest TTL in the response. The
 freshness lifetime SHOULD be set to expire at the same time
-as the DNS Record has a 0 TTL. The response freshness lifetime MUST
+any of the DNS Records reach a 0 TTL. The response freshness lifetime MUST
 NOT be greater than that indicated by the DNS Record with the smallest
 TTL in the response.
 
 A DNS API Client that receives a response without an explicit
-fresheness lifetime MUST NOT assign that response a heuristic
+freshness lifetime MUST NOT assign that response a heuristic
 freshness ({{RFC7234}} Section 4.2.2.) greater than that indicated by
 the DNS Record with the smallest TTL in the response.
 
