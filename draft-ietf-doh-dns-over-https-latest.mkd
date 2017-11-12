@@ -35,6 +35,7 @@ normative:
   RFC5246:
   RFC5785:
   RFC7230:
+  RFC7234:
   RFC7540:
   RFC7858:
 
@@ -180,17 +181,22 @@ help contextualize DNS Query requests that use server push
 A DNS API Client encodes the DNS query into the HTTP request using
 either the HTTP GET or POST methods.
 
-When using the POST method, the DNS query is included as the message
+When using the POST method the DNS query is included as the message
 body of the HTTP request and the Content-Type request header indicates
 the media type of the message. POST-ed requests are smaller than their
 GET equivalents.
 
-When using the GET method, the URI path MUST contain a query parameter
-of the form content-type=TTT and another of the form body=BBBB, where
-"TTT" is the media type of the format used for the body parameter, and
-"BBB" is the content of the body encoded with base64url
-{{RFC4648}}. Using the GET method is friendlier to many HTTP cache
-implementations.
+When using the GET method the URI path MUST contain a query parameter
+with the name of ct and a value indicating the media-format used for
+the body parameter. The value may either be an explicit media type
+(e.g. ct=application/dns-udpwireformat&body=...) or it may be
+empty. An empty value indicates the default
+application/dns-udpwireformat type (e.g. ct&body=...).
+
+When using the GET method the URI path MUST contain a query parameter
+with the name of body. The value of the parameter is the content of
+the request encoded with base64url {{RFC4648}}. Using the GET method is
+friendlier to many HTTP cache implementations.
 
 The DNS API Client SHOULD include an HTTP "Accept:" request header to
 say what type of content can be understood in response. The client
@@ -199,9 +205,11 @@ responses but MAY process any other type it receives.
 
 In order to maximize cache friendliness, DNS API clients using media
 formats that include DNS ID, such as application/dns-udpwireformat,
-should use a DNS ID of 0 in every DNS request.  HTTP semantics correlate
-the request and response, thus eliminating the need for the ID in a
-media type such as application/dns-udpwireformat.
+SHOULD use a DNS ID of 0 in every DNS request.  HTTP correlates
+request and response, thus eliminating the need for the ID in a media
+type such as application/dns-udpwireformat and the use of a varying
+DNS ID can cause semantically equivalent DNS queries to be cached
+separately.
 
 DNS API clients can use HTTP/2 padding and compression in the same way
 that other HTTP/2 clients use (or don't use) them.
@@ -243,8 +251,7 @@ abcd0100
 :method = GET
 :scheme = https
 :authority = dnsserver.example.net
-:path = /.well-known/dns-query?  (no CR)
-        content-type=application/dns-udpwireformat&  (no CR)
+:path = /.well-known/dns-query?ct&  (no CR)
         body=q80BAAABAAAAAAAAA3d3dwdleGFtcGxlA2NvbQAAAQAB
 accept = application/dns-udpwireformat, application/simpledns+json
 ~~~~~
@@ -287,10 +294,22 @@ responses. Responses may be returned in a different temporal order than
 requests were made using the protocols native multi-streaming
 functionality.
 
-In the HTTP responses, the HTTP cache headers SHOULD be set to expire
-at the same time as the shortest DNS TTL in the response. Because DNS
-provides only caching but not revalidation semantics, DNS over HTTP
-responses should not carry revalidation response headers
+A DNS response may contain a set of DNS Resource Records each with its
+own Time To Live (TTL) freshness information. The freshness lifetime
+({{RFC7234}} Section 4.2) of the HTTP response should be coordinated
+with the Resource Record bearing the smallest TTL in the response. The
+freshness lifetime SHOULD be set to expire at the same time
+any of the DNS Records reach a 0 TTL. The response freshness lifetime MUST
+NOT be greater than that indicated by the DNS Record with the smallest
+TTL in the response.
+
+A DNS API Client that receives a response without an explicit
+freshness lifetime MUST NOT assign that response a heuristic
+freshness ({{RFC7234}} Section 4.2.2.) greater than that indicated by
+the DNS Record with the smallest TTL in the response.
+
+Because DNS provides only caching but not revalidation semantics, DNS
+over HTTP responses should not carry revalidation response headers
 (such as Last-Modified: or Etag:) or return 304 responses.
 
 A DNS API Server MUST be able to process application/dns-udpwireformat
@@ -363,7 +382,7 @@ This specification registers a Well-Known URI {{RFC5785}}:
 ~~~~~
 To: ietf-types@iana.org
 Subject: Registration of MIME media type
-pplication/dns-udpwireformat
+         application/dns-udpwireformat
 
 MIME media type name: application
 
