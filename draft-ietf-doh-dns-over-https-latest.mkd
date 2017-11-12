@@ -181,17 +181,22 @@ help contextualize DNS Query requests that use server push
 A DNS API Client encodes the DNS query into the HTTP request using
 either the HTTP GET or POST methods.
 
-When using the POST method, the DNS query is included as the message
+When using the POST method the DNS query is included as the message
 body of the HTTP request and the Content-Type request header indicates
 the media type of the message. POST-ed requests are smaller than their
 GET equivalents.
 
-When using the GET method, the URI path MUST contain a query parameter
-of the form content-type=TTT and another of the form body=BBBB, where
-"TTT" is the media type of the format used for the body parameter, and
-"BBB" is the content of the body encoded with base64url
-{{RFC4648}}. Using the GET method is friendlier to many HTTP cache
-implementations.
+When using the GET method the URI path MUST contain a query parameter
+with the name of ct and a value indicating the media-format used for
+the body parameter. The value may either be an explicit media type
+(e.g. ct=application/dns-udpwireformat&body=...) or it may be
+empty. An empty value indicates the default
+application/dns-udpwireformat type (e.g. ct&body=...).
+
+When using the GET method the URI path MUST contain a query parameter
+with the name of body. The value of the parameter is the content of
+the request encoded with base64url {{RFC4648}}. Using the GET method is
+friendlier to many HTTP cache implementations.
 
 The DNS API Client SHOULD include an HTTP "Accept:" request header to
 say what type of content can be understood in response. The client
@@ -247,8 +252,7 @@ abcd0100
 :method = GET
 :scheme = https
 :authority = dnsserver.example.net
-:path = /.well-known/dns-query?  (no CR)
-        content-type=application/dns-udpwireformat&  (no CR)
+:path = /.well-known/dns-query?ct&  (no CR)
         body=q80BAAABAAAAAAAAA3d3dwdleGFtcGxlA2NvbQAAAQAB
 accept = application/dns-udpwireformat, application/simpledns+json
 ~~~~~
