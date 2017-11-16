@@ -428,9 +428,10 @@ Change controller:  IESG
 
 # Security Considerations {#Security}
 
-Running DNS over HTTPS relies on the security of the underlying
-HTTP connection. By requiring at least {{RFC7540}} levels of support
-for TLS, this protocol expects to use current best practices for secure
+DNS over HTTPS relies on the underlying
+HTTPS connection to provide confidentiality. By requiring at
+least {{RFC7540}} levels of support
+for TLS, this protocol expects to use current best practices for confidential
 transport.
 
 Session level encryption has well known weaknesses with respect to
@@ -438,6 +439,13 @@ traffic analysis which might be particularly acute when dealing with
 DNS queries. Sections 10.6 (Compression) and 10.7 (Padding) of
 {{RFC7540}} provide some further advice on mitigations within an
 HTTP/2 context.
+
+The HTTPS connection also authenticates the DNS API server but does not
+inherently assure of authenticity of DNS data.  A 
+DNS API client may choose to trust answers from a particular DNS API server,
+much as a DNS client might choose to trust answers from its
+recurvise DNS resolver.  A DNS API client may also perform full DNSSEC
+validation of answers received from a DNS API server.
 
 \[\[ From the WG charter:
 
