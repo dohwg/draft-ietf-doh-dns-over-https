@@ -110,21 +110,31 @@ described in BCP 14, RFC 2119 {{RFC2119}}.
 
 # Use Cases
 
-There are two primary use cases for this protocol.
+There are two initial use cases for this protocol.
 
-The primary use case is to prevent on-path network devices from interfering
-with native DNS operations. This interference includes, but is not
-limited to, spoofing DNS responses, blocking DNS requests, and
-tracking. HTTP authentication and proxy friendliness are expected to
-make this protocol function in some environments where unsecured DNS
-({{?DNS=RFC1035}}) or DNS directly on TLS ({{RFC7858}}) would not.
+The primary use case is to prevent on-path network devices from
+interfering with DNS operations. This interference includes, but is
+not limited to, spoofing DNS responses, blocking DNS requests, and
+tracking.
 
-A secondary use case is web applications that want to access DNS
-information. Standardizing an HTTPS mechanism allows this to be done
-in a way consistent with the cross-origin resource sharing
-security model of the web {{CORS}} and also integrate the caching mechanisms of DNS
-with those of HTTP. These applications may be interested in using a
-different media type than traditional clients.
+In this use, clients -- whether operating systems or individual
+applications -- will be explicitly configured to use a DOH server as a
+recursive resolver by its user (or administrator). They might use the
+DOH server for all queries, or only for a subset of them. The specific
+configuration mechanism is out of scope for this document.
+
+A secondary use case is allowing web applications to access DNS
+information, by using existing APIs in browsers to access it over
+HTTP.
+
+This is technically already possible (since the server controls both
+the HTTP resources it exposes and the use of browser APIs by its
+content), but standardisation might make this easier to accomplish.
+
+Note that in this second use, the browser does not consult the DOH
+server or use its responses for any DNS lookups outside the scope of
+the application using them; i.e., there is (currently) no API that
+allows a Web site to poison DNS for others.
 
 \[\[ This paragraph is to be removed when this document is published as an RFC \]\]
 Note that these use cases are different than those in a
