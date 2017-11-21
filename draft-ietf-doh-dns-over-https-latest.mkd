@@ -64,7 +64,7 @@ This document describes how to run DNS service over HTTP using
 https:// URIs.
 
 \[\[ There is a repository for this draft at
-<https://github.com/paulehoffman/draft-ietf-doh-dns-over-https> \]\].
+<https://github.com/dohwg/draft-ietf-doh-dns-over-https> \]\].
 
 --- middle
 
