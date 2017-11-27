@@ -487,17 +487,15 @@ working group consensus.
 
 # Operational Considerations
 
-Different DNS servers may provide different results to the same
-query. It logically follows that the server which is consulted
-influences the end result. Split-horizon DNS [RFC6950] is a specific
-example of this approach where the answers are derived from the source
-of the query. If a client selects a server that is unanticipated by
-this style of algorithm the response may be not be correct.
+Local policy considerations and similar factors mean different DNS servers may provide
+different results to the same query: for instance in split DNS configurations {{RFC6950}}.
+It logically follows that the server which is queried can influence the end result.
+Therefore a client’s choice of DNS server may affect the responses it gets to its queries.
 
-The HTTPS channel used by this specification establishes secure two
-party communication between the DNS API Client and the DNS API
-Server. Filtering or inspection systems that rely on unsecured
-transport of DNS will not function in a DNS over HTTPS environment.
+The HTTPS channel used by this specification establishes secure two party communication
+between the DNS API Client and the DNS API Server.
+Filtering or inspection systems that rely on unsecured transport of DNS will not function
+in a DNS over HTTPS environment.
 
 # Acknowledgments
 
