@@ -368,7 +368,7 @@ abcd 8180 0001 0001 0000 0000 0377 7777
 
 This protocol MUST be used with https scheme URI {{RFC7230}}.
 
-This protocol MUST use HTTP/2 {{RFC7540}} or its successors in order
+This protocol SHOULD use HTTP/2 {{RFC7540}} or its successors in order
 to satisfy the security requirements of DNS over HTTPS.
 Further,
 the messages in classic UDP based DNS {{RFC1035}} are inherently unordered and have low
@@ -376,6 +376,9 @@ overhead. A competitive HTTP transport needs to support
 reordering, priority, parallelism, and header compression, all of which
 are supported by HTTP/2 {{RFC7540}} or its
 successors.
+
+If the protocol does not use HTTP/2 or its succesors, it MUST
+use HTTP 1.1 {{RFC7230}}. This will possibly result in worse performance.
 
 # IANA Considerations {#iana}
 
