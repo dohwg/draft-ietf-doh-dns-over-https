@@ -40,7 +40,6 @@ normative:
   RFC7234:
   RFC7540:
   RFC7541:
-  RFC7858:
 
 informative:
   I-D.ietf-dnsop-dns-wireformat-http:
