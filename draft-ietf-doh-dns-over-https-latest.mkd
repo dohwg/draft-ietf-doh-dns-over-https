@@ -34,6 +34,8 @@ normative:
   RFC4648:
   RFC5246:
   RFC5785:
+  RFC6960:
+  RFC6961:
   RFC7230:
   RFC7234:
   RFC7540:
@@ -507,6 +509,15 @@ The HTTPS channel used by this specification establishes secure two
 party communication between the DNS API Client and the DNS API Server.
 Filtering or inspection systems that rely on unsecured transport of
 DNS will not function in a DNS over HTTPS environment.
+
+Many HTTPS implementations perform real time third party checks of the
+revocation status of the certificates being used by TLS. If this check
+is done as part of the DNS API server connection procedure and the
+check itself requires DNS resolution to connect to the third party a
+deadlock can occur. The use of an OCSP {{RFC6960}} server is one
+example of how this can happen. DNS API servers SHOULD utilize OCSP
+Stapling {{RFC6961}} to provide the client with certificate revocation
+information that does not require contacting a third party.
 
 # Acknowledgments
 
