@@ -34,6 +34,8 @@ normative:
   RFC4648:
   RFC5246:
   RFC5785:
+  RFC6960:
+  RFC6961:
   RFC7230:
   RFC7234:
   RFC7540:
@@ -49,10 +51,7 @@ informative:
   RFC7719:
   CORS:
     title: "Cross-Origin Resource Sharing"
-    author:
-      org: W3C
-    date: 2014
-    target: "https://www.w3.org/TR/cors/"
+    target: "https://fetch.spec.whatwg.org/#http-cors-protocol"
 
 --- abstract
 
@@ -86,10 +85,10 @@ disagreement about what the appropriate formatting should be and
 partially because they did not follow HTTP best practices.
 
 This document defines a specific protocol for sending DNS {{RFC1035}}
-queries and getting DNS responses over modern versions of HTTP
-{{RFC7540}} using https:// (and therefore TLS {{RFC5246}} security for
-integrity and confidentiality). Each DNS query-response pair is mapped
-into a HTTP request-response pair.
+queries and getting DNS responses over HTTP {{RFC7540}} using https://
+(and therefore TLS {{RFC5246}} security for integrity and
+confidentiality). Each DNS query-response pair is mapped into a HTTP
+request-response pair.
 
 The described approach is more than a tunnel over HTTP. It establishes
 default media formatting types for requests and responses but uses
@@ -130,7 +129,8 @@ configuration mechanism is out of scope for this document.
 
 A secondary use case is allowing web applications to access DNS
 information, by using existing APIs in browsers to access it over
-HTTP.
+HTTP in a safe way consistent with Cross Origin Resource Sharing
+(CORS) {{CORS}}.
 
 This is technically already possible (since the server controls both
 the HTTP resources it exposes and the use of browser APIs by its
@@ -310,15 +310,16 @@ requests were made using the protocols native multi-streaming
 functionality.
 
 The Answer section of a DNS response contains one or more RRsets.
-(RRsets are defined in {{RFC7719}}.)
-According to {{RFC2181}}, each resource record in an RRset is supposed to have the Time To Live (TTL)
-freshness information.
-Different RRsets in the Answer section can have different TTLs.
-The HTTP response freshness lifetime ({{RFC7234}} Section 4.2) should be coordinated with the
-Resource Record bearing the smallest TTL in the Answer section of the response.
-The HTTP freshness lifetime SHOULD be set to expire at the same time any of the DNS
-Records reach a 0 TTL.
-The response freshness lifetime MUST NOT be greater than that indicated by the DNS Record with the
+(RRsets are defined in {{RFC7719}}.)  According to {{RFC2181}}, each
+resource record in an RRset is supposed to have the Time To Live (TTL)
+freshness information.  Different RRsets in the Answer section can
+have different TTLs, though it is only possible for the HTTP response
+to have a single freshness lifetime.  The HTTP response freshness lifetime
+({{RFC7234}} Section 4.2) should be coordinated with the Resource
+Record bearing the smallest TTL in the Answer section of the response.
+The HTTP freshness lifetime SHOULD be set to expire at the same time
+any of the DNS Records reach a 0 TTL.  The response freshness lifetime
+MUST NOT be greater than that indicated by the DNS Record with the
 smallest TTL in the response.
 
 A DNS API Client that receives a response without an explicit
@@ -383,14 +384,17 @@ abcd 8180 0001 0001 0000 0000 0377 7777
 
 This protocol MUST be used with https scheme URI {{RFC7230}}.
 
-This protocol MUST use HTTP/2 {{RFC7540}} or its successors in order
-to satisfy the security requirements of DNS over HTTPS.
-Further,
-the messages in classic UDP based DNS {{RFC1035}} are inherently unordered and have low
-overhead. A competitive HTTP transport needs to support
-reordering, priority, parallelism, and header compression, all of which
-are supported by HTTP/2 {{RFC7540}} or its
-successors.
+## HTTP/2
+
+The minimum version of HTTP used by DOH SHOULD be HTTP/2 {{RFC7540}}.
+
+The messages in classic UDP based DNS {{RFC1035}} are inherently
+unordered and have low overhead. A competitive HTTP transport needs to
+support reordering, parallelism, priority, and header compression to
+acheive similar performance. Those features were introduced to HTTP in
+HTTP/2 {{RFC7540}}. Earlier versions of HTTP are capable of conveying
+the semantic requirements of DOH but would result in very poor
+performance for many uses cases.
 
 # IANA Considerations {#iana}
 
@@ -454,15 +458,22 @@ Change controller:  IESG
 # Security Considerations {#Security}
 
 Running DNS over HTTPS relies on the security of the underlying
-HTTP connection. By requiring at least {{RFC7540}} levels of support
-for TLS, this protocol expects to use current best practices for secure
-transport.
+HTTP transport. Implementations utilizing HTTP/2 benefit from the TLS
+profile defined in {{RFC7540}} Section 9.2.
 
 Session level encryption has well known weaknesses with respect to
 traffic analysis which might be particularly acute when dealing with
 DNS queries. Sections 10.6 (Compression) and 10.7 (Padding) of
 {{RFC7540}} provide some further advice on mitigations within an
 HTTP/2 context.
+
+The HTTPS connection provides transport security for the interaction
+between the DNS API server and client, but does not inherently ensure
+the authenticity of DNS data. A DNS API client may also perform full
+DNSSEC validation of answers received from a DNS API server or it may
+choose to trust answers from a particular DNS API server, much as a
+DNS client might choose to trust answers from its recurvise DNS
+resolver.
 
 \[\[ From the WG charter:
 
@@ -505,6 +516,15 @@ The HTTPS channel used by this specification establishes secure two
 party communication between the DNS API Client and the DNS API Server.
 Filtering or inspection systems that rely on unsecured transport of
 DNS will not function in a DNS over HTTPS environment.
+
+Many HTTPS implementations perform real time third party checks of the
+revocation status of the certificates being used by TLS. If this check
+is done as part of the DNS API server connection procedure and the
+check itself requires DNS resolution to connect to the third party a
+deadlock can occur. The use of an OCSP {{RFC6960}} server is one
+example of how this can happen. DNS API servers SHOULD utilize OCSP
+Stapling {{RFC6961}} to provide the client with certificate revocation
+information that does not require contacting a third party.
 
 # Acknowledgments
 
