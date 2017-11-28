@@ -44,6 +44,7 @@ informative:
   RFC2181:
   RFC6147:
   RFC6891:
+  RFC6950:
   RFC7719:
   CORS:
     title: "Cross-Origin Resource Sharing"
@@ -485,15 +486,17 @@ working group consensus.
 
 # Operational Considerations
 
-Local policy considerations and similar factors mean different DNS servers may provide
-different results to the same query: for instance in split DNS configurations {{RFC6950}}.
-It logically follows that the server which is queried can influence the end result.
-Therefore a client’s choice of DNS server may affect the responses it gets to its queries.
+Local policy considerations and similar factors mean different DNS
+servers may provide different results to the same query: for instance
+in split DNS configurations {{RFC6950}}.  It logically follows that
+the server which is queried can influence the end result.  Therefore a
+client’s choice of DNS server may affect the responses it gets to its
+queries.
 
-The HTTPS channel used by this specification establishes secure two party communication
-between the DNS API Client and the DNS API Server.
-Filtering or inspection systems that rely on unsecured transport of DNS will not function
-in a DNS over HTTPS environment.
+The HTTPS channel used by this specification establishes secure two
+party communication between the DNS API Client and the DNS API Server.
+Filtering or inspection systems that rely on unsecured transport of
+DNS will not function in a DNS over HTTPS environment.
 
 # Acknowledgments
 
