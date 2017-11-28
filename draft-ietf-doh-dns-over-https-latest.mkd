@@ -308,15 +308,16 @@ requests were made using the protocols native multi-streaming
 functionality.
 
 The Answer section of a DNS response contains one or more RRsets.
-(RRsets are defined in {{RFC7719}}.)
-According to {{RFC2181}}, each resource record in an RRset is supposed to have the Time To Live (TTL)
-freshness information.
-Different RRsets in the Answer section can have different TTLs.
-The HTTP response freshness lifetime ({{RFC7234}} Section 4.2) should be coordinated with the
-Resource Record bearing the smallest TTL in the Answer section of the response.
-The HTTP freshness lifetime SHOULD be set to expire at the same time any of the DNS
-Records reach a 0 TTL.
-The response freshness lifetime MUST NOT be greater than that indicated by the DNS Record with the
+(RRsets are defined in {{RFC7719}}.)  According to {{RFC2181}}, each
+resource record in an RRset is supposed to have the Time To Live (TTL)
+freshness information.  Different RRsets in the Answer section can
+have different TTLs, though it is only possible for the HTTP response
+to have a single freshness lifetime.  The HTTP response freshness lifetime
+({{RFC7234}} Section 4.2) should be coordinated with the Resource
+Record bearing the smallest TTL in the Answer section of the response.
+The HTTP freshness lifetime SHOULD be set to expire at the same time
+any of the DNS Records reach a 0 TTL.  The response freshness lifetime
+MUST NOT be greater than that indicated by the DNS Record with the
 smallest TTL in the response.
 
 A DNS API Client that receives a response without an explicit
