@@ -49,10 +49,7 @@ informative:
   RFC7719:
   CORS:
     title: "Cross-Origin Resource Sharing"
-    author:
-      org: W3C
-    date: 2014
-    target: "https://www.w3.org/TR/cors/"
+    target: "https://fetch.spec.whatwg.org/#http-cors-protocol"
 
 --- abstract
 
@@ -130,7 +127,8 @@ configuration mechanism is out of scope for this document.
 
 A secondary use case is allowing web applications to access DNS
 information, by using existing APIs in browsers to access it over
-HTTP.
+HTTP in a safe way consistent with Cross Origin Resource Sharing
+(CORS) {{CORS}}.
 
 This is technically already possible (since the server controls both
 the HTTP resources it exposes and the use of browser APIs by its
