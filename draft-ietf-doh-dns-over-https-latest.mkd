@@ -39,6 +39,8 @@ normative:
   RFC7230:
   RFC7234:
   RFC7540:
+  RFC7541:
+  RFC7858:
 
 informative:
   I-D.ietf-dnsop-dns-wireformat-http:
@@ -325,10 +327,6 @@ freshness lifetime MUST NOT assign that response a heuristic
 freshness ({{RFC7234}} Section 4.2.2.) greater than that indicated by
 the DNS Record with the smallest TTL in the response.
 
-Because DNS provides only caching but not revalidation semantics, DNS
-over HTTP responses should not carry revalidation response headers
-(such as Last-Modified: or Etag:) or return 304 responses.
-
 A DNS API Server MUST be able to process application/dns-udpwireformat
 request messages.
 
@@ -337,6 +335,17 @@ media type it is unable to process.
 
 This document does not change the definition of any HTTP response codes or
 otherwise proscribe their use.
+
+HTTP revalidation of cached DNS information may be of limited value as
+revalidation provides only a bandwidth benefit and DNS transactions
+are normally latency bound instead. Furthermore, the HTTP response
+headers that enable revalidation (such as "Last-Modified" and "Etag") are
+often fairly large when compared to the overall DNS response size, and have
+a variable nature that creates constant pressure on the HTTP/2
+compression dictionary {{RFC7541}}. Other types of DNS data, such as
+zone transfers, may be larger and benefit more from revalidation. DNS
+API servers may wish to consider whether providing these optional
+response headers is worthwhile.
 
 ## Example
 
