@@ -338,8 +338,8 @@ otherwise proscribe their use.
 HTTP revalidation of cached DNS information may be of limited value as
 revalidation provides only a bandwidth benefit and DNS transactions
 are normally latency bound instead. Furthermore, the HTTP response
-headers that enable revalidation (e.g. Last-Modified and Etag) are
-often fairly large compared to the overall DNS response size and have
+headers that enable revalidation (such as "Last-Modified" and "Etag") are
+often fairly large when compared to the overall DNS response size, and have
 a variable nature that creates constant pressure on the HTTP/2
 compression dictionary {{RFC7541}}. Other types of DNS data, such as
 zone transfers, may be larger and benefit more from revalidation. DNS
