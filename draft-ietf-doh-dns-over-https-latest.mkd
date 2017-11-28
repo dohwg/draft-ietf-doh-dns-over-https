@@ -41,8 +41,10 @@ normative:
 
 informative:
   I-D.ietf-dnsop-dns-wireformat-http:
+  RFC2181:
   RFC6147:
   RFC6891:
+  RFC7719:
   CORS:
     title: "Cross-Origin Resource Sharing"
     author:
@@ -84,7 +86,8 @@ partially because they did not follow HTTP best practices.
 This document defines a specific protocol for sending DNS {{RFC1035}}
 queries and getting DNS responses over modern versions of HTTP
 {{RFC7540}} using https:// (and therefore TLS {{RFC5246}} security for
-integrity and confidentiality).
+integrity and confidentiality). Each DNS query-response pair is mapped
+into a HTTP request-response pair.
 
 The described approach is more than a tunnel over HTTP. It establishes
 default media formatting types for requests and responses but uses
@@ -188,8 +191,8 @@ URI registry.)  DNS API servers SHOULD use this well-known path to
 help contextualize DNS Query requests that use server push
 {{!RFC7540}}.
 
-A DNS API Client encodes the DNS query into the HTTP request using
-either the HTTP GET or POST methods.
+A DNS API Client encodes a single DNS query into the HTTP request
+using either the HTTP GET or POST methods.
 
 When using the POST method the DNS query is included as the message
 body of the HTTP request and the Content-Type request header indicates
@@ -304,14 +307,17 @@ responses. Responses may be returned in a different temporal order than
 requests were made using the protocols native multi-streaming
 functionality.
 
-A DNS response may contain a set of DNS Resource Records each with its
-own Time To Live (TTL) freshness information. The freshness lifetime
-({{RFC7234}} Section 4.2) of the HTTP response should be coordinated
-with the Resource Record bearing the smallest TTL in the response. The
-freshness lifetime SHOULD be set to expire at the same time
-any of the DNS Records reach a 0 TTL. The response freshness lifetime MUST
-NOT be greater than that indicated by the DNS Record with the smallest
-TTL in the response.
+The Answer section of a DNS response contains one or more RRsets.
+(RRsets are defined in {{RFC7719}}.)
+According to {{RFC2181}}, each resource record in an RRset is supposed to have the Time To Live (TTL)
+freshness information.
+Different RRsets in the Answer section can have different TTLs.
+The HTTP response freshness lifetime ({{RFC7234}} Section 4.2) should be coordinated with the
+Resource Record bearing the smallest TTL in the Answer section of the response.
+The HTTP freshness lifetime SHOULD be set to expire at the same time any of the DNS
+Records reach a 0 TTL.
+The response freshness lifetime MUST NOT be greater than that indicated by the DNS Record with the
+smallest TTL in the response.
 
 A DNS API Client that receives a response without an explicit
 freshness lifetime MUST NOT assign that response a heuristic
