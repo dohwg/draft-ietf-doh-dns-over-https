@@ -236,7 +236,7 @@ The body is the DNS on-the-wire format is defined in {{RFC1035}}.
 When using the GET method, the body MUST be encoded with base64url {{RFC4648}}.
 Padding characters for base64url MUST NOT be included.
 
-When using the POST method, the body is not encoded.
+When using the POST method, the body MUST NOT be encoded.
 
 DNS API clients using the DNS wire format MAY have one or more EDNS(0)
 extensions {{RFC6891}} in the request.
