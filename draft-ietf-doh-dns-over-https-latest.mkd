@@ -133,7 +133,7 @@ HTTP in a safe way consistent with Cross Origin Resource Sharing
 
 This is technically already possible (since the server controls both
 the HTTP resources it exposes and the use of browser APIs by its
-content), but standardisation might make this easier to accomplish.
+content), but standardization might make this easier to accomplish.
 
 Note that in this second use, the browser does not consult the DOH
 server or use its responses for any DNS lookups outside the scope of
@@ -164,7 +164,7 @@ The protocol described here bases its design on the following protocol requireme
   contain one or more EDNS extensions, including those not yet defined.
 
 * The protocol must use a secure transport that meets the
-  requirements for modern HTTPS.
+  requirements for HTTPS.
 
 ## Non-requirements
 
@@ -201,14 +201,14 @@ the media type of the message. POST-ed requests are smaller than their
 GET equivalents.
 
 When using the GET method the URI path MUST contain a query parameter
-with the name of ct and a value indicating the media-format used for
+with the name of "ct" and a value indicating the media-format used for
 the body parameter. The value may either be an explicit media type
 (e.g. ct=application/dns-udpwireformat&body=...) or it may be
 empty. An empty value indicates the default
 application/dns-udpwireformat type (e.g. ct&body=...).
 
 When using the GET method the URI path MUST contain a query parameter
-with the name of body. The value of the parameter is the content of
+with the name of "body". The value of the parameter is the content of
 the request encoded with base64url {{RFC4648}}. Using the GET method is
 friendlier to many HTTP cache implementations.
 
@@ -296,7 +296,7 @@ that a media type gives is solely up to the format, and not defined in
 this protocol.
 
 At the time this is published, the response types are works in progress. The
-only known response type is "application/dns-udpwireformat", but it is possible that
+only response type defined in this document is "application/dns-udpwireformat", but it is possible that
 at least one JSON-based response format will be defined in the future.
 
 The DNS response for "application/dns-udpwireformat" in {{dnswire}}
@@ -329,8 +329,8 @@ the DNS Record with the smallest TTL in the response.
 A DNS API Server MUST be able to process application/dns-udpwireformat
 request messages.
 
-A DNS API Server SHOULD respond with HTTP status code 415 upon receiving a
-media type it is unable to process.
+A DNS API Server SHOULD respond with HTTP status code 415 (Unsupported
+Media Type) upon receiving a media type it is unable to process.
 
 This document does not change the definition of any HTTP response codes or
 otherwise proscribe their use.
