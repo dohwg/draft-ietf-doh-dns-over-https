@@ -350,7 +350,7 @@ response headers is worthwhile.
 
 This is an example response for a query for the IN A records for
 "www.example.com" with recursion turned on. The response bears one
-record with an address of 93.184.216.34 and a TTL of 128 seconds.
+record with an address of 192.0.2.1 and a TTL of 128 seconds.
 
 <!--
 Raw hex for response
@@ -362,7 +362,7 @@ abcd8180
 00010001
 00000080
 0004
-5db8d822
+c0000201
 -->
 
 ~~~~~
@@ -376,7 +376,7 @@ abcd 8180 0001 0001 0000 0000 0377 7777
 0765 7861 6d70 6c65 0363 6f6d 0000 0100
 
 0103 7777 7707 6578 616d 706c 6503 636f
-6d00 0001 0001 0000 0080 0004 5db8 d822
+6d00 0001 0001 0000 0080 0004 C000 0201
 ~~~~~
 
 # HTTP Integration
