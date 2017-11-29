@@ -392,7 +392,7 @@ unordered and have low overhead. A competitive HTTP transport needs to
 support reordering, parallelism, priority, and header compression to
 acheive similar performance. Those features were introduced to HTTP in
 HTTP/2 {{RFC7540}}. Earlier versions of HTTP are capable of conveying
-the semantic requirements of DOH but would result in very poor
+the semantic requirements of DOH but may result in very poor
 performance for many uses cases.
 
 # IANA Considerations {#iana}
