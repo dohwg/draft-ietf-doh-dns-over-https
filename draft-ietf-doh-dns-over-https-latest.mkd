@@ -161,7 +161,9 @@ The protocol described here bases its design on the following protocol requireme
 
 * The protocol must ensure interoperable media formats through a
   mandatory to implement format wherein a query must be able to
-  contain one or more EDNS extensions, including those not yet defined.
+  contain future modifications to the DNS protocol including the
+  inclusion of one or more EDNS extensions (including those not yet
+  defined).
 
 * The protocol must use a secure transport that meets the
   requirements for HTTPS.
