@@ -323,7 +323,7 @@ any of the DNS Records reach a 0 TTL.  The response freshness lifetime
 MUST NOT be greater than that indicated by the DNS Record with the
 smallest TTL in the response.
 
-Given these requirements on the server, a client SHOULD act as if
+Given these requirements on the server, a client MUST act as if
 the TTL on all the RRsets is the same as the HTTP freshness lifetime.
 A DNS API Client that receives a response without an explicit
 freshness lifetime MUST NOT assign that response a heuristic
