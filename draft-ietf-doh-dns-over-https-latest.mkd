@@ -398,7 +398,7 @@ The minimum version of HTTP used by DOH SHOULD be HTTP/2 {{RFC7540}}.
 The messages in classic UDP based DNS {{RFC1035}} are inherently
 unordered and have low overhead. A competitive HTTP transport needs to
 support reordering, parallelism, priority, and header compression to
-acheive similar performance. Those features were introduced to HTTP in
+achieve similar performance. Those features were introduced to HTTP in
 HTTP/2 {{RFC7540}}. Earlier versions of HTTP are capable of conveying
 the semantic requirements of DOH but may result in very poor
 performance for many uses cases.
@@ -479,7 +479,7 @@ between the DNS API server and client, but does not inherently ensure
 the authenticity of DNS data. A DNS API client may also perform full
 DNSSEC validation of answers received from a DNS API server or it may
 choose to trust answers from a particular DNS API server, much as a
-DNS client might choose to trust answers from its recurvise DNS
+DNS client might choose to trust answers from its recursive DNS
 resolver.
 
 \[\[ From the WG charter:
