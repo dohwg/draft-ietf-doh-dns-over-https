@@ -211,8 +211,12 @@ application/dns-udpwireformat type (e.g. ct&body=...).
 
 When using the GET method the URI path MUST contain a query parameter
 with the name of "body". The value of the parameter is the content of
-the request encoded with base64url {{RFC4648}}. Using the GET method is
-friendlier to many HTTP cache implementations.
+the request potentially encoded with base64url
+{{RFC4648}}. Specifications that define media types for use with DOH,
+such as DNS Wire Format {{dnswire}} of this document, MUST indicate if
+the body parameter uses base64url encoding.
+
+Using the GET method is friendlier to many HTTP cache implementations.
 
 The DNS API Client SHOULD include an HTTP "Accept:" request header to
 say what type of content can be understood in response. The client
@@ -233,9 +237,11 @@ that other HTTP/2 clients use (or don't use) them.
 ## DNS Wire Format {#dnswire}
 
 The media type is "application/dns-udpwireformat".
-The body is the DNS on-the-wire format is defined in {{RFC1035}}.
+
+The body is the DNS on-the-wire format defined in {{RFC1035}}.
 
 When using the GET method, the body MUST be encoded with base64url {{RFC4648}}.
+
 Padding characters for base64url MUST NOT be included.
 
 When using the POST method, the body MUST NOT be encoded.
@@ -257,7 +263,7 @@ fictitious.
 
 <!--
 Raw hex for query
-abcd0100
+00000100
 0001000000000000
 03777777076578616d706c6503636f6d00
 00010001
@@ -284,7 +290,7 @@ content-type = application/dns-udpwireformat
 content-length = 33
 
 <33 bytes represented by the following hex encoding>
-abcd 0100 0001 0000 0000 0000 0377 7777
+0000 0100 0001 0000 0000 0000 0377 7777
 0765 7861 6d70 6c65 0363 6f6d 0000 0100
 01
 ~~~~~
@@ -297,18 +303,18 @@ DNS header bytes while another might omit it. The amount and type of information
 that a media type gives is solely up to the format, and not defined in
 this protocol.
 
-At the time this is published, the response types are works in progress. The
-only response type defined in this document is "application/dns-udpwireformat", but it is possible that
-at least one JSON-based response format will be defined in the future.
+At the time this is published, the response types are works in
+progress. The only response type defined in this document is
+"application/dns-udpwireformat", but it is possible that at least one
+JSON-based response format will be defined in the future.
 
 The DNS response for "application/dns-udpwireformat" in {{dnswire}}
 MAY have one or more EDNS(0) extensions, depending on the
 extension definition of the extensions given in the DNS request.
 
-Native HTTP methods are used to correlate requests and
-responses. Responses may be returned in a different temporal order than
-requests were made using the protocols native multi-streaming
-functionality.
+Each DNS request-response pair is matched to one HTTP request-response
+pair. The responses may be processed and transported in any order
+using HTTP's multi-streaming functionality ({{RFC7540}} Section 5}).
 
 The Answer section of a DNS response contains one or more RRsets.
 (RRsets are defined in {{RFC7719}}.)  According to {{RFC2181}}, each
@@ -358,7 +364,7 @@ record with an address of 192.0.2.1 and a TTL of 128 seconds.
 
 <!--
 Raw hex for response
-abcd8180
+00008180
 0001000100000000
 03777777076578616d706c6503636f6d00
 00010001
@@ -376,7 +382,7 @@ content-length = 64
 cache-control = max-age=128
 
 <64 bytes represented by the following hex encoding>
-abcd 8180 0001 0001 0000 0000 0377 7777
+0000 8180 0001 0001 0000 0000 0377 7777
 0765 7861 6d70 6c65 0363 6f6d 0000 0100
 
 0103 7777 7707 6578 616d 706c 6503 636f
