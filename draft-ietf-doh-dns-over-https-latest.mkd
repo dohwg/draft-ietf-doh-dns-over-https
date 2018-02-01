@@ -237,9 +237,11 @@ that other HTTP/2 clients use (or don't use) them.
 ## DNS Wire Format {#dnswire}
 
 The media type is "application/dns-udpwireformat".
-The body is the DNS on-the-wire format is defined in {{RFC1035}}.
+
+The body is the DNS on-the-wire format defined in {{RFC1035}}.
 
 When using the GET method, the body MUST be encoded with base64url {{RFC4648}}.
+
 Padding characters for base64url MUST NOT be included.
 
 When using the POST method, the body MUST NOT be encoded.
