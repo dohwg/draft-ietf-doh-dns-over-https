@@ -257,7 +257,7 @@ fictitious.
 
 <!--
 Raw hex for query
-abcd0100
+00000100
 0001000000000000
 03777777076578616d706c6503636f6d00
 00010001
@@ -284,7 +284,7 @@ content-type = application/dns-udpwireformat
 content-length = 33
 
 <33 bytes represented by the following hex encoding>
-abcd 0100 0001 0000 0000 0000 0377 7777
+0000 0100 0001 0000 0000 0000 0377 7777
 0765 7861 6d70 6c65 0363 6f6d 0000 0100
 01
 ~~~~~
@@ -356,7 +356,7 @@ record with an address of 192.0.2.1 and a TTL of 128 seconds.
 
 <!--
 Raw hex for response
-abcd8180
+00008180
 0001000100000000
 03777777076578616d706c6503636f6d00
 00010001
@@ -374,7 +374,7 @@ content-length = 64
 cache-control = max-age=128
 
 <64 bytes represented by the following hex encoding>
-abcd 8180 0001 0001 0000 0000 0377 7777
+0000 8180 0001 0001 0000 0000 0377 7777
 0765 7861 6d70 6c65 0363 6f6d 0000 0100
 
 0103 7777 7707 6578 616d 706c 6503 636f
