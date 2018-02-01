@@ -211,7 +211,11 @@ application/dns-udpwireformat type (e.g. ct&body=...).
 
 When using the GET method the URI path MUST contain a query parameter
 with the name of "body". The value of the parameter is the content of
-the request encoded according to its returned media-format specification.
+the request potentially encoded with base64url
+{{RFC4648}}. Specifications that define media types for use with DOH,
+such as DNS Wire Format {{dnswire}} of this document, MUST indicate if
+the body parameter uses base64url encoding.
+
 Using the GET method is friendlier to many HTTP cache implementations.
 
 The DNS API Client SHOULD include an HTTP "Accept:" request header to
