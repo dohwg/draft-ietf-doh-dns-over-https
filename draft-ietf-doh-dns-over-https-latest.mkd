@@ -193,13 +193,13 @@ GET equivalents.
 
 When using the GET method the URI path MUST contain a query parameter
 with the name of "ct" and a value indicating the media-format used for
-the body parameter. The value may either be an explicit media type
-(e.g. ct=application/dns-udpwireformat&body=...) or it may be
+the dns parameter. The value may either be an explicit media type
+(e.g. ct=application/dns-udpwireformat&dns=...) or it may be
 empty. An empty value indicates the default
-application/dns-udpwireformat type (e.g. ct&body=...).
+application/dns-udpwireformat type (e.g. ct&dns=...).
 
 When using the GET method the URI path MUST contain a query parameter
-with the name of "body". The value of the parameter is the content of
+with the name of "dns". The value of the parameter is the content of
 the request potentially encoded with base64url
 {{RFC4648}}. Specifications that define media types for use with DOH,
 such as DNS Wire Format {{dnswire}} of this document, MUST indicate if
@@ -229,9 +229,10 @@ The media type is "application/dns-udpwireformat".
 
 The body is the DNS on-the-wire format defined in {{RFC1035}}.
 
-When using the GET method, the body MUST be encoded with base64url {{RFC4648}}.
-
-Padding characters for base64url MUST NOT be included.
+When using the GET method, the body MUST be encoded with base64url
+{{RFC4648}} and then placed as a name value pair in the query portion
+of the URI with name "dns". Padding characters for base64url MUST NOT
+be included.
 
 When using the POST method, the body MUST NOT be encoded.
 
@@ -262,7 +263,7 @@ Raw hex for query
 :scheme = https
 :authority = dnsserver.example.net
 :path = /dns-query?ct&  (no CR)
-        body=q80BAAABAAAAAAAAA3d3dwdleGFtcGxlA2NvbQAAAQAB
+        dns=q80BAAABAAAAAAAAA3d3dwdleGFtcGxlA2NvbQAAAQAB
 accept = application/dns-udpwireformat, application/simpledns+json
 ~~~~~
 
