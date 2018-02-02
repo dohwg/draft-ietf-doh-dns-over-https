@@ -426,7 +426,7 @@ performance for many uses cases.
 Before using DOH response data for DNS resolution, the client MUST
 establish that the HTTP request URI is a trusted service for the DOH
 query. For HTTP requests initiated by the DNS API client this trust is
-implicit in the selection of URI. For HTTP server push {{RFC7540}}
+implicit in the selection of URI. For HTTP server push ({{RFC7540}}
 Section 8.2) extra care must be taken to ensure that the pushed URI is
 one that the client would have directed the same query to if the
 client had initiated the request. This specification does not extend
