@@ -564,6 +564,17 @@ example of how this can happen. DNS API servers SHOULD utilize OCSP
 Stapling {{RFC6961}} to provide the client with certificate revocation
 information that does not require contacting a third party.
 
+A DNS API client may face a similar bootstrapping problem when the
+HTTP request needs to resolve the hostname portion of the DNS
+URI. Just as the address of a traditional DNS nameserver cannot be
+originally determined from that same server, a DOH client cannot use
+its DOH server to initially resolve the server's host name into an
+address. Alternative strategies a client might employ include making
+the initial resolution part of the configuration, IP based URIs and
+corresponding IP based certificates for HTTPS, or resolving the DNS
+API Server's hostname via traditional DNS or another DOH server while
+still authenticating the resulting connection via HTTPS.
+
 # Acknowledgments
 
 Joe Hildebrand contributed lots of material for a different iteration of this document.
