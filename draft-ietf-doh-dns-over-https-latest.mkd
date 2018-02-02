@@ -244,11 +244,14 @@ extensions {{RFC6891}} in the request.
 These examples use HTTP/2 style formatting from {{RFC7540}}.
 
 These examples use a DNS API service located at
-https://dnsserver.example.net/dns-query. The requests are represented
-as application/dns-udpwirefomat typed bodies, but the client indicates
-it can parse responses in either that format or as a hypothetical
-JSON-based content type. The application/simpledns+json type used by
-this example is currently fictitious.
+https://dnsserver.example.net/dns-query to resolve the IN A records of
+www.example.com.
+
+The requests are represented as application/dns-udpwirefomat typed
+bodies, but the client indicates it can parse responses in either that
+format or as a hypothetical JSON-based content type. The
+application/simpledns+json type used by this example is currently
+fictitious.
 
 <!--
 Raw hex for query
@@ -263,7 +266,7 @@ Raw hex for query
 :scheme = https
 :authority = dnsserver.example.net
 :path = /dns-query?ct&  (no CR)
-        dns=q80BAAABAAAAAAAAA3d3dwdleGFtcGxlA2NvbQAAAQAB
+        dns=AAABAAABAAAAAAAAA3d3dwdleGFtcGxlA2NvbQAAAQAB
 accept = application/dns-udpwireformat, application/simpledns+json
 ~~~~~
 
