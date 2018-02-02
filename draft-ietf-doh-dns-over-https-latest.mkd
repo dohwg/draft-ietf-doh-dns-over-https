@@ -33,7 +33,6 @@ normative:
   RFC2119:
   RFC4648:
   RFC5246:
-  RFC5785:
   RFC6960:
   RFC6961:
   RFC7230:
@@ -181,22 +180,11 @@ The protocol described here bases its design on the following protocol requireme
 
 # The HTTP Request
 
-To make a DNS API query, a DNS API client sends an HTTP request to the
-URI of the DNS API.
-
-The URI scheme MUST be https.
-
-A client can be configured with a DNS API URI, or it can discover the
-URI.  This document defines a well-known URI path of
-"/.well-known/dns-query" so that a discovery process that produces a
-domain name or domain name and port can be used to construct the DNS
-API URI.  (See {{iana}} for the registration of this in the well-known
-URI registry.)  DNS API servers SHOULD use this well-known path to
-help contextualize DNS Query requests that use server push
-{{!RFC7540}}.
-
-A DNS API Client encodes a single DNS query into the HTTP request
-using either the HTTP GET or POST methods.
+To make a DNS API query a DNS API client encodes a single DNS query
+into an HTTP request using either the HTTP GET or POST method and the
+other requirements of this section. The DNS API server defines the URI
+used by the request. Configuration and discovery of the URI is done
+out of band from this protocol.
 
 When using the POST method the DNS query is included as the message
 body of the HTTP request and the Content-Type request header indicates
@@ -254,13 +242,12 @@ extensions {{RFC6891}} in the request.
 
 These examples use HTTP/2 style formatting from {{RFC7540}}.
 
-For this example assume a DNS API server is following this
-specification on origin https://dnsserver.example.net/ and the
-well-known path. The DNS API client chooses to send its requests in
-application/dns-udpwirefomat but indicates it can parse replies in that
-format or as a hypothetical JSON-based content type. The
-application/simpledns+json type used by this example is currently
-fictitious.
+These examples use a DNS API service located at
+https://dnsserver.example.net/dns-query. The requests are represented
+as application/dns-udpwirefomat typed bodies, but the client indicates
+it can parse responses in either that format or as a hypothetical
+JSON-based content type. The application/simpledns+json type used by
+this example is currently fictitious.
 
 <!--
 Raw hex for query
@@ -274,7 +261,7 @@ Raw hex for query
 :method = GET
 :scheme = https
 :authority = dnsserver.example.net
-:path = /.well-known/dns-query?ct&  (no CR)
+:path = /dns-query?ct&  (no CR)
         body=q80BAAABAAAAAAAAA3d3dwdleGFtcGxlA2NvbQAAAQAB
 accept = application/dns-udpwireformat, application/simpledns+json
 ~~~~~
@@ -285,7 +272,7 @@ The same DNS query, using the POST method would be:
 :method = POST
 :scheme = https
 :authority = dnsserver.example.net
-:path = /.well-known/dns-query
+:path = /dns-query
 accept = application/dns-udpwireformat, application/simpledns+json
 content-type = application/dns-udpwireformat
 content-length = 33
@@ -435,14 +422,6 @@ the semantic requirements of DOH but may result in very poor
 performance for many uses cases.
 
 # IANA Considerations {#iana}
-
-## Registration of Well-Known URI
-
-This specification registers a Well-Known URI {{RFC5785}}:
-
-* URI Suffix: dns-query
-* Change Controller: IETF
-* Specification Document(s): \[this specification\]
 
 ## Registration of application/dns-udpwireformat Media Type
 
