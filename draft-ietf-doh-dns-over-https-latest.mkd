@@ -244,30 +244,26 @@ extensions {{RFC6891}} in the request.
 These examples use HTTP/2 style formatting from {{RFC7540}}.
 
 These examples use a DNS API service located at
-https://dnsserver.example.net/dns-query. The requests are represented
-as application/dns-udpwirefomat typed bodies, but the client indicates
-it can parse responses in either that format or as a hypothetical
-JSON-based content type. The application/simpledns+json type used by
-this example is currently fictitious.
+https://dnsserver.example.net/dns-query to resolve the IN A records.
 
-<!--
-Raw hex for query
-00000100
-0001000000000000
-03777777076578616d706c6503636f6d00
-00010001
--->
+The requests are represented as application/dns-udpwirefomat typed
+bodies, but the client indicates it can parse responses in either that
+format or as a hypothetical JSON-based content type. The
+application/simpledns+json type used by this example is currently
+fictitious.
+
+The first example request uses GET to request www.example.com
 
 ~~~~~
 :method = GET
 :scheme = https
 :authority = dnsserver.example.net
-:path = /dns-query?ct&  (no CR)
-        dns=q80BAAABAAAAAAAAA3d3dwdleGFtcGxlA2NvbQAAAQAB
+:path = /dns-query?ct& (no space or CR)
+        dns=AAABAAABAAAAAAAAA3d3dwdleGFtcGxlA2NvbQAAAQAB
 accept = application/dns-udpwireformat, application/simpledns+json
 ~~~~~
 
-The same DNS query, using the POST method would be:
+The same DNS query for www.example.com, using the POST method would be:
 
 ~~~~~
 :method = POST
@@ -279,9 +275,36 @@ content-type = application/dns-udpwireformat
 content-length = 33
 
 <33 bytes represented by the following hex encoding>
-0000 0100 0001 0000 0000 0000 0377 7777
-0765 7861 6d70 6c65 0363 6f6d 0000 0100
+00 00 01 00 00 01 00 00  00 00 00 00 03 77 77 77
+07 65 78 61 6d 70 6c 65  03 63 6f 6d 00 00 01 00
 01
+~~~~~
+
+Finally, a GET based query for
+a.62characterlabel-makes-base64url-distinct-from-standard-base64.example.com
+is shown as an example to emphasize that the encoding alphabet of
+base64url is different than regular base64 and that padding is omitted.
+
+The DNS query is 94 bytes represented by the following hex encoding
+
+~~~~~
+
+00 00 01 00 00 01 00 00  00 00 00 00 01 61 3e 36
+32 63 68 61 72 61 63 74  65 72 6c 61 62 65 6c 2d
+6d 61 6b 65 73 2d 62 61  73 65 36 34 75 72 6c 2d
+64 69 73 74 69 6e 63 74  2d 66 72 6f 6d 2d 73 74
+61 6e 64 61 72 64 2d 62  61 73 65 36 34 07 65 78
+61 6d 70 6c 65 03 63 6f  6d 00 00 01 00 01      
+
+:method = GET
+:scheme = https
+:authority = dnsserver.example.net
+:path = /dns-query?ct& (no space or CR)
+        dns=AAABAAABAAAAAAAAAWE-NjJjaGFyYWN0ZXJsYWJl (no space or CR)
+        bC1tYWtlcy1iYXNlNjR1cmwtZGlzdGluY3QtZnJvbS1z (no space or CR)
+        dGFuZGFyZC1iYXNlNjQHZXhhbXBsZQNjb20AAAEAAQ
+accept = application/dns-udpwireformat, application/simpledns+json
+
 ~~~~~
 
 # The HTTP Response
@@ -338,19 +361,6 @@ This is an example response for a query for the IN A records for
 "www.example.com" with recursion turned on. The response bears one
 record with an address of 192.0.2.1 and a TTL of 128 seconds.
 
-<!--
-Raw hex for response
-00008180
-0001000100000000
-03777777076578616d706c6503636f6d00
-00010001
-03777777076578616d706c6503636f6d00
-00010001
-00000080
-0004
-c0000201
--->
-
 ~~~~~
 :status = 200
 content-type = application/dns-udpwireformat
@@ -358,11 +368,10 @@ content-length = 64
 cache-control = max-age=128
 
 <64 bytes represented by the following hex encoding>
-0000 8180 0001 0001 0000 0000 0377 7777
-0765 7861 6d70 6c65 0363 6f6d 0000 0100
-
-0103 7777 7707 6578 616d 706c 6503 636f
-6d00 0001 0001 0000 0080 0004 C000 0201
+00 00 81 80 00 01 00 01  00 00 00 00 03 77 77 77
+07 65 78 61 6d 70 6c 65  03 63 6f 6d 00 00 01 00
+01 03 77 77 77 07 65 78  61 6d 70 6c 65 03 63 6f
+6d 00 00 01 00 01 00 00  00 80 00 04 C0 00 02 01
 ~~~~~
 
 # HTTP Integration
