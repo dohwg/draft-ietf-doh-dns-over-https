@@ -236,7 +236,7 @@ be included.
 
 When using the POST method, the body MUST NOT be encoded.
 
-DNS API clients using the DNS wire format MAY have one or more EDNS(0)
+DNS API clients using the DNS wire format MAY have one or more EDNS
 extensions {{RFC6891}} in the request.
 
 ## Examples
@@ -321,7 +321,7 @@ progress. The only response type defined in this document is
 JSON-based response format will be defined in the future.
 
 The DNS response for "application/dns-udpwireformat" in {{dnswire}}
-MAY have one or more EDNS(0) extensions, depending on the
+MAY have one or more EDNS extensions, depending on the
 extension definition of the extensions given in the DNS request.
 
 Each DNS request-response pair is matched to one HTTP request-response
