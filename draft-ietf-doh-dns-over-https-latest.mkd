@@ -203,7 +203,7 @@ with the name of "dns". The value of the parameter is the content of
 the request potentially encoded with base64url
 {{RFC4648}}. Specifications that define media types for use with DOH,
 such as DNS Wire Format {{dnswire}} of this document, MUST indicate if
-the body parameter uses base64url encoding.
+the dns parameter uses base64url encoding.
 
 Using the GET method is friendlier to many HTTP cache implementations.
 
@@ -227,14 +227,15 @@ that other HTTP/2 clients use (or don't use) them.
 
 The media type is "application/dns-udpwireformat".
 
-The body is the DNS on-the-wire format defined in {{RFC1035}}.
+The data payload is the DNS on-the-wire format defined in {{RFC1035}}.
 
-When using the GET method, the body MUST be encoded with base64url
-{{RFC4648}} and then placed as a name value pair in the query portion
-of the URI with name "dns". Padding characters for base64url MUST NOT
-be included.
+When using the GET method, the data payload MUST be encoded with
+base64url {{RFC4648}} and then placed as a name value pair in the
+query portion of the URI with name "dns". Padding characters for
+base64url MUST NOT be included.
 
-When using the POST method, the body MUST NOT be encoded.
+When using the POST method, the data payload MUST NOT be encoded and
+is used directly as the HTTP message body.
 
 DNS API clients using the DNS wire format MAY have one or more EDNS
 extensions {{RFC6891}} in the request.
