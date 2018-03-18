@@ -57,14 +57,6 @@ informative:
 
 --- abstract
 
-DNS queries sometimes experience problems with end to end connectivity
-at times and places where HTTPS flows freely.
-
-HTTPS provides the most practical mechanism for reliable end to end
-communication. Its use of TLS provides integrity and confidentiality
-guarantees and its use of HTTP allows it to interoperate with proxies,
-firewalls, and authentication systems where required for transit.
-
 This document describes how to run DNS service over HTTP using
 https:// URIs.
 
