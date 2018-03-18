@@ -51,6 +51,9 @@ informative:
   CORS:
     title: "Cross-Origin Resource Sharing"
     target: "https://fetch.spec.whatwg.org/#http-cors-protocol"
+  QUERYPARAMETER:
+    title: "application/x-www-form-urlencoded Parsing"
+    target: "https://url.spec.whatwg.org/#application/x-www-form-urlencoded"
 
 --- abstract
 
@@ -192,6 +195,7 @@ the media type of the message. POST-ed requests are smaller than their
 GET equivalents.
 
 When using the GET method the URI path MUST contain a query parameter
+name-value pair {{QUERYPARAMETER}}
 with the name of "ct" and a value indicating the media-format used for
 the dns parameter. The value may either be an explicit media type
 (e.g. ct=application/dns-udpwireformat&dns=...) or it may be
