@@ -248,10 +248,7 @@ These examples use a DNS API service located at
 https://dnsserver.example.net/dns-query to resolve the IN A records.
 
 The requests are represented as application/dns-udpwirefomat typed
-bodies, but the client indicates it can parse responses in either that
-format or as a hypothetical JSON-based content type. The
-application/simpledns+json type used by this example is currently
-fictitious.
+bodies.
 
 The first example request uses GET to request www.example.com
 
@@ -261,7 +258,7 @@ The first example request uses GET to request www.example.com
 :authority = dnsserver.example.net
 :path = /dns-query?ct& (no space or CR)
         dns=AAABAAABAAAAAAAAA3d3dwdleGFtcGxlA2NvbQAAAQAB
-accept = application/dns-udpwireformat, application/simpledns+json
+accept = application/dns-udpwireformat
 ~~~~~
 
 The same DNS query for www.example.com, using the POST method would be:
@@ -271,7 +268,7 @@ The same DNS query for www.example.com, using the POST method would be:
 :scheme = https
 :authority = dnsserver.example.net
 :path = /dns-query
-accept = application/dns-udpwireformat, application/simpledns+json
+accept = application/dns-udpwireformat
 content-type = application/dns-udpwireformat
 content-length = 33
 
@@ -304,7 +301,7 @@ The DNS query is 94 bytes represented by the following hex encoding
         dns=AAABAAABAAAAAAAAAWE-NjJjaGFyYWN0ZXJsYWJl (no space or CR)
         bC1tYWtlcy1iYXNlNjR1cmwtZGlzdGluY3QtZnJvbS1z (no space or CR)
         dGFuZGFyZC1iYXNlNjQHZXhhbXBsZQNjb20AAAEAAQ
-accept = application/dns-udpwireformat, application/simpledns+json
+accept = application/dns-udpwireformat
 
 ~~~~~
 
@@ -318,8 +315,8 @@ this protocol.
 
 At the time this is published, the response types are works in
 progress. The only response type defined in this document is
-"application/dns-udpwireformat", but it is possible that at least one
-JSON-based response format will be defined in the future.
+"application/dns-udpwireformat", but it is possible that other
+response formats will be defined in the future.
 
 The DNS response for "application/dns-udpwireformat" in {{dnswire}}
 MAY have one or more EDNS extensions, depending on the
