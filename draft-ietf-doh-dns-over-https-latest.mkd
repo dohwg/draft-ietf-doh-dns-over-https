@@ -41,7 +41,6 @@ normative:
   RFC7541:
 
 informative:
-  I-D.ietf-dnsop-dns-wireformat-http:
   RFC2181:
   RFC5861:
   RFC6147:
@@ -100,7 +99,21 @@ The integration with HTTP provides a transport suitable for both
 traditional DNS clients and native web applications seeking access to
 the DNS.
 
-# Terminology
+## Use Cases
+
+There are myriad use cases for this protocol. Two were widely discussed
+during the development of the protocol are
+to prevent on-path network devices from
+interfering with DNS operations
+and
+allowing web applications to access DNS
+information, by using existing APIs in browsers to access it over
+HTTP in a safe way consistent with Cross Origin Resource Sharing
+(CORS) {{CORS}}. As developers became interested in the protocol,
+other use cases for DNS transported in HTTPS were discovered
+and discussed.
+
+## Terminology
 
 A server that supports this protocol is called a "DNS API server" to
 differentiate it from a "DNS server" (one that uses the regular DNS
@@ -110,42 +123,6 @@ protocol).  Similarly, a client that supports this protocol is called a
 In this document, the key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
 "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" are to be interpreted as
 described in BCP 14, RFC 2119 {{RFC2119}}.
-
-# Use Cases
-
-There are two initial use cases for this protocol.
-
-The primary use case is to prevent on-path network devices from
-interfering with DNS operations. This interference includes, but is
-not limited to, spoofing DNS responses, blocking DNS requests, and
-tracking.
-
-In this use, clients -- whether operating systems or individual
-applications -- will be explicitly configured to use a DOH server as a
-recursive resolver by its user (or administrator). They might use the
-DOH server for all queries, or only for a subset of them. The specific
-configuration mechanism is out of scope for this document.
-
-A secondary use case is allowing web applications to access DNS
-information, by using existing APIs in browsers to access it over
-HTTP in a safe way consistent with Cross Origin Resource Sharing
-(CORS) {{CORS}}.
-
-This is technically already possible (since the server controls both
-the HTTP resources it exposes and the use of browser APIs by its
-content), but standardization might make this easier to accomplish.
-
-Note that in this second use, the browser does not consult the DOH
-server or use its responses for any DNS lookups outside the scope of
-the application using them; i.e., there is (currently) no API that
-allows a Web site to poison DNS for others.
-
-\[\[ This paragraph is to be removed when this document is published as an RFC \]\]
-Note that these use cases are different than those in a
-similar protocol described at
-{{I-D.ietf-dnsop-dns-wireformat-http}}. The use case for that protocol
-is proxying DNS queries over HTTP instead of over DNS itself.  The use
-cases in this document all involve query origination instead of proxying.
 
 # Protocol Requirements
 
