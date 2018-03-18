@@ -99,21 +99,14 @@ The integration with HTTP provides a transport suitable for both
 traditional DNS clients and native web applications seeking access to
 the DNS.
 
-## Use Cases
+Two primary uses cases were considered during this protocol's
+development. They included preventing on-path devices from interfering
+with DNS operations and allowing web applications to access DNS
+information via existing browser APIs in a safe way consistent with
+Cross Origin Resource Sharing (CORS) {{CORS}}. There are certainly
+other uses for this work.
 
-There are myriad use cases for this protocol. Two were widely discussed
-during the development of the protocol are
-to prevent on-path network devices from
-interfering with DNS operations
-and
-allowing web applications to access DNS
-information, by using existing APIs in browsers to access it over
-HTTP in a safe way consistent with Cross Origin Resource Sharing
-(CORS) {{CORS}}. As developers became interested in the protocol,
-other use cases for DNS transported in HTTPS were discovered
-and discussed.
-
-## Terminology
+# Terminology
 
 A server that supports this protocol is called a "DNS API server" to
 differentiate it from a "DNS server" (one that uses the regular DNS
