@@ -544,6 +544,10 @@ discovered, or because the client was told to trust the DNS API
 server by an untrusted party. Instead, a client MUST only trust DNS
 API server that is configured as trustworthy.
 
+Clients may use DOH as one of many mechanisms to obtain DNS
+data. Clients that fallback to another mechanism upon encountering a
+DOH error may weaken or inadvertently poison their consumers.
+
 # Operational Considerations
 
 Local policy considerations and similar factors mean different DNS
