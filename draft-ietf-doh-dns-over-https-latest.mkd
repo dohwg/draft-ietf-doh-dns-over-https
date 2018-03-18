@@ -567,6 +567,11 @@ corresponding IP based certificates for HTTPS, or resolving the DNS
 API Server's hostname via traditional DNS or another DOH server while
 still authenticating the resulting connection via HTTPS.
 
+HTTP {{RFC7230}} is a stateless application level protocol and
+therefore DOH implementations do not provide stateful ordering
+guarantees between different requests. DOH can not be used as a
+transport for other protocols that require strict ordering.
+
 # Acknowledgments
 
 Joe Hildebrand contributed lots of material for a different iteration of this document.
