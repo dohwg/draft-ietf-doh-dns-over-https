@@ -277,7 +277,13 @@ accept = application/dns-udpwireformat
 An HTTP response with a 2xx status code ({{RFC7231}} Section 6.3)
 indicates a valid DNS response to the query made in the HTTP
 request. A valid DNS response includes both success and failure
-responses.
+responses. For example, a DNS failure response such as SERVFAIL or
+NXDOMAIN will contain a successful HTTP 2xx status code even though
+there was a failure at the DNS layer. Responses with non successful
+HTTP status codes do not contain DNS answers to the question in the
+corresponding request. Some of these non-successful HTTPS responses
+(e.g. redirects or authentication failures) may allow clients to make
+new requests to satisfty the original question.
 
 Different response media types will provide more or less information from a DNS
 response. For example, one response type might include the information from the
