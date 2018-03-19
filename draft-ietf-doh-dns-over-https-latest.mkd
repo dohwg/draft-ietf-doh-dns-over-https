@@ -472,9 +472,9 @@ profile defined in {{RFC7540}} Section 9.2.
 
 Session level encryption has well known weaknesses with respect to
 traffic analysis which might be particularly acute when dealing with
-DNS queries. Sections 10.6 (Compression) and 10.7 (Padding) of
-{{RFC7540}} provide some further advice on mitigations within an
-HTTP/2 context.
+DNS queries.
+HTTP/2 provides further advice about the use of compression
+(Section 10.6 of {{RFC7540}}) and padding (Section 10.7 of {{RFC7540}}).
 
 The HTTPS connection provides transport security for the interaction
 between the DNS API server and client, but does not inherently ensure
