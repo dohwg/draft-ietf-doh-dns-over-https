@@ -98,7 +98,7 @@ default media formatting types for requests and responses but uses
 normal HTTP content negotiation mechanisms for selecting alternatives
 that endpoints may prefer in anticipation of serving new use cases. In
 addition to this media type negotiation, it aligns itself with HTTP
-features such as caching, proxying, and compression.
+features such as caching, redirection, proxying, and compression.
 
 The integration with HTTP provides a transport suitable for both
 traditional DNS clients and native web applications seeking access to
@@ -312,15 +312,10 @@ accept = application/dns-udpwireformat
 
 # The HTTP Response
 
-A successful DOH response will carry DNS information in the HTTP
-response with a status code between 200 and 299. A successful HTTP
-response indicates a valid DNS response to the query made in the
-HTTP request but that DNS level response itself might represent some
-sort of failure (e.g. NXDOMAIN). HTTP response codes that are not in
-the successful range ({{RFC7231}} Section 6.3) indicate the DNS
-request was not satisfied by the response. HTTP defines how a client
-may handle many of these particular non-successful status codes
-(e.g. through redirection or authentication).
+An HTTP response with a 2xx status code ({{RFC7231}} Section 6.3)
+indicates a valid DNS response to the query made in the HTTP
+request. A valid DNS response includes both success and failure
+responses.
 
 Different response media types will provide more or less information from a DNS
 response. For example, one response type might include the information from the
