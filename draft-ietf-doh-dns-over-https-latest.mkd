@@ -36,6 +36,7 @@ normative:
   RFC6960:
   RFC6961:
   RFC7230:
+  RFC7231:
   RFC7234:
   RFC7540:
   RFC7541:
@@ -88,7 +89,7 @@ default media formatting types for requests and responses but uses
 normal HTTP content negotiation mechanisms for selecting alternatives
 that endpoints may prefer in anticipation of serving new use cases. In
 addition to this media type negotiation, it aligns itself with HTTP
-features such as caching, proxying, and compression.
+features such as caching, redirection, proxying, and compression.
 
 The integration with HTTP provides a transport suitable for both
 traditional DNS clients and native web applications seeking access to
@@ -272,6 +273,11 @@ accept = application/dns-udpwireformat
 ~~~~~
 
 # The HTTP Response
+
+An HTTP response with a 2xx status code ({{RFC7231}} Section 6.3)
+indicates a valid DNS response to the query made in the HTTP
+request. A valid DNS response includes both success and failure
+responses.
 
 Different response media types will provide more or less information from a DNS
 response. For example, one response type might include the information from the
