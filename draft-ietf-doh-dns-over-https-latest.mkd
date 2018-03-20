@@ -48,6 +48,7 @@ informative:
   RFC6891:
   RFC6950:
   RFC7719:
+  RFC7858:
   CORS:
     title: "Cross-Origin Resource Sharing"
     target: "https://fetch.spec.whatwg.org/#http-cors-protocol"
@@ -192,9 +193,9 @@ that other HTTP/2 clients use (or don't use) them.
 
 ## DNS Wire Format {#dnswire}
 
-The media type is "application/dns-udpwireformat".
-
 The data payload is the DNS on-the-wire format defined in {{RFC1035}}.
+The format is for DNS over UDP. (Note that this is different than the
+wire format used in {{RFC7858}}.
 
 When using the GET method, the data payload MUST be encoded with
 base64url {{RFC4648}} and then placed as a name value pair in the
@@ -206,6 +207,8 @@ is used directly as the HTTP message body.
 
 DNS API clients using the DNS wire format MAY have one or more EDNS
 extensions {{RFC6891}} in the request.
+
+The media type is "application/dns-udpwireformat".
 
 ## Examples
 
