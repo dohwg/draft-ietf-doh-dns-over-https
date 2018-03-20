@@ -488,7 +488,8 @@ the authenticity of DNS data. A DNS API client may also perform full
 DNSSEC validation of answers received from a DNS API server or it may
 choose to trust answers from a particular DNS API server, much as a
 DNS client might choose to trust answers from its recursive DNS
-resolver.
+resolver. This capability might be affected by the response media
+type.
 
 {{caching}} describes the interaction of this protocol with HTTP
 caching. An adversary that can control the cache used by the client
