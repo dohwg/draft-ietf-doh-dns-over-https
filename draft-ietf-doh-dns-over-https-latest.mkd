@@ -30,7 +30,6 @@ author:
 
 normative:
   RFC1035:
-  RFC2119:
   RFC4648:
   RFC5246:
   RFC6960:
@@ -40,6 +39,7 @@ normative:
   RFC7234:
   RFC7540:
   RFC7541:
+  RFC8174:
 
 informative:
   RFC2181:
@@ -110,10 +110,12 @@ differentiate it from a "DNS server" (one that uses the regular DNS
 protocol).  Similarly, a client that supports this protocol is called a
 "DNS API client".
 
-In this document, the key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-"SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" are to be interpreted as
-described in BCP 14, RFC 2119 {{RFC2119}}.
-
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+"SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY",
+and "OPTIONAL" in this document are to be interpreted as described in
+BCP 14, RFC8174 {{RFC8174}} when, and only when, they
+appear in all capitals, as shown here.
+		 
 # Protocol Requirements
 
 The protocol described here bases its design on the following protocol requirements:
