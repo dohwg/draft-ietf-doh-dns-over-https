@@ -179,7 +179,7 @@ the dns parameter uses base64url encoding.
 
 Using the GET method is friendlier to many HTTP cache implementations.
 
-The DNS API Client SHOULD include an HTTP "Accept:" request header to
+The DNS API client SHOULD include an HTTP "Accept:" request header to
 say what type of content can be understood in response. The client
 MUST be prepared to process "application/dns-udpwireformat" {{dnswire}}
 responses but MAY process any other type it receives.
@@ -324,15 +324,15 @@ any of the DNS Records reach a 0 TTL.  The response freshness lifetime
 MUST NOT be greater than that indicated by the DNS Record with the
 smallest TTL in the response.
 
-A DNS API Client that receives a response without an explicit
+A DNS API client that receives a response without an explicit
 freshness lifetime MUST NOT assign that response a heuristic
 freshness ({{RFC7234}} Section 4.2.2.) greater than that indicated by
 the DNS Record with the smallest TTL in the response.
 
-A DNS API Server MUST be able to process application/dns-udpwireformat
+A DNS API server MUST be able to process application/dns-udpwireformat
 request messages.
 
-A DNS API Server SHOULD respond with HTTP status code 415 (Unsupported
+A DNS API server SHOULD respond with HTTP status code 415 (Unsupported
 Media Type) upon receiving a media type it is unable to process.
 
 This document does not change the definition of any HTTP response codes or
@@ -363,7 +363,7 @@ This protocol MUST be used with the https scheme URI {{RFC7230}}.
 
 ## Cache Interaction {#caching}
 
-A DOH API Client may utilize a hierarchy of caches that include both
+A DOH API client may utilize a hierarchy of caches that include both
 HTTP and DNS specific caches. HTTP cache entries may be bypassed with
 HTTP mechanisms such as the Cache-Control no-cache directive however
 DNS caches do not have a similar mechanism.
@@ -533,7 +533,7 @@ For example, in the case of DNS64 {{RFC6147}}, the choice could affect
 whether IPv6/IPv4 translation will work at all.
 
 The HTTPS channel used by this specification establishes secure two
-party communication between the DNS API Client and the DNS API Server.
+party communication between the DNS API client and the DNS API server.
 Filtering or inspection systems that rely on unsecured transport of
 DNS will not function in a DNS over HTTPS environment.
 
@@ -554,7 +554,7 @@ its DOH server to initially resolve the server's host name into an
 address. Alternative strategies a client might employ include making
 the initial resolution part of the configuration, IP based URIs and
 corresponding IP based certificates for HTTPS, or resolving the DNS
-API Server's hostname via traditional DNS or another DOH server while
+API server's hostname via traditional DNS or another DOH server while
 still authenticating the resulting connection via HTTPS.
 
 HTTP {{RFC7230}} is a stateless application level protocol and
