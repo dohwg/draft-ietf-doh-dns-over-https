@@ -71,7 +71,7 @@ https:// URIs.
 The Internet does not always provide end to end reachability for
 native DNS. On-path network devices may spoof DNS responses, block DNS
 requests, or just redirect DNS queries to different DNS servers that
-give less-than-honest answers. These are sometimes delivered with poor
+give less-than-honest answers. These are also sometimes delivered with poor
 performance or reduced feature sets.
 
 Over time, there have been many proposals for using HTTP and HTTPS as
@@ -480,8 +480,8 @@ Change controller:  IESG
 # Security Considerations {#Security}
 
 Running DNS over HTTPS relies on the security of the underlying
-HTTP transport. This mitigates classic UDP based DNS amplication
-attacks. Implementations utilizing HTTP/2 benefit from the TLS
+HTTP transport. This mitigates classic amplication
+attacks for UDP-based DNS. Implementations utilizing HTTP/2 benefit from the TLS
 profile defined in {{RFC7540}} Section 9.2.
 
 Session level encryption has well known weaknesses with respect to
