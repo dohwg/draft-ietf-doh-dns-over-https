@@ -325,12 +325,12 @@ The response freshness lifetime
 MUST NOT be greater than that indicated by the DNS resoruce record with the
 smallest TTL in the response.
 
-If the DNS response has no records in the Answer section, 
-and the DNS response has an SOA record in the Authority section,
-the response freshness lifetime MUST be set to the MINIMUM field from
-that SOA record. Otherwise, the server MUST
-use the "Cache-Control no-cache" directive in the
-response header.
+If the DNS response has no records in the Answer section, and the DNS
+response has an SOA record in the Authority section, the response
+freshness lifetime MUST be set to the MINIMUM field from that SOA
+record. Otherwise, the response MUST set a freshness lifetime
+({{RFC7234}} Section 4.2) of 0 by using a mechanism such as
+"Cache-Control: no-cache" ({{RFC7234}} Section 5.2.1.4).
 
 A DNS API Client that receives a response without an explicit
 freshness lifetime MUST NOT assign that response a heuristic
