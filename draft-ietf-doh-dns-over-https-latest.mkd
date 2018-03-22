@@ -117,7 +117,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
 and "OPTIONAL" in this document are to be interpreted as described in
 BCP 14, RFC8174 {{RFC8174}} when, and only when, they
 appear in all capitals, as shown here.
-		 
+
 # Protocol Requirements
 
 The protocol described here bases its design on the following protocol requirements:
@@ -266,7 +266,7 @@ The DNS query is 94 bytes represented by the following hex encoding
 6d 61 6b 65 73 2d 62 61  73 65 36 34 75 72 6c 2d
 64 69 73 74 69 6e 63 74  2d 66 72 6f 6d 2d 73 74
 61 6e 64 61 72 64 2d 62  61 73 65 36 34 07 65 78
-61 6d 70 6c 65 03 63 6f  6d 00 00 01 00 01      
+61 6d 70 6c 65 03 63 6f  6d 00 00 01 00 01
 
 :method = GET
 :scheme = https
