@@ -68,18 +68,6 @@ https:// URIs.
 
 # Introduction
 
-The Internet does not always provide end to end reachability for
-native DNS. On-path network devices may spoof DNS responses, block DNS
-requests, or just redirect DNS queries to different DNS servers that
-give less-than-honest answers. These are also sometimes delivered with poor
-performance or reduced feature sets.
-
-Over time, there have been many proposals for using HTTP and HTTPS as
-a substrate for DNS queries and responses. To date, none of those
-proposals have made it beyond early discussion, partially due to
-disagreement about what the appropriate formatting should be and
-partially because they did not follow HTTP best practices.
-
 This document defines a specific protocol for sending DNS {{RFC1035}}
 queries and getting DNS responses over HTTP {{RFC7540}} using https://
 (and therefore TLS {{RFC5246}} security for integrity and
