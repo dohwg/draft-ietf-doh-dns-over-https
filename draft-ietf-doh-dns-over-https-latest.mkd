@@ -166,9 +166,9 @@ When using the GET method the URI path MUST contain a query parameter
 name-value pair {{QUERYPARAMETER}}
 with the name of "ct" and a value indicating the media-format used for
 the dns parameter. The value may either be an explicit media type
-(e.g. ct=application/dns-udpwireformat&dns=...) or it may be
+(e.g., `ct=application/dns-udpwireformat&dns=...`) or it may be
 empty. An empty value indicates the default
-application/dns-udpwireformat type (e.g. ct&dns=...).
+application/dns-udpwireformat type (e.g., `ct&dns=...`).
 
 When using the GET method the URI path MUST contain a query parameter
 with the name of "dns". The value of the parameter is the content of
@@ -289,7 +289,7 @@ NXDOMAIN will be the message in a successful 2xx HTTP response even
 though there was a failure at the DNS layer. Responses with
 non-successful HTTP status codes do not contain DNS answers to the
 question in the corresponding request. Some of these non-successful
-HTTP responses (e.g. redirects or authentication failures) could
+HTTP responses (e.g., redirects or authentication failures) could
 allow clients to make new requests to satisfy the original question.
 
 Different response media types will provide more or less information from a DNS
@@ -381,10 +381,10 @@ contain the {{RFC7234}} Age response header indicating the elapsed
 time between when the entry was placed in the HTTP cache and the
 current DOH response. DNS API clients should subtract this time from
 the DNS TTL if they are re-sharing the information in a non HTTP
-context (e.g. their own DNS cache) to determine the remaining time to
+context (e.g., their own DNS cache) to determine the remaining time to
 live of the DNS record.
 
-HTTP revalidation (e.g. via If-None-Match request headers) of cached
+HTTP revalidation (e.g., via If-None-Match request headers) of cached
 DNS information may be of limited value to DOH as revalidation
 provides only a bandwidth benefit and DNS transactions are normally
 latency bound. Furthermore, the HTTP response headers that enable
