@@ -129,7 +129,7 @@ The protocol described here bases its design on the following protocol requireme
 
 * The protocol must permit the addition of new formats for DNS queries and responses.
 
-* The protocol must ensure interoperable formats through a
+* The protocol must ensure interoperable media formats through a
   mandatory to implement format wherein a query must be able to
   contain future modifications to the DNS protocol including the
   inclusion of one or more EDNS extensions (including those not yet
