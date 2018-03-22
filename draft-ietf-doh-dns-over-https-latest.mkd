@@ -488,7 +488,7 @@ Change controller:  IESG
 # Security Considerations {#Security}
 
 Running DNS over HTTPS relies on the security of the underlying
-HTTP transport. This mitigates classic amplication
+HTTP transport. This mitigates classic amplification
 attacks for UDP-based DNS. Implementations utilizing HTTP/2 benefit from the TLS
 profile defined in {{RFC7540}} Section 9.2.
 
