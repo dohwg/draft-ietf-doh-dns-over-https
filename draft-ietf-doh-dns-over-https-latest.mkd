@@ -26,7 +26,7 @@ author:
    ins: P. McManus
    name: Patrick McManus
    org: Mozilla
-   email: pmcmanus@mozilla.com
+   email: mcmanus@ducksong.com
 
 normative:
   RFC1035:
