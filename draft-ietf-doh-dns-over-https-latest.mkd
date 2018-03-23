@@ -527,7 +527,7 @@ API server that is configured as trustworthy.
 A client can use DNS over HTTPS as one of multiple mechanisms to obtain DNS
 data. If a client of this protocol encounters an HTTP error after sending
 a DNS query, and then falls back to a different DNS retrieval mechanism,
-doing so can weaken the privacy expected by the user of the client.
+doing so can weaken the privacy and authenticity expected by the user of the client.
 
 # Operational Considerations
 
