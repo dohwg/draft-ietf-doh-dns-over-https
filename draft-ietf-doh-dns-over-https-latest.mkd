@@ -30,6 +30,7 @@ author:
 
 normative:
   RFC1035:
+  RFC2308:
   RFC4648:
   RFC5246:
   RFC6960:
@@ -314,7 +315,9 @@ smallest TTL in the response.
 If the DNS response has no records in the Answer section, and the DNS
 response has an SOA record in the Authority section, the response
 freshness lifetime MUST NOT be greater than the MINIMUM field from that SOA
-record. Otherwise, the HTTP response MUST set a freshness lifetime
+record.
+(See {{RFC2308}}.)
+Otherwise, the HTTP response MUST set a freshness lifetime
 ({{RFC7234}} Section 4.2) of 0 by using a mechanism such as
 "Cache-Control: no-cache" ({{RFC7234}} Section 5.2.1.4).
 
