@@ -357,7 +357,7 @@ This protocol MUST be used with the https scheme URI {{RFC7230}}.
 
 ## Cache Interaction {#caching}
 
-A DOH API client may utilize a hierarchy of caches that include both
+A DNS API client may utilize a hierarchy of caches that include both
 HTTP and DNS specific caches. HTTP cache entries may be bypassed with
 HTTP mechanisms such as the "Cache-Control no-cache" directive; however
 DNS caches do not have a similar mechanism.
@@ -543,12 +543,12 @@ information that does not require contacting a third party.
 A DNS API client may face a similar bootstrapping problem when the
 HTTP request needs to resolve the hostname portion of the DNS
 URI. Just as the address of a traditional DNS nameserver cannot be
-originally determined from that same server, a DOH client cannot use
-its DOH server to initially resolve the server's host name into an
+originally determined from that same server, a DNS API client cannot use
+its DNS API server to initially resolve the server's host name into an
 address. Alternative strategies a client might employ include making
 the initial resolution part of the configuration, IP based URIs and
 corresponding IP based certificates for HTTPS, or resolving the DNS
-API server's hostname via traditional DNS or another DOH server while
+API server's hostname via traditional DNS or another DNS API server while
 still authenticating the resulting connection via HTTPS.
 
 HTTP {{RFC7230}} is a stateless application level protocol and
