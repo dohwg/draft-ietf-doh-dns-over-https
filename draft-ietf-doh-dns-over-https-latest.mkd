@@ -34,7 +34,6 @@ normative:
   RFC4648:
   RFC5246:
   RFC6960:
-  RFC6961:
   RFC7230:
   RFC7231:
   RFC7234:
@@ -48,6 +47,7 @@ informative:
   RFC6147:
   RFC6891:
   RFC6950:
+  RFC6961:
   RFC7719:
   RFC7830:
   RFC7858:
@@ -535,14 +535,16 @@ party communication between the DNS API client and the DNS API server.
 Filtering or inspection systems that rely on unsecured transport of
 DNS will not function in a DNS over HTTPS environment.
 
-Many HTTPS implementations perform real time third party checks of the
+Some HTTPS client implementations perform real time third party checks of the
 revocation status of the certificates being used by TLS. If this check
 is done as part of the DNS API server connection procedure and the
 check itself requires DNS resolution to connect to the third party a
 deadlock can occur. The use of an OCSP {{RFC6960}} server is one
-example of how this can happen. DNS API servers SHOULD utilize OCSP
-Stapling {{RFC6961}} to provide the client with certificate revocation
-information that does not require contacting a third party.
+example of how this deadlock can happen.
+To avoid the possibility of deadlock, DNS API servers SHOULD
+bundle the certificate status as part of the handshake using a
+mechanism appropriate to the version of TLS, such as 
+using {{RFC6961}} for TLS version 1.2.
 
 A DNS API client may face a similar bootstrapping problem when the
 HTTP request needs to resolve the hostname portion of the DNS
