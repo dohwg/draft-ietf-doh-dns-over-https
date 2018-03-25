@@ -137,8 +137,6 @@ The protocol described here bases its design on the following protocol requireme
 
 * Supporting insecure HTTP
 
-* Supporting HTTP versions below 2
-
 # The HTTP Request
 
 To make a DNS API query a DNS API client encodes a single DNS query
@@ -184,8 +182,6 @@ separately.
 
 DNS API clients can use HTTP/2 padding and compression in the same way
 that other HTTP/2 clients use (or don't use) them.
-(Note that there is also DNS padding defined in {{RFC7830}} that
-can also be used by DNS API clients and servers.)
 
 ## DNS Wire Format {#dnswire}
 
