@@ -186,8 +186,12 @@ that other HTTP/2 clients use (or don't use) them.
 ## DNS Wire Format {#dnswire}
 
 The data payload is the DNS on-the-wire format defined in {{RFC1035}}.
-The format is for DNS over UDP. (Note that this is different than the
+The format is for DNS over UDP. Note that this is different than the
 wire format used in {{RFC7858}}.
+Also note that while {{RFC1035}} says "Messages carried by UDP are
+restricted to 512 bytes", that was later updated by {{RFC6891}},
+and this protocol does not put any limit on the size of DNS
+on-the-wire format payloads.
 
 When using the GET method, the data payload MUST be encoded with
 base64url {{RFC4648}} and then placed as a name value pair in the
@@ -561,6 +565,13 @@ HTTP {{RFC7230}} is a stateless application level protocol and
 therefore DOH implementations do not provide stateful ordering
 guarantees between different requests. DOH cannot be used as a
 transport for other protocols that require strict ordering.
+
+If a DNS API server responds to a DNS API client with a DNS message that has the
+TC (truncation) bit set in the header, that indicates that the DNS API server
+was not able to retrieve a full answer for the query over TCP and is providing
+the best answer it could get. This protocol does not require that a DNS API
+server that cannot get an untruncated answer send back such an answer; it can
+instead send back an HTTP error to indicate that it cannot give a useful answer.
 
 # Acknowledgments
 
