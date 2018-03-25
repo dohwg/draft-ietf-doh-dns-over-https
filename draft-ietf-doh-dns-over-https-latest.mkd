@@ -536,9 +536,11 @@ revocation status of the certificates being used by TLS. If this check
 is done as part of the DNS API server connection procedure and the
 check itself requires DNS resolution to connect to the third party a
 deadlock can occur. The use of an OCSP {{RFC6960}} server is one
-example of how this deadlock can happen. DNS API servers SHOULD
-bundle the certificate status as part of the handshake using a version
-appropriate mechanism such as {{RFC6961}} to avoid the possibility of deadlock.
+example of how this deadlock can happen.
+To avoid the possibility of deadlock, DNS API servers SHOULD
+bundle the certificate status as part of the handshake using a
+mechanism appropriate to the version of TLS, such as 
+using {{RFC6961}} for TLS version 1.2.
 
 A DNS API client may face a similar bootstrapping problem when the
 HTTP request needs to resolve the hostname portion of the DNS
