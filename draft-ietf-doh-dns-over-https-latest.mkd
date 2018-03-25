@@ -49,6 +49,7 @@ informative:
   RFC6891:
   RFC6950:
   RFC7719:
+  RFC7830:
   RFC7858:
   CORS:
     title: "Cross-Origin Resource Sharing"
@@ -113,15 +114,17 @@ The protocol described here bases its design on the following protocol requireme
 
 * The protocol must use normal HTTP semantics.
 
-* The queries and responses must be able to be flexible enough to express every normal
-  DNS query.
+* The queries and responses must be able to be flexible enough to express every
+  DNS query that would normally be sent in DNS over UDP (including queries and
+  responses that use DNS extensions, but not those that require multiple
+  responses).
 
 * The protocol must permit the addition of new formats for DNS queries and responses.
 
 * The protocol must ensure interoperability by specifying a single format for
   requests and responses that is mandatory to implement.  That format must be
   able to support future modifications to the DNS protocol including the
-  inclusion of one or more EDNS extensions (including those not yet defined).
+  inclusion of one or more EDNS options (including those not yet defined).
 
 * The protocol must use a secure transport that meets the
   requirements for HTTPS.
@@ -133,8 +136,6 @@ The protocol described here bases its design on the following protocol requireme
 * Supporting other network-specific inferences from plaintext DNS queries
 
 * Supporting insecure HTTP
-
-* Supporting legacy HTTP versions
 
 # The HTTP Request
 
@@ -197,7 +198,7 @@ When using the POST method, the data payload MUST NOT be encoded and
 is used directly as the HTTP message body.
 
 DNS API clients using the DNS wire format MAY have one or more EDNS
-extensions {{RFC6891}} in the request.
+options {{RFC6891}} in the request.
 
 The media type is "application/dns-udpwireformat".
 
@@ -291,7 +292,7 @@ progress. The only response type defined in this document is
 response formats will be defined in the future.
 
 The DNS response for "application/dns-udpwireformat" in {{dnswire}}
-MAY have one or more EDNS extensions, depending on the
+MAY have one or more EDNS options, depending on the
 extension definition of the extensions given in the DNS request.
 
 Each DNS request-response pair is matched to one HTTP request-response
