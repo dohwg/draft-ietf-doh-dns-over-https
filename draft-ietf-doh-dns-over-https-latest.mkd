@@ -150,6 +150,9 @@ body of the HTTP request and the Content-Type request header indicates
 the media type of the message. POST-ed requests are smaller than their
 GET equivalents.
 
+DNS API servers MUST implement receiving DNS API messages over
+both POST and GET methods.
+
 When using the GET method the URI path MUST contain a query parameter
 name-value pair {{QUERYPARAMETER}}
 with the name of "ct" and a value indicating the media-format used for
@@ -205,6 +208,10 @@ DNS API clients using the DNS wire format MAY have one or more EDNS
 options {{RFC6891}} in the request.
 
 The media type is "application/dns-udpwireformat".
+
+DNS API clients and DNS API servers MUST support the
+"application/dns-udpwireformat" media type, and MAY support other
+media types as well. 
 
 ## Examples
 
