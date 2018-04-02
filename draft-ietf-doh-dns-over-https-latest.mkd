@@ -144,6 +144,8 @@ other requirements of this section. The DNS API server defines the URI
 used by the request. Configuration and discovery of the URI is done
 out of band from this protocol.
 
+DNS API servers MUST implement both POST and GET methods.
+
 When using the POST method the DNS query is included as the message
 body of the HTTP request and the Content-Type request header indicates
 the media type of the message. POST-ed requests are smaller than their
@@ -425,6 +427,13 @@ one that the client would have directed the same query to if the
 client had initiated the request. This specification does not extend
 DNS resolution privileges to URIs that are not recognized by the
 client as trusted DNS API servers.
+
+## Content Negotiation
+
+In order to maximize interoperability, DNS API clients and DNS API
+servers MUST support the "application/dns-udpwireformat" media
+type. Other media types MAY be used as defined by HTTP Content
+Negotiation ({{RFC7231}} Section 3.4).
 
 # IANA Considerations {#iana}
 
