@@ -169,10 +169,11 @@ the dns parameter uses base64url encoding.
 
 Using the GET method is friendlier to many HTTP cache implementations.
 
-The DNS API client SHOULD include an HTTP "Accept:" request header to
-say what type of content can be understood in response. The client
-MUST be prepared to process "application/dns-udpwireformat" {{dnswire}}
-responses but MAY process any other type it receives.
+The DNS API client SHOULD include an HTTP "Accept" request header to
+indicate what type of content can be understood in
+response. Irrespective of the value of the Accept request header, the
+client MUST be prepared to process "application/dns-udpwireformat"
+{{dnswire}} responses but MAY also process any other type it receives.
 
 In order to maximize cache friendliness, DNS API clients using media
 formats that include DNS ID, such as application/dns-udpwireformat,
