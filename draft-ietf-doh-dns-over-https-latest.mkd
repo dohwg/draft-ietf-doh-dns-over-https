@@ -203,8 +203,8 @@ The media type is "application/dns-udpwireformat".
 These examples use HTTP/2 style formatting from {{RFC7540}}.
 
 These examples use a DNS API service with a URI Template of
-"https://dnsserver.example.net/dns-query?dns={wireformat}" to resolve
-the IN A records.
+"https://dnsserver.example.net/dns-query{?wireformat}" to resolve
+IN A records.
 
 The requests are represented as application/dns-udpwirefomat typed
 bodies.
@@ -216,7 +216,7 @@ The first example request uses GET to request www.example.com
 :scheme = https
 :authority = dnsserver.example.net
 :path = /dns-query? (no space or CR)
-        dns=AAABAAABAAAAAAAAA3d3dwdleGFtcGxlA2NvbQAAAQAB
+        wireformat=AAABAAABAAAAAAAAA3d3dwdleGFtcGxlA2NvbQAAAQAB
 accept = application/dns-udpwireformat
 ~~~~~
 
@@ -257,9 +257,9 @@ The DNS query is 94 bytes represented by the following hex encoding
 :scheme = https
 :authority = dnsserver.example.net
 :path = /dns-query? (no space or CR)
-        dns=AAABAAABAAAAAAAAAWE-NjJjaGFyYWN0ZXJsYWJl (no space or CR)
-        bC1tYWtlcy1iYXNlNjR1cmwtZGlzdGluY3QtZnJvbS1z (no space or CR)
-        dGFuZGFyZC1iYXNlNjQHZXhhbXBsZQNjb20AAAEAAQ
+        wireformat=AAABAAABAAAAAAAAAWE-NjJjaGFyYWN0ZXJs (no space or CR)
+        YWJlbC1tYWtlcy1iYXNlNjR1cmwtZGlzdGluY3QtZnJvbS (no space or CR)
+        1zdGFuZGFyZC1iYXNlNjQHZXhhbXBsZQNjb20AAAEAAQ
 accept = application/dns-udpwireformat
 
 ~~~~~
