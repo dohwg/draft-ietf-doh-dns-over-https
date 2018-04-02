@@ -146,8 +146,8 @@ out of band from this protocol.
 
 The URI template defined in this document is processed without any
 variables for requests using POST, and with the single variable
-"wireformat" for GET . The value of the wireformat parameter is the
-content of the request (See {{dnswire}}) encoded with base64url
+"wireformat" for requests using GET. The value of the wireformat parameter is the
+content of the request (as described in {{dnswire}}), encoded with base64url
 {{RFC4648}}.
 
 Future specifications for new media types MUST define the variables
