@@ -193,8 +193,7 @@ The format is for DNS over UDP. Note that this is different than the
 wire format used in {{RFC7858}}.
 Also note that while {{RFC1035}} says "Messages carried by UDP are
 restricted to 512 bytes", that was later updated by {{RFC6891}},
-and this protocol does not put any limit on the size of DNS
-on-the-wire format payloads.
+and this protocol allows DNS on-the-wire format payloads of any size.
 
 When using the GET method, the data payload MUST be encoded with
 base64url {{RFC4648}} and then placed as a name value pair in the
@@ -528,7 +527,7 @@ API server that is configured as trustworthy.
 A client can use DNS over HTTPS as one of multiple mechanisms to obtain DNS
 data. If a client of this protocol encounters an HTTP error after sending
 a DNS query, and then falls back to a different DNS retrieval mechanism,
-doing so can weaken the privacy expected by the user of the client.
+doing so can weaken the privacy and authenticity expected by the user of the client.
 
 # Operational Considerations
 
@@ -575,7 +574,7 @@ transport for other protocols that require strict ordering.
 
 If a DNS API server responds to a DNS API client with a DNS message that has the
 TC (truncation) bit set in the header, that indicates that the DNS API server
-was not able to retrieve a full answer for the query over TCP and is providing
+was not able to retrieve a full answer for the query and is providing
 the best answer it could get. This protocol does not require that a DNS API
 server that cannot get an untruncated answer send back such an answer; it can
 instead send back an HTTP error to indicate that it cannot give a useful answer.
