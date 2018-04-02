@@ -33,7 +33,6 @@ normative:
   RFC2308:
   RFC4648:
   RFC5246:
-  RFC6960:
   RFC7230:
   RFC7231:
   RFC7234:
@@ -43,11 +42,13 @@ normative:
 
 informative:
   RFC2181:
+  RFC5280:
   RFC5861:
+  RFC6066:
   RFC6147:
   RFC6891:
   RFC6950:
-  RFC6961:
+  RFC6960:
   RFC7719:
   RFC7830:
   RFC7858:
@@ -542,12 +543,12 @@ Some HTTPS client implementations perform real time third party checks of the
 revocation status of the certificates being used by TLS. If this check
 is done as part of the DNS API server connection procedure and the
 check itself requires DNS resolution to connect to the third party a
-deadlock can occur. The use of an OCSP {{RFC6960}} server is one
-example of how this deadlock can happen.
-To avoid the possibility of deadlock, DNS API servers SHOULD
+deadlock can occur. The use of OCSP {{RFC6960}} servers or AIA for CRL fetching
+({{RFC5280}} Section 4.2.2.1) are examples of how this deadlock can happen.
+To mitigate the possibility of deadlock, DNS API servers SHOULD
 bundle the certificate status as part of the handshake using a
 mechanism appropriate to the version of TLS, such as 
-using {{RFC6961}} for TLS version 1.2.
+using {{RFC6066}} Section 8 for TLS version 1.2.
 
 A DNS API client may face a similar bootstrapping problem when the
 HTTP request needs to resolve the hostname portion of the DNS
