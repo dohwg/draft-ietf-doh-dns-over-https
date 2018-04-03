@@ -144,11 +144,10 @@ used by the request through the use of a URI Template
 {{RFC6570}}. Configuration and discovery of the URI Template is done
 out of band from this protocol.
 
-The URI template defined in this document is processed without any
-variables for requests using POST, and with the single variable
-"dns" for requests using GET. The value of the dns parameter is the
-content of the request (as described in {{dnswire}}), encoded with base64url
-{{RFC4648}}.
+The URI Template defined in this document is processed without any
+variables when the HTTP method is POST. When the HTTP method is
+GET the single variable "dns" is defined as the content of the request
+(as described in {{dnswire}}), encoded with base64url {{RFC4648}}.
 
 Future specifications for new media types MUST define the variables
 used for URI Template processing with this protocol.
