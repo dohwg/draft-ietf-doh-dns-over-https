@@ -137,7 +137,7 @@ The protocol described here bases its design on the following protocol requireme
 
 # The HTTP Request
 
-To make a DNS API query, a DNS API client encodes a single DNS query
+A DNS API client encodes a single DNS query
 into an HTTP request using either the HTTP GET or POST method and the
 other requirements of this section. The DNS API server defines the URI
 used by the request through the use of a URI Template
@@ -146,7 +146,7 @@ out of band from this protocol.
 
 The URI template defined in this document is processed without any
 variables for requests using POST, and with the single variable
-"wireformat" for requests using GET. The value of the wireformat parameter is the
+"dns" for requests using GET. The value of the dns parameter is the
 content of the request (as described in {{dnswire}}), encoded with base64url
 {{RFC4648}}.
 
@@ -190,7 +190,7 @@ and this protocol allows DNS on-the-wire format payloads of any size.
 
 When using the GET method, the data payload MUST be encoded with
 base64url {{RFC4648}} and then provided as a variable named
-"wireformat" to the URI Template expansion. Padding characters for
+"dns" to the URI Template expansion. Padding characters for
 base64url MUST NOT be included.
 
 When using the POST method, the data payload MUST NOT be encoded and
@@ -206,7 +206,7 @@ The media type is "application/dns-udpwireformat".
 These examples use HTTP/2 style formatting from {{RFC7540}}.
 
 These examples use a DNS API service with a URI Template of
-"https://dnsserver.example.net/dns-query{?wireformat}" to resolve
+"https://dnsserver.example.net/dns-query{?dns}" to resolve
 IN A records.
 
 The requests are represented as application/dns-udpwirefomat typed
@@ -218,8 +218,7 @@ The first example request uses GET to request www.example.com
 :method = GET
 :scheme = https
 :authority = dnsserver.example.net
-:path = /dns-query? (no space or CR)
-        wireformat=AAABAAABAAAAAAAAA3d3dwdleGFtcGxlA2NvbQAAAQAB
+:path = /dns-query?dns=AAABAAABAAAAAAAAA3d3dwdleGFtcGxlA2NvbQAAAQAB
 accept = application/dns-udpwireformat
 ~~~~~
 
@@ -260,9 +259,9 @@ The DNS query is 94 bytes represented by the following hex encoding
 :scheme = https
 :authority = dnsserver.example.net
 :path = /dns-query? (no space or CR)
-        wireformat=AAABAAABAAAAAAAAAWE-NjJjaGFyYWN0ZXJs (no space or CR)
-        YWJlbC1tYWtlcy1iYXNlNjR1cmwtZGlzdGluY3QtZnJvbS (no space or CR)
-        1zdGFuZGFyZC1iYXNlNjQHZXhhbXBsZQNjb20AAAEAAQ
+        dns=AAABAAABAAAAAAAAAWE-NjJjaGFyYWN0ZXJsYWJl (no space or CR)
+        bC1tYWtlcy1iYXNlNjR1cmwtZGlzdGluY3QtZnJvbS1z (no space or CR)
+        dGFuZGFyZC1iYXNlNjQHZXhhbXBsZQNjb20AAAEAAQ
 accept = application/dns-udpwireformat
 
 ~~~~~
