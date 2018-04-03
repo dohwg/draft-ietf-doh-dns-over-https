@@ -588,8 +588,30 @@ parameter of the application/dns-udpwireformat media type.
 
 # Acknowledgments
 
-Joe Hildebrand contributed lots of material for a different iteration of this document.
-Helpful early comments were given by Ben Schwartz and Mark Nottingham.
+This work required a high level of cooperation between experts in
+different technologies. Thank you
+Ray Bellis,
+Stephane Bortzmeyer,
+Manu Bretelle,
+Tony Finch,
+Daniel Kahn Gilmor,
+Olafur Guomundsson,
+Wes Hardaker,
+Rory Hewitt,
+Joe Hildebrand,
+David Lawrence,
+Eliot Lear,
+John Mattson,
+Alex Mayrhofer,
+Mark Nottingham,
+Jim Reid,
+Adam Roach,
+Ben Schwartz,
+Davey Song,
+Daniel Stenberg,
+Andrew Sullivan,
+Martin Thomson,
+and Sam Weiler.
 
 --- back
 
