@@ -503,10 +503,17 @@ Joe Hildebrand contributed lots of material for a different iteration of this do
 Helpful early comments were given by Ben Schwartz and Mark Nottingham.
 Other contributors include
 Adam Roach,
+Alex Mayrhofer,
 Andrew Sullivan,
+Davey Song,
 Eliot Lear,
-Jim Reid, and
-Rory Hewitt.
+Martin Thomson
+Jim Reid,
+Manu Bretelle,
+Rory Hewitt,
+Sam Weiler,
+Stephane Bortzmeyer, and
+Wes Hardaker.
 
 --- back
 
