@@ -33,6 +33,7 @@ normative:
   RFC2308:
   RFC4648:
   RFC5246:
+  RFC6570:
   RFC7230:
   RFC7231:
   RFC7234:
@@ -54,9 +55,6 @@ informative:
   CORS:
     title: "Cross-Origin Resource Sharing"
     target: "https://fetch.spec.whatwg.org/#http-cors-protocol"
-  QUERYPARAMETER:
-    title: "application/x-www-form-urlencoded Parsing"
-    target: "https://url.spec.whatwg.org/#application/x-www-form-urlencoded"
 
 --- abstract
 
@@ -139,33 +137,28 @@ The protocol described here bases its design on the following protocol requireme
 
 # The HTTP Request
 
-To make a DNS API query a DNS API client encodes a single DNS query
+A DNS API client encodes a single DNS query
 into an HTTP request using either the HTTP GET or POST method and the
 other requirements of this section. The DNS API server defines the URI
-used by the request. Configuration and discovery of the URI is done
+used by the request through the use of a URI Template
+{{RFC6570}}. Configuration and discovery of the URI Template is done
 out of band from this protocol.
 
-DNS API servers MUST implement both POST and GET methods.
+The URI template defined in this document is processed without any
+variables for requests using POST, and with the single variable
+"dns" for requests using GET. The value of the dns parameter is the
+content of the request (as described in {{dnswire}}), encoded with base64url
+{{RFC4648}}.
+
+Future specifications for new media types MUST define the variables
+used for URI Template processing with this protocol.
+
+DNS API servers MUST implement both the POST and GET methods.
 
 When using the POST method the DNS query is included as the message
 body of the HTTP request and the Content-Type request header indicates
 the media type of the message. POST-ed requests are smaller than their
 GET equivalents.
-
-When using the GET method the URI path MUST contain a query parameter
-name-value pair {{QUERYPARAMETER}}
-with the name of "ct" and a value indicating the media-format used for
-the dns parameter. The value may either be an explicit media type
-(e.g., `ct=application/dns-udpwireformat&dns=...`) or it may be
-empty. An empty value indicates the default
-application/dns-udpwireformat type (e.g., `ct&dns=...`).
-
-When using the GET method the URI path MUST contain a query parameter
-with the name of "dns". The value of the parameter is the content of
-the request potentially encoded with base64url
-{{RFC4648}}. Specifications that define media types for use with DOH,
-such as DNS Wire Format {{dnswire}} of this document, MUST indicate if
-the dns parameter uses base64url encoding.
 
 Using the GET method is friendlier to many HTTP cache implementations.
 
@@ -196,8 +189,8 @@ restricted to 512 bytes", that was later updated by {{RFC6891}},
 and this protocol allows DNS on-the-wire format payloads of any size.
 
 When using the GET method, the data payload MUST be encoded with
-base64url {{RFC4648}} and then placed as a name value pair in the
-query portion of the URI with name "dns". Padding characters for
+base64url {{RFC4648}} and then provided as a variable named
+"dns" to the URI Template expansion. Padding characters for
 base64url MUST NOT be included.
 
 When using the POST method, the data payload MUST NOT be encoded and
@@ -212,8 +205,9 @@ The media type is "application/dns-udpwireformat".
 
 These examples use HTTP/2 style formatting from {{RFC7540}}.
 
-These examples use a DNS API service located at
-https://dnsserver.example.net/dns-query to resolve the IN A records.
+These examples use a DNS API service with a URI Template of
+"https://dnsserver.example.net/dns-query{?dns}" to resolve
+IN A records.
 
 The requests are represented as application/dns-udpwirefomat typed
 bodies.
@@ -224,8 +218,7 @@ The first example request uses GET to request www.example.com
 :method = GET
 :scheme = https
 :authority = dnsserver.example.net
-:path = /dns-query?ct& (no space or CR)
-        dns=AAABAAABAAAAAAAAA3d3dwdleGFtcGxlA2NvbQAAAQAB
+:path = /dns-query?dns=AAABAAABAAAAAAAAA3d3dwdleGFtcGxlA2NvbQAAAQAB
 accept = application/dns-udpwireformat
 ~~~~~
 
@@ -265,7 +258,7 @@ The DNS query is 94 bytes represented by the following hex encoding
 :method = GET
 :scheme = https
 :authority = dnsserver.example.net
-:path = /dns-query?ct& (no space or CR)
+:path = /dns-query? (no space or CR)
         dns=AAABAAABAAAAAAAAAWE-NjJjaGFyYWN0ZXJsYWJl (no space or CR)
         bC1tYWtlcy1iYXNlNjR1cmwtZGlzdGluY3QtZnJvbS1z (no space or CR)
         dGFuZGFyZC1iYXNlNjQHZXhhbXBsZQNjb20AAAEAAQ
