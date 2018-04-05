@@ -58,11 +58,8 @@ informative:
 
 --- abstract
 
-This document describes how to run DNS service over HTTP using
+This document describes how to run DNS service over HTTP (DOH) using
 https:// URIs.
-
-\[\[ There is a repository for this draft at
-<https://github.com/dohwg/draft-ietf-doh-dns-over-https> \]\].
 
 --- middle
 
@@ -165,13 +162,13 @@ The DNS API client SHOULD include an HTTP "Accept" request header to
 indicate what type of content can be understood in
 response. Irrespective of the value of the Accept request header, the
 client MUST be prepared to process "application/dns-udpwireformat"
-{{dnswire}} responses but MAY also process any other type it receives.
+(See {{dnswire}}) responses but MAY also process any other type it receives.
 
 In order to maximize cache friendliness, DNS API clients using media
 formats that include DNS ID, such as application/dns-udpwireformat,
 SHOULD use a DNS ID of 0 in every DNS request.  HTTP correlates
-request and response, thus eliminating the need for the ID in a media
-type such as application/dns-udpwireformat and the use of a varying
+the request and response, thus eliminating the need for the ID in a media
+type such as application/dns-udpwireformat. The use of a varying
 DNS ID can cause semantically equivalent DNS queries to be cached
 separately.
 
@@ -295,7 +292,7 @@ extension definition of the extensions given in the DNS request.
 
 Each DNS request-response pair is matched to one HTTP request-response
 pair. The responses may be processed and transported in any order
-using HTTP's multi-streaming functionality ({{RFC7540}} Section 5}).
+using HTTP's multi-streaming functionality ({{RFC7540}} Section 5).
 
 The Answer section of a DNS response can contain zero or more RRsets.
 (RRsets are defined in {{RFC7719}}.)  According to {{RFC2181}}, each
