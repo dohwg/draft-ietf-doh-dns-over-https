@@ -69,7 +69,7 @@ This document defines a specific protocol for sending DNS {{RFC1035}}
 queries and getting DNS responses over HTTP {{RFC7540}} using https://
 (and therefore TLS {{RFC5246}} security for integrity and
 confidentiality). Each DNS query-response pair is mapped into a HTTP
-request-response pair.
+exchange.
 
 The described approach is more than a tunnel over HTTP. It establishes
 default media formatting types for requests and responses but uses
@@ -132,7 +132,9 @@ The protocol described here bases its design on the following protocol requireme
 
 * Supporting insecure HTTP
 
-# The HTTP Request
+# The HTTP Exchange
+
+## The HTTP Request
 
 A DNS API client encodes a single DNS query
 into an HTTP request using either the HTTP GET or POST method and the
@@ -175,7 +177,7 @@ separately.
 DNS API clients can use HTTP/2 padding and compression in the same way
 that other HTTP/2 clients use (or don't use) them.
 
-## DNS Wire Format {#dnswire}
+### DNS Wire Format {#dnswire}
 
 The data payload is the DNS on-the-wire format defined in {{RFC1035}}.
 The format is for DNS over UDP. Note that this is different than the
@@ -197,7 +199,7 @@ options {{RFC6891}} in the request.
 
 The media type is "application/dns-udpwireformat".
 
-## Examples
+### HTTP Request Examples
 
 These examples use HTTP/2 style formatting from {{RFC7540}}.
 
@@ -262,7 +264,7 @@ accept = application/dns-udpwireformat
 
 ~~~~~
 
-# The HTTP Response
+## The HTTP Response
 
 An HTTP response with a 2xx status code ({{RFC7231}} Section 6.3)
 indicates a valid DNS response to the query made in the HTTP
@@ -290,8 +292,8 @@ The DNS response for "application/dns-udpwireformat" in {{dnswire}}
 MAY have one or more EDNS options, depending on the
 extension definition of the extensions given in the DNS request.
 
-Each DNS request-response pair is matched to one HTTP request-response
-pair. The responses may be processed and transported in any order
+Each DNS request-response pair is matched to one HTTP exchange.
+The responses may be processed and transported in any order
 using HTTP's multi-streaming functionality ({{RFC7540}} Section 5).
 
 {{caching}} discusses the relationship between DNS and HTTP
@@ -306,7 +308,7 @@ Media Type) upon receiving a media type it is unable to process.
 This document does not change the definition of any HTTP response codes or
 otherwise proscribe their use.
 
-## Example
+### HTTP Response Example
 
 This is an example response for a query for the IN A records for
 "www.example.com" with recursion turned on. The response bears one
