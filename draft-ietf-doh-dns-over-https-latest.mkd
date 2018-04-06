@@ -441,10 +441,7 @@ MIME subtype name: dns-udpwireformat
 
 Required parameters: n/a
 
-Optional parameters:  original_transport
-The "original_transport" parameter has two defined values,
-"udp" and "tcp". This parameter is only expected to be used by
-servers.
+Optional parameters: n/a
 
 Encoding considerations: This is a binary format. The contents are a
 DNS message as defined in RFC 1035. The format used here is for DNS
@@ -577,10 +574,6 @@ was not able to retrieve a full answer for the query and is providing
 the best answer it could get. This protocol does not require that a DNS API
 server that cannot get an untruncated answer send back such an answer; it can
 instead send back an HTTP error to indicate that it cannot give a useful answer.
-
-This protocol does not define any use for the "original_transport" optional
-parameter of the application/dns-udpwireformat media type.
-
 
 # Acknowledgments
 
