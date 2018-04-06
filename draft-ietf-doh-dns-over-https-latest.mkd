@@ -294,33 +294,8 @@ Each DNS request-response pair is matched to one HTTP request-response
 pair. The responses may be processed and transported in any order
 using HTTP's multi-streaming functionality ({{RFC7540}} Section 5).
 
-The Answer section of a DNS response can contain zero or more RRsets.
-(RRsets are defined in {{RFC7719}}.)  According to {{RFC2181}}, each
-resource record in an RRset has Time To Live (TTL)
-freshness information.  Different RRsets in the Answer section can
-have different TTLs, although it is only possible for the HTTP response
-to have a single freshness lifetime.  The HTTP response freshness lifetime
-({{RFC7234}} Section 4.2) should be coordinated with the RRset
-with the smallest TTL in the Answer section of the response.
-Specifically, the HTTP freshness lifetime SHOULD be set to expire at the same time
-any of the DNS resource records in the Answer section reach a 0 TTL.
-The response freshness lifetime
-MUST NOT be greater than that indicated by the DNS resoruce record with the
-smallest TTL in the response.
-
-If the DNS response has no records in the Answer section, and the DNS
-response has an SOA record in the Authority section, the response
-freshness lifetime MUST NOT be greater than the MINIMUM field from that SOA
-record.
-(See {{RFC2308}}.)
-Otherwise, the HTTP response MUST set a freshness lifetime
-({{RFC7234}} Section 4.2) of 0 by using a mechanism such as
-"Cache-Control: no-cache" ({{RFC7234}} Section 5.2.1.4).
-
-A DNS API client that receives a response without an explicit
-freshness lifetime MUST NOT assign that response a heuristic
-freshness ({{RFC7234}} Section 4.2.2.) greater than that indicated by
-the DNS Record with the smallest TTL in the response.
+{{caching}} discusses the relationship between DNS and HTTP
+response caching.
 
 A DNS API server MUST be able to process application/dns-udpwireformat
 request messages.
@@ -360,6 +335,34 @@ A DNS API client may utilize a hierarchy of caches that include both
 HTTP and DNS specific caches. HTTP cache entries may be bypassed with
 HTTP mechanisms such as the "Cache-Control no-cache" directive; however
 DNS caches do not have a similar mechanism.
+
+The Answer section of a DNS response can contain zero or more RRsets.
+(RRsets are defined in {{RFC7719}}.)  According to {{RFC2181}}, each
+resource record in an RRset has Time To Live (TTL)
+freshness information.  Different RRsets in the Answer section can
+have different TTLs, although it is only possible for the HTTP response
+to have a single freshness lifetime.  The HTTP response freshness lifetime
+({{RFC7234}} Section 4.2) should be coordinated with the RRset
+with the smallest TTL in the Answer section of the response.
+Specifically, the HTTP freshness lifetime SHOULD be set to expire at the same time
+any of the DNS resource records in the Answer section reach a 0 TTL.
+The response freshness lifetime
+MUST NOT be greater than that indicated by the DNS resoruce record with the
+smallest TTL in the response.
+
+If the DNS response has no records in the Answer section, and the DNS
+response has an SOA record in the Authority section, the response
+freshness lifetime MUST NOT be greater than the MINIMUM field from that SOA
+record.
+(See {{RFC2308}}.)
+Otherwise, the HTTP response MUST set a freshness lifetime
+({{RFC7234}} Section 4.2) of 0 by using a mechanism such as
+"Cache-Control: no-cache" ({{RFC7234}} Section 5.2.1.4).
+
+A DNS API client that receives a response without an explicit
+freshness lifetime MUST NOT assign that response a heuristic
+freshness ({{RFC7234}} Section 4.2.2.) greater than that indicated by
+the DNS Record with the smallest TTL in the response.
 
 A DOH response that was previously stored in an HTTP cache will
 contain the {{RFC7234}} Age response header indicating the elapsed
