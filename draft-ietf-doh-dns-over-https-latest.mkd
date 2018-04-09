@@ -163,14 +163,14 @@ Using the GET method is friendlier to many HTTP cache implementations.
 The DNS API client SHOULD include an HTTP "Accept" request header to
 indicate what type of content can be understood in
 response. Irrespective of the value of the Accept request header, the
-client MUST be prepared to process "application/dns-udpwireformat"
-(See {{dnswire}}) responses but MAY also process any other type it receives.
+client MUST be prepared to process "message/dns"
+(as described in {{dnswire}}) responses but MAY also process any other type it receives.
 
 In order to maximize cache friendliness, DNS API clients using media
-formats that include DNS ID, such as application/dns-udpwireformat,
+formats that include DNS ID, such as message/dns,
 SHOULD use a DNS ID of 0 in every DNS request.  HTTP correlates
 the request and response, thus eliminating the need for the ID in a media
-type such as application/dns-udpwireformat. The use of a varying
+type such as message/dns. The use of a varying
 DNS ID can cause semantically equivalent DNS queries to be cached
 separately.
 
@@ -195,7 +195,7 @@ The first example request uses GET to request www.example.com
 :scheme = https
 :authority = dnsserver.example.net
 :path = /dns-query?dns=AAABAAABAAAAAAAAA3d3dwdleGFtcGxlA2NvbQAAAQAB
-accept = application/dns-udpwireformat
+accept = message/dns
 ~~~~~
 
 The same DNS query for www.example.com, using the POST method would be:
@@ -205,8 +205,8 @@ The same DNS query for www.example.com, using the POST method would be:
 :scheme = https
 :authority = dnsserver.example.net
 :path = /dns-query
-accept = application/dns-udpwireformat
-content-type = application/dns-udpwireformat
+accept = message/dns
+content-type = message/dns
 content-length = 33
 
 <33 bytes represented by the following hex encoding>
@@ -238,7 +238,7 @@ The DNS query is 94 bytes represented by the following hex encoding
         dns=AAABAAABAAAAAAAAAWE-NjJjaGFyYWN0ZXJsYWJl (no space or CR)
         bC1tYWtlcy1iYXNlNjR1cmwtZGlzdGluY3QtZnJvbS1z (no space or CR)
         dGFuZGFyZC1iYXNlNjQHZXhhbXBsZQNjb20AAAEAAQ
-accept = application/dns-udpwireformat
+accept = message/dns
 
 ~~~~~
 
@@ -263,10 +263,10 @@ this protocol.
 
 At the time this is published, the response types are works in
 progress. The only response type defined in this document is
-"application/dns-udpwireformat", but it is possible that other
+"message/dns", but it is possible that other
 response formats will be defined in the future.
 
-The DNS response for "application/dns-udpwireformat" in {{dnswire}}
+The DNS response for "message/dns" in {{dnswire}}
 MAY have one or more EDNS options, depending on the
 extension definition of the extensions given in the DNS request.
 
@@ -277,7 +277,7 @@ using HTTP's multi-streaming functionality ({{RFC7540}} Section 5).
 {{caching}} discusses the relationship between DNS and HTTP
 response caching.
 
-A DNS API server MUST be able to process application/dns-udpwireformat
+A DNS API server MUST be able to process message/dns
 request messages.
 
 A DNS API server SHOULD respond with HTTP status code 415 (Unsupported
@@ -291,7 +291,7 @@ record with an address of 192.0.2.1 and a TTL of 128 seconds.
 
 ~~~~~
 :status = 200
-content-type = application/dns-udpwireformat
+content-type = message/dns
 content-length = 64
 cache-control = max-age=128
 
@@ -402,7 +402,7 @@ client as trusted DNS API servers.
 ## Content Negotiation
 
 In order to maximize interoperability, DNS API clients and DNS API
-servers MUST support the "application/dns-udpwireformat" media
+servers MUST support the "message/dns" media
 type. Other media types MAY be used as defined by HTTP Content
 Negotiation ({{RFC7231}} Section 3.4).
 
@@ -426,20 +426,20 @@ is used directly as the HTTP message body.
 DNS API clients using the DNS wire format MAY have one or more EDNS
 options {{RFC6891}} in the request.
 
-The media type is "application/dns-udpwireformat".
+The media type is "message/dns".
 
 # IANA Considerations {#iana}
 
-## Registration of application/dns-udpwireformat Media Type
+## Registration of message/dns Media Type
 
 ~~~~~
 To: ietf-types@iana.org
 Subject: Registration of MIME media type
-         application/dns-udpwireformat
+         message/dns
 
-MIME media type name: application
+MIME media type name: message
 
-MIME subtype name: dns-udpwireformat
+MIME subtype name: dns
 
 Required parameters: n/a
 
