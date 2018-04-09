@@ -185,8 +185,7 @@ These examples use a DNS API service with a URI Template of
 "https://dnsserver.example.net/dns-query{?dns}" to resolve
 IN A records.
 
-The requests are represented as application/dns-udpwirefomat typed
-bodies.
+The requests are represented as message/dns typed bodies.
 
 The first example request uses GET to request www.example.com
 
