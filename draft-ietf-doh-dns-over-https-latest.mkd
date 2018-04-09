@@ -283,9 +283,6 @@ request messages.
 A DNS API server SHOULD respond with HTTP status code 415 (Unsupported
 Media Type) upon receiving a media type it is unable to process.
 
-This document does not change the definition of any HTTP response codes or
-otherwise proscribe their use.
-
 ### HTTP Response Example
 
 This is an example response for a query for the IN A records for
