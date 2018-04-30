@@ -309,7 +309,7 @@ This protocol MUST be used with the https scheme URI {{RFC7230}}.
 
 A DNS API client may utilize a hierarchy of caches that include both
 HTTP and DNS specific caches. HTTP cache entries may be bypassed with
-HTTP mechanisms such as the "Cache-Control no-cache" directive; however
+HTTP mechanisms such as the `no-cache` Cache-Control directive; however
 DNS caches do not have a similar mechanism.
 
 The Answer section of a DNS response can contain zero or more RRsets.
