@@ -389,14 +389,14 @@ performance.
 ## Server Push
 
 Before using DOH response data for DNS resolution, the client MUST
-establish that the HTTP request URI is a trusted service for the DOH
-query. For HTTP requests initiated by the DNS API client this trust is
+establish that the HTTP request URI is authorized for the DOH query.
+For HTTP requests initiated by the DNS API client this authorization is
 implicit in the selection of URI. For HTTP server push ({{RFC7540}}
 Section 8.2) extra care must be taken to ensure that the pushed URI is
 one that the client would have directed the same query to if the
 client had initiated the request. This specification does not extend
 DNS resolution privileges to URIs that are not recognized by the
-client as trusted DNS API servers.
+client as authorized DNS API servers.
 
 ## Content Negotiation
 
