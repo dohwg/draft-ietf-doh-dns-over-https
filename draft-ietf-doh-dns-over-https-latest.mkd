@@ -344,9 +344,7 @@ A DOH response that was previously stored in an HTTP cache will
 contain the {{RFC7234}} Age response header indicating the elapsed
 time between when the entry was placed in the HTTP cache and the
 current DOH response. DNS API clients should subtract this time from
-the DNS TTL if they are re-sharing the information in a non HTTP
-context (e.g., their own DNS cache) to determine the remaining time to
-live of the DNS record.
+the DNS TTL in each RRset to determine the time remaining on the TTL.
 
 HTTP revalidation (e.g., via If-None-Match request headers) of cached
 DNS information may be of limited value to DOH as revalidation
