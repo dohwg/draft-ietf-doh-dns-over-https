@@ -551,7 +551,8 @@ certificate status as part of the handshake using a mechanism
 appropriate to the version of TLS, such as using {{RFC6066}} Section 8
 for TLS version 1.2. AIA deadlocks can be avoided by providing
 intermediate certificates that might otherwise be obtained through
-additional requests.
+additional requests. Note that these deadlocks also need to be
+considered for server that a DNS API server might redirect to.
 
 A DNS API client may face a similar bootstrapping problem when the
 HTTP request needs to resolve the hostname portion of the DNS
