@@ -333,7 +333,7 @@ record.
 (See {{RFC2308}}.)
 Otherwise, the HTTP response MUST set a freshness lifetime
 ({{RFC7234}} Section 4.2) of 0 by using a mechanism such as
-"Cache-Control: no-cache" ({{RFC7234}} Section 5.2.1.4).
+the `no-cache` Cache-Control directive ({{RFC7234}} Section 5.2.1.4).
 
 A DNS API client that receives a response without an explicit
 freshness lifetime MUST NOT assign that response a heuristic
