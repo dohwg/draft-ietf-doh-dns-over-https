@@ -360,7 +360,7 @@ zone transfers, may be larger and benefit more from revalidation. DNS
 API servers may wish to consider whether providing these validation
 enabling response headers is worthwhile.
 
-The `stale-while-revalidate` and `stale-if-error` cache control directives
+The `stale-while-revalidate` and `stale-if-error` Cache-Control directives
 ({{?RFC5861}}) could be well suited to a DOH implementation when allowed by server
 policy. Those mechanisms allow a client, at the server's discretion,
 to reuse a cache entry that is no longer fresh.
