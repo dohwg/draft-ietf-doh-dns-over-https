@@ -408,8 +408,8 @@ The data payload is the DNS on-the-wire format defined in {{RFC1035}}.
 The format is for DNS over UDP. Note that this is different than the
 wire format used in {{RFC7858}}.
 Also note that while {{RFC1035}} says "Messages carried by UDP are
-restricted to 512 bytes", that was later updated by {{RFC6891}},
-and this protocol allows DNS on-the-wire format payloads of any size.
+restricted to 512 bytes", that was later updated by {{RFC6891}}.
+This protocol allows DNS on-the-wire format payloads of any size.
 
 When using the GET method, the data payload MUST be encoded with
 base64url {{RFC4648}} and then provided as a variable named
