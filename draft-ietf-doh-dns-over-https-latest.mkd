@@ -87,8 +87,8 @@ Two primary uses cases were considered during this protocol's
 development. They included preventing on-path devices from interfering
 with DNS operations and allowing web applications to access DNS
 information via existing browser APIs in a safe way consistent with
-Cross Origin Resource Sharing (CORS) {{CORS}}. There are certainly
-other uses for this work.
+Cross Origin Resource Sharing (CORS) {{CORS}}. No special effort has
+been taken to enable or prevent application to other use cases.
 
 # Terminology
 
