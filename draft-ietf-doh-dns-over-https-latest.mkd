@@ -323,7 +323,7 @@ with the smallest TTL in the Answer section of the response.
 Specifically, the HTTP freshness lifetime SHOULD be set to expire at the same time
 any of the DNS resource records in the Answer section reach a 0 TTL.
 The response freshness lifetime
-MUST NOT be greater than that indicated by the DNS resoruce record with the
+MUST NOT be greater than that indicated by the DNS resource record with the
 smallest TTL in the response.
 
 If the DNS response has no records in the Answer section, and the DNS
