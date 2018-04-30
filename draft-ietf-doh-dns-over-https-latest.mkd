@@ -506,16 +506,11 @@ can affect that client's view of the DNS. This is no different
 than the security implications of HTTP caching for other protocols
 that use HTTP.
 
-A server that is acting both as a normal web server and a DNS API
-server is in a position to choose which DNS names it forces a
-client to resolve (through its web service) and also be the one to
-answer those queries (through its DNS API service). An untrusted
-DNS API server can thus easily cause damage by poisoning a client's
-cache with names that the DNS API server chooses to poison. A
-client MUST NOT trust a DNS API server simply because it was
-discovered, or because the client was told to trust the DNS API
-server by an untrusted party. Instead, a client MUST only trust DNS
-API server that is configured as trustworthy.
+In the absence of information about the authenticity of responses, such as
+DNSSEC, a DNS API server can poison a client's cache. A
+client MUST NOT authorize arbitrary DNS API servers.
+Instead, a client MUST specifically authorize DNS
+API servers using mechanisms such as explicit configuration.
 
 A client can use DNS over HTTPS as one of multiple mechanisms to obtain DNS
 data. If a client of this protocol encounters an HTTP error after sending
