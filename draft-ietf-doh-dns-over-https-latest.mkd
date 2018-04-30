@@ -309,7 +309,7 @@ This protocol MUST be used with the https scheme URI {{RFC7230}}.
 
 A DNS API client may utilize a hierarchy of caches that include both
 HTTP and DNS specific caches. HTTP cache entries may be bypassed with
-HTTP mechanisms such as the "Cache-Control no-cache" directive; however
+HTTP mechanisms such as the `no-cache` Cache-Control directive; however
 DNS caches do not have a similar mechanism.
 
 The Answer section of a DNS response can contain zero or more RRsets.
@@ -333,7 +333,7 @@ record.
 (See {{RFC2308}}.)
 Otherwise, the HTTP response MUST set a freshness lifetime
 ({{RFC7234}} Section 4.2) of 0 by using a mechanism such as
-"Cache-Control: no-cache" ({{RFC7234}} Section 5.2.1.4).
+the `no-cache` Cache-Control directive ({{RFC7234}} Section 5.2.1.4).
 
 A DNS API client that receives a response without an explicit
 freshness lifetime MUST NOT assign that response a heuristic
