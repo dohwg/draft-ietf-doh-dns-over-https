@@ -80,7 +80,7 @@ features such as caching, redirection, proxying, authentication, and
 compression.
 
 The integration with HTTP provides a transport suitable for both
-traditional DNS clients and native web applications seeking access to
+existing DNS clients and native web applications seeking access to
 the DNS.
 
 Two primary uses cases were considered during this protocol's
@@ -93,8 +93,10 @@ been taken to enable or prevent application to other use cases.
 # Terminology
 
 A server that supports this protocol is called a "DNS API server" to
-differentiate it from a "DNS server" (one that uses the regular DNS
-protocol).  Similarly, a client that supports this protocol is called a
+differentiate it from a "DNS server"
+(one that only provides DNS service over one or more of the other transport protocols
+standardized for DNS).
+Similarly, a client that supports this protocol is called a
 "DNS API client".
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
@@ -584,6 +586,7 @@ different technologies. Thank you
 Ray Bellis,
 Stephane Bortzmeyer,
 Manu Bretelle,
+Sara Dickinson,
 Tony Finch,
 Daniel Kahn Gilmor,
 Olafur Guomundsson,
