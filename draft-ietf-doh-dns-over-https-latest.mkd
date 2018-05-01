@@ -489,13 +489,14 @@ HTTP/2 provides further advice about the use of compression
 (Section 10.6 of {{RFC7540}}) and padding (Section 10.7 of {{RFC7540}}).
 
 The HTTPS connection provides transport security for the interaction
-between the DNS API server and client, but does not inherently ensure
-the authenticity of DNS data. A DNS API client may also perform full
-DNSSEC validation of answers received from a DNS API server or it may
-choose to trust answers from a particular DNS API server, much as a
-DNS client might choose to trust answers from its recursive DNS
-resolver. This capability might be affected by the response media
-type.
+between the DNS API server and client, but does not provide the
+response integrity of DNS data provided by DNSSEC.
+DNSSEC and DOH  are independent and fully compatible protocols,
+each solving different problems.
+The use of one does not diminish the need nor the usefulness of the other.
+It is the choice of a client to either perform full DNSSEC validation of
+answers or to treat answers from a DNS API server as DNSSEC-authenticated,
+and this choice may be affected by the response media type.
 
 {{caching}} describes the interaction of this protocol with HTTP
 caching. An adversary that can control the cache used by the client
