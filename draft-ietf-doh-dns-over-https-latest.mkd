@@ -92,7 +92,7 @@ other uses for this work.
 
 # Terminology
 
-A server that supports this protocol on one or more URIs is called a "DNS API server" to
+A server that supports this protocol is called a "DNS API server" to
 differentiate it from a "DNS server" (one that uses the regular DNS
 protocol).  Similarly, a client that supports this protocol is called a
 "DNS API client".
