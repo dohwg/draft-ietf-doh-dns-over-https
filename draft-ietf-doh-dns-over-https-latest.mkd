@@ -1,6 +1,6 @@
 ---
-title: DNS Queries over HTTPS
-abbrev: DNS Queries over HTTPS
+title: DNS Queries over HTTPS (DOH)
+abbrev: DNS Queries over HTTPS (DOH)
 docname: draft-ietf-doh-dns-over-https
 
 stand_alone: true
@@ -58,7 +58,7 @@ informative:
 
 --- abstract
 
-This document describes how to make DNS queries using HTTPS.
+This document describes how to make DNS queries over HTTPS.
 
 --- middle
 
