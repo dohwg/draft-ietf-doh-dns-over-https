@@ -1,6 +1,6 @@
 ---
-title: DNS Queries over HTTPS
-abbrev: DNS Queries over HTTPS
+title: DNS Queries over HTTPS (DOH)
+abbrev: DNS Queries over HTTPS (DOH)
 docname: draft-ietf-doh-dns-over-https
 
 stand_alone: true
@@ -58,16 +58,15 @@ informative:
 
 --- abstract
 
-This document describes how to run DNS service over HTTP (DOH) using
-https:// URIs.
+This document describes how to make DNS queries over HTTPS.
 
 --- middle
 
 # Introduction
 
 This document defines a specific protocol for sending DNS {{RFC1035}}
-queries and getting DNS responses over HTTP {{RFC7540}} using https://
-(and therefore TLS {{RFC5246}} security for integrity and
+queries and getting DNS responses over HTTP {{RFC7540}} using https
+URIs (and therefore TLS {{RFC5246}} security for integrity and
 confidentiality). Each DNS query-response pair is mapped into a HTTP
 exchange.
 
