@@ -142,8 +142,13 @@ A DNS API client encodes a single DNS query
 into an HTTP request using either the HTTP GET or POST method and the
 other requirements of this section. The DNS API server defines the URI
 used by the request through the use of a URI Template
-{{RFC6570}}. Configuration and discovery of the URI Template is done
-out of band from this protocol.
+{{RFC6570}}.
+
+Configuration and discovery of the URI Template is done
+out of band from this protocol. DNS API Servers MAY support more
+than one URI. This allows the different endpoints to have different
+properties such as different authentication requirements or service
+level guarantees.
 
 The URI Template defined in this document is processed without any
 variables when the HTTP method is POST. When the HTTP method is
