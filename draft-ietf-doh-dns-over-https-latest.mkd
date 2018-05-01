@@ -1,6 +1,6 @@
 ---
-title: DNS Queries over HTTPS
-abbrev: DNS Queries over HTTPS
+title: DNS Queries over HTTPS (DOH)
+abbrev: DNS Queries over HTTPS (DOH)
 docname: draft-ietf-doh-dns-over-https
 
 stand_alone: true
@@ -51,6 +51,7 @@ informative:
   RFC6950:
   RFC6960:
   RFC7719:
+  RFC7828:
   RFC7858:
   CORS:
     title: "Cross-Origin Resource Sharing"
@@ -58,16 +59,15 @@ informative:
 
 --- abstract
 
-This document describes how to run DNS service over HTTP (DOH) using
-https:// URIs.
+This document describes how to make DNS queries over HTTPS.
 
 --- middle
 
 # Introduction
 
 This document defines a specific protocol for sending DNS {{RFC1035}}
-queries and getting DNS responses over HTTP {{RFC7540}} using https://
-(and therefore TLS {{RFC5246}} security for integrity and
+queries and getting DNS responses over HTTP {{RFC7540}} using https
+URIs (and therefore TLS {{RFC5246}} security for integrity and
 confidentiality). Each DNS query-response pair is mapped into a HTTP
 exchange.
 
@@ -87,12 +87,12 @@ Two primary uses cases were considered during this protocol's
 development. They included preventing on-path devices from interfering
 with DNS operations and allowing web applications to access DNS
 information via existing browser APIs in a safe way consistent with
-Cross Origin Resource Sharing (CORS) {{CORS}}. There are certainly
-other uses for this work.
+Cross Origin Resource Sharing (CORS) {{CORS}}. No special effort has
+been taken to enable or prevent application to other use cases.
 
 # Terminology
 
-A server that supports this protocol on one or more URIs is called a "DNS API server" to
+A server that supports this protocol is called a "DNS API server" to
 differentiate it from a "DNS server"
 (one that only provides DNS service over one or more of the other transport protocols
 standardized for DNS).
@@ -254,7 +254,7 @@ though there was a failure at the DNS layer. Responses with
 non-successful HTTP status codes do not contain DNS answers to the
 question in the corresponding request. Some of these non-successful
 HTTP responses (e.g., redirects or authentication failures) could
-allow clients to make new requests to satisfy the original question.
+mean that clients need to make new requests to satisfy the original question.
 
 Different response media types will provide more or less information from a DNS
 response. For example, one response type might include the information from the
@@ -262,13 +262,12 @@ DNS header bytes while another might omit it. The amount and type of information
 that a media type gives is solely up to the format, and not defined in
 this protocol.
 
-At the time this is published, the response types are works in
-progress. The only response type defined in this document is
+The only response type defined in this document is
 "application/dns-message", but it is possible that other
 response formats will be defined in the future.
 
 The DNS response for "application/dns-message" in {{dnswire}}
-MAY have one or more EDNS options, depending on the
+MAY have one or more EDNS options {{RFC6891}}, depending on the
 extension definition of the extensions given in the DNS request.
 
 Each DNS request-response pair is matched to one HTTP exchange.
@@ -575,6 +574,10 @@ was not able to retrieve a full answer for the query and is providing
 the best answer it could get. This protocol does not require that a DNS API
 server that cannot get an untruncated answer send back such an answer; it can
 instead send back an HTTP error to indicate that it cannot give a useful answer.
+
+Many extensions to DNS, using {{RFC6891}}, have been defined over the years.
+Extensions that are specific to the choice of transport, such as {{RFC7828}},
+are not applicable to DOH.
 
 # Acknowledgments
 
