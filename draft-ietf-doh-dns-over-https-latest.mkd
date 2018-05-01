@@ -252,7 +252,7 @@ though there was a failure at the DNS layer. Responses with
 non-successful HTTP status codes do not contain DNS answers to the
 question in the corresponding request. Some of these non-successful
 HTTP responses (e.g., redirects or authentication failures) could
-allow clients to make new requests to satisfy the original question.
+mean that clients need to make new requests to satisfy the original question.
 
 Different response media types will provide more or less information from a DNS
 response. For example, one response type might include the information from the
