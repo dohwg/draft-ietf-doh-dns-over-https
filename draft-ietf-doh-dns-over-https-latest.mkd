@@ -51,6 +51,7 @@ informative:
   RFC6950:
   RFC6960:
   RFC7719:
+  RFC7828:
   RFC7858:
   CORS:
     title: "Cross-Origin Resource Sharing"
@@ -264,7 +265,7 @@ The only response type defined in this document is
 response formats will be defined in the future.
 
 The DNS response for "application/dns-message" in {{dnswire}}
-MAY have one or more EDNS options, depending on the
+MAY have one or more EDNS options {{RFC6891}}, depending on the
 extension definition of the extensions given in the DNS request.
 
 Each DNS request-response pair is matched to one HTTP exchange.
@@ -571,6 +572,10 @@ was not able to retrieve a full answer for the query and is providing
 the best answer it could get. This protocol does not require that a DNS API
 server that cannot get an untruncated answer send back such an answer; it can
 instead send back an HTTP error to indicate that it cannot give a useful answer.
+
+Many extensions to DNS, using {{RFC6891}}, have been defined over the years.
+Extensions that are specific to the choice of transport, such as {{RFC7828}},
+are not applicable to DOH.
 
 # Acknowledgments
 
