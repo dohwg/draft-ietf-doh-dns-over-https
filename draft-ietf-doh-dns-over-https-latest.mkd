@@ -260,8 +260,7 @@ DNS header bytes while another might omit it. The amount and type of information
 that a media type gives is solely up to the format, and not defined in
 this protocol.
 
-At the time this is published, the response types are works in
-progress. The only response type defined in this document is
+The only response type defined in this document is
 "application/dns-message", but it is possible that other
 response formats will be defined in the future.
 
