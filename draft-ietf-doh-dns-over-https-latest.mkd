@@ -1,6 +1,6 @@
 ---
-title: DNS Queries over HTTPS
-abbrev: DNS Queries over HTTPS
+title: DNS Queries over HTTPS (DOH)
+abbrev: DNS Queries over HTTPS (DOH)
 docname: draft-ietf-doh-dns-over-https
 
 stand_alone: true
@@ -51,6 +51,7 @@ informative:
   RFC6950:
   RFC6960:
   RFC7719:
+  RFC7828:
   RFC7858:
   CORS:
     title: "Cross-Origin Resource Sharing"
@@ -58,16 +59,15 @@ informative:
 
 --- abstract
 
-This document describes how to run DNS service over HTTP (DOH) using
-https:// URIs.
+This document describes how to make DNS queries over HTTPS.
 
 --- middle
 
 # Introduction
 
 This document defines a specific protocol for sending DNS {{RFC1035}}
-queries and getting DNS responses over HTTP {{RFC7540}} using https://
-(and therefore TLS {{RFC5246}} security for integrity and
+queries and getting DNS responses over HTTP {{RFC7540}} using https
+URIs (and therefore TLS {{RFC5246}} security for integrity and
 confidentiality). Each DNS query-response pair is mapped into a HTTP
 exchange.
 
@@ -80,21 +80,23 @@ features such as caching, redirection, proxying, authentication, and
 compression.
 
 The integration with HTTP provides a transport suitable for both
-traditional DNS clients and native web applications seeking access to
+existing DNS clients and native web applications seeking access to
 the DNS.
 
 Two primary uses cases were considered during this protocol's
 development. They included preventing on-path devices from interfering
 with DNS operations and allowing web applications to access DNS
 information via existing browser APIs in a safe way consistent with
-Cross Origin Resource Sharing (CORS) {{CORS}}. There are certainly
-other uses for this work.
+Cross Origin Resource Sharing (CORS) {{CORS}}. No special effort has
+been taken to enable or prevent application to other use cases.
 
 # Terminology
 
-A server that supports this protocol on one or more URIs is called a "DNS API server" to
-differentiate it from a "DNS server" (one that uses the regular DNS
-protocol).  Similarly, a client that supports this protocol is called a
+A server that supports this protocol is called a "DNS API server" to
+differentiate it from a "DNS server"
+(one that only provides DNS service over one or more of the other transport protocols
+standardized for DNS).
+Similarly, a client that supports this protocol is called a
 "DNS API client".
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
@@ -104,6 +106,8 @@ BCP 14, RFC8174 {{RFC8174}} when, and only when, they
 appear in all capitals, as shown here.
 
 # Protocol Requirements
+
+\[\[ RFC Editor: Please remove this entire section before publication. \]\]
 
 The protocol described here bases its design on the following protocol requirements:
 
@@ -140,8 +144,13 @@ A DNS API client encodes a single DNS query
 into an HTTP request using either the HTTP GET or POST method and the
 other requirements of this section. The DNS API server defines the URI
 used by the request through the use of a URI Template
-{{RFC6570}}. Configuration and discovery of the URI Template is done
-out of band from this protocol.
+{{RFC6570}}.
+
+Configuration and discovery of the URI Template is done
+out of band from this protocol. DNS API Servers MAY support more
+than one URI. This allows the different endpoints to have different
+properties such as different authentication requirements or service
+level guarantees.
 
 The URI Template defined in this document is processed without any
 variables when the HTTP method is POST. When the HTTP method is
@@ -252,7 +261,7 @@ though there was a failure at the DNS layer. Responses with
 non-successful HTTP status codes do not contain DNS answers to the
 question in the corresponding request. Some of these non-successful
 HTTP responses (e.g., redirects or authentication failures) could
-allow clients to make new requests to satisfy the original question.
+mean that clients need to make new requests to satisfy the original question.
 
 Different response media types will provide more or less information from a DNS
 response. For example, one response type might include the information from the
@@ -260,13 +269,12 @@ DNS header bytes while another might omit it. The amount and type of information
 that a media type gives is solely up to the format, and not defined in
 this protocol.
 
-At the time this is published, the response types are works in
-progress. The only response type defined in this document is
+The only response type defined in this document is
 "application/dns-message", but it is possible that other
 response formats will be defined in the future.
 
 The DNS response for "application/dns-message" in {{dnswire}}
-MAY have one or more EDNS options, depending on the
+MAY have one or more EDNS options {{RFC6891}}, depending on the
 extension definition of the extensions given in the DNS request.
 
 Each DNS request-response pair is matched to one HTTP exchange.
@@ -387,14 +395,14 @@ performance.
 ## Server Push
 
 Before using DOH response data for DNS resolution, the client MUST
-establish that the HTTP request URI is a trusted service for the DOH
-query. For HTTP requests initiated by the DNS API client this trust is
+establish that the HTTP request URI is authorized for the DOH query.
+For HTTP requests initiated by the DNS API client this authorization is
 implicit in the selection of URI. For HTTP server push ({{RFC7540}}
 Section 8.2) extra care must be taken to ensure that the pushed URI is
 one that the client would have directed the same query to if the
 client had initiated the request. This specification does not extend
 DNS resolution privileges to URIs that are not recognized by the
-client as trusted DNS API servers.
+client as authorized DNS API servers.
 
 ## Content Negotiation
 
@@ -402,6 +410,10 @@ In order to maximize interoperability, DNS API clients and DNS API
 servers MUST support the "application/dns-message" media
 type. Other media types MAY be used as defined by HTTP Content
 Negotiation ({{RFC7231}} Section 3.4).
+Those media types MUST be flexible enough to express every
+DNS query that would normally be sent in DNS over UDP (including queries and
+responses that use DNS extensions, but not those that require multiple
+responses).
 
 # DNS Wire Format {#dnswire}
 
@@ -490,13 +502,14 @@ HTTP/2 provides further advice about the use of compression
 (Section 10.6 of {{RFC7540}}) and padding (Section 10.7 of {{RFC7540}}).
 
 The HTTPS connection provides transport security for the interaction
-between the DNS API server and client, but does not inherently ensure
-the authenticity of DNS data. A DNS API client may also perform full
-DNSSEC validation of answers received from a DNS API server or it may
-choose to trust answers from a particular DNS API server, much as a
-DNS client might choose to trust answers from its recursive DNS
-resolver. This capability might be affected by the response media
-type.
+between the DNS API server and client, but does not provide the
+response integrity of DNS data provided by DNSSEC.
+DNSSEC and DOH  are independent and fully compatible protocols,
+each solving different problems.
+The use of one does not diminish the need nor the usefulness of the other.
+It is the choice of a client to either perform full DNSSEC validation of
+answers or to treat answers from a DNS API server as DNSSEC-authenticated,
+and this choice may be affected by the response media type.
 
 {{caching}} describes the interaction of this protocol with HTTP
 caching. An adversary that can control the cache used by the client
@@ -504,16 +517,11 @@ can affect that client's view of the DNS. This is no different
 than the security implications of HTTP caching for other protocols
 that use HTTP.
 
-A server that is acting both as a normal web server and a DNS API
-server is in a position to choose which DNS names it forces a
-client to resolve (through its web service) and also be the one to
-answer those queries (through its DNS API service). An untrusted
-DNS API server can thus easily cause damage by poisoning a client's
-cache with names that the DNS API server chooses to poison. A
-client MUST NOT trust a DNS API server simply because it was
-discovered, or because the client was told to trust the DNS API
-server by an untrusted party. Instead, a client MUST only trust DNS
-API server that is configured as trustworthy.
+In the absence of information about the authenticity of responses, such as
+DNSSEC, a DNS API server can poison a client's cache. A
+client MUST NOT authorize arbitrary DNS API servers.
+Instead, a client MUST specifically authorize DNS
+API servers using mechanisms such as explicit configuration.
 
 A client can use DNS over HTTPS as one of multiple mechanisms to obtain DNS
 data. If a client of this protocol encounters an HTTP error after sending
@@ -575,6 +583,10 @@ the best answer it could get. This protocol does not require that a DNS API
 server that cannot get an untruncated answer send back such an answer; it can
 instead send back an HTTP error to indicate that it cannot give a useful answer.
 
+Many extensions to DNS, using {{RFC6891}}, have been defined over the years.
+Extensions that are specific to the choice of transport, such as {{RFC7828}},
+are not applicable to DOH.
+
 # Acknowledgments
 
 This work required a high level of cooperation between experts in
@@ -582,6 +594,7 @@ different technologies. Thank you
 Ray Bellis,
 Stephane Bortzmeyer,
 Manu Bretelle,
+Sara Dickinson,
 Tony Finch,
 Daniel Kahn Gilmor,
 Olafur Guomundsson,
