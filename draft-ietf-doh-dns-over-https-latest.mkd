@@ -575,12 +575,15 @@ therefore DOH implementations do not provide stateful ordering
 guarantees between different requests. DOH cannot be used as a
 transport for other protocols that require strict ordering.
 
-If a DNS API server responds to a DNS API client with a DNS message that has the
-TC (truncation) bit set in the header, that indicates that the DNS API server
-was not able to retrieve a full answer for the query and is providing
-the best answer it could get. This protocol does not require that a DNS API
-server that cannot get an untruncated answer send back such an answer; it can
-instead send back an HTTP error to indicate that it cannot give a useful answer.
+A DNS API server is allowed to answer queries with any valid DNS response.
+For example, a valid DNS response might have the TC (truncation) bit set in
+the DNS header to indicate that the server (even a DNS API server)
+was not able to retrieve a full answer for the query but is providing
+the best answer it could get.
+A DNS API server is also allowed to reply to queries with an HTTP error
+for queries that it cannot fulfill.
+In this same example, a DNS API server might instead reply with an HTTP
+error instead of a non-error response with the TC bit set in the data.
 
 Many extensions to DNS, using {{RFC6891}}, have been defined over the years.
 Extensions that are specific to the choice of transport, such as {{RFC7828}},
