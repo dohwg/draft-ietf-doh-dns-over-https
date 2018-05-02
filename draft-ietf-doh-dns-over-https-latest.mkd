@@ -577,13 +577,13 @@ transport for other protocols that require strict ordering.
 
 A DNS API server is allowed to answer queries with any valid DNS response.
 For example, a valid DNS response might have the TC (truncation) bit set in
-the DNS header to indicate that the server (even a DNS API server)
+the DNS header to indicate that the server
 was not able to retrieve a full answer for the query but is providing
 the best answer it could get.
-A DNS API server is also allowed to reply to queries with an HTTP error
+A DNS API server can reply to queries with an HTTP error
 for queries that it cannot fulfill.
-In this same example, a DNS API server might instead reply with an HTTP
-error instead of a non-error response with the TC bit set in the data.
+In this same example, a DNS API server could use an HTTP error instead
+of a non-error response that has the TC bit set.
 
 Many extensions to DNS, using {{RFC6891}}, have been defined over the years.
 Extensions that are specific to the choice of transport, such as {{RFC7828}},
