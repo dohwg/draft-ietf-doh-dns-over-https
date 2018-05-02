@@ -381,7 +381,7 @@ the Vary response header.
 
 ## HTTP/2
 
-The minimum version of HTTP used by DOH SHOULD be HTTP/2 {{RFC7540}}.
+HTTP/2 {{RFC7540}} is the minimum RECOMMENDED version of HTTP for use with DOH.
 
 The messages in classic UDP based DNS {{RFC1035}} are inherently
 unordered and have low overhead. A competitive HTTP transport needs to
