@@ -517,7 +517,7 @@ than the security implications of HTTP caching for other protocols
 that use HTTP.
 
 In the absence of information about the authenticity of responses, such as
-DNSSEC, a DNS API server can poison a client's cache. A
+DNSSEC, a DNS API server can give a client invalid data in responses. A
 client MUST NOT authorize arbitrary DNS API servers.
 Instead, a client MUST specifically authorize DNS
 API servers using mechanisms such as explicit configuration.
