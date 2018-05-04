@@ -52,6 +52,7 @@ informative:
   RFC6960:
   RFC7719:
   RFC7828:
+  RFC7830:
   RFC7858:
   CORS:
     title: "Cross-Origin Resource Sharing"
@@ -499,6 +500,9 @@ traffic analysis which might be particularly acute when dealing with
 DNS queries.
 HTTP/2 provides further advice about the use of compression
 (Section 10.6 of {{RFC7540}}) and padding (Section 10.7 of {{RFC7540}}).
+DNS API Servers can also add DNS padding {{RFC7830}} if the DNS API requests
+it in the DNS query; doing so adds padding at the innermost layer of
+the response message.
 
 The HTTPS connection provides transport security for the interaction
 between the DNS API server and client, but does not provide the
