@@ -590,7 +590,10 @@ Many extensions to DNS, using {{RFC6891}}, have been defined over the years.
 Extensions that are specific to the choice of transport, such as {{RFC7828}},
 are not applicable to DOH.
 
+--- back
+
 # Acknowledgments
+{:numbered="false"}
 
 This work required a high level of cooperation between experts in
 different technologies. Thank you
@@ -617,8 +620,6 @@ Daniel Stenberg,
 Andrew Sullivan,
 Martin Thomson,
 and Sam Weiler.
-
---- back
 
 # Previous Work on DNS over HTTP or in Other Formats
 
