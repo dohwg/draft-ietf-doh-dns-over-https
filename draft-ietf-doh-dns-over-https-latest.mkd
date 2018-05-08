@@ -91,6 +91,9 @@ with DNS operations and allowing web applications to access DNS
 information via existing browser APIs in a safe way consistent with
 Cross Origin Resource Sharing (CORS) {{CORS}}. No special effort has
 been taken to enable or prevent application to other use cases.
+This document focuses on communication between DNS clients (such as operating
+system stub resolvers) and recursive resolvers.
+
 
 # Terminology
 
