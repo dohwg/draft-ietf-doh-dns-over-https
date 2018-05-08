@@ -265,7 +265,7 @@ accept = application/dns-message
 
 ~~~~~
 
-## The HTTP Response
+## The HTTP Response {#http-response}
 
 An HTTP response with a 2xx status code ({{RFC7231}} Section 6.3)
 indicates a valid DNS response to the query made in the HTTP
@@ -515,15 +515,17 @@ HTTP/2 provides further advice about the use of compression
 DNS API Servers can also add DNS padding {{RFC7830}} if the DNS API requests
 it in the DNS query.
 
-The HTTPS connection provides transport security for the interaction
-between the DNS API server and client, but does not provide the
-response integrity of DNS data provided by DNSSEC.
-DNSSEC and DOH  are independent and fully compatible protocols,
-each solving different problems.
-The use of one does not diminish the need nor the usefulness of the other.
-It is the choice of a client to either perform full DNSSEC validation of
-answers or to treat answers from a DNS API server as DNSSEC-authenticated,
-and this choice may be affected by the response media type.
+The HTTPS connection provides transport security for the interaction between the
+DNS API server and client, but does not provide the response integrity of DNS
+data provided by DNSSEC. DNSSEC and DOH are independent and fully compatible
+protocols, each solving different problems. The use of one does not diminish the
+need nor the usefulness of the other. It is the choice of a client to either
+perform full DNSSEC validation of answers or to trust the DNS API server to do
+DNSSEC validation and inspect the AD (Authentic Data) bit in the returned
+message to determine whether an answer was authentic or not. As noted in
+{{http-response}}, different response media types will provide more or less
+information from a DNS response so this choice may be affected by the response
+media type.
 
 {{caching}} describes the interaction of this protocol with HTTP
 caching. An adversary that can control the cache used by the client
@@ -531,8 +533,8 @@ can affect that client's view of the DNS. This is no different
 than the security implications of HTTP caching for other protocols
 that use HTTP.
 
-In the absence of information about the authenticity of responses, such as
-DNSSEC, a DNS API server can give a client invalid data in responses. A
+In the absence of DNSSEC information about the authenticity of responses
+a DNS API server can give a client invalid data in responses. A
 client MUST NOT use arbitrary DNS API servers.
 Instead, a client MUST only use DNS
 API servers specified using mechanisms such as explicit configuration. This does
