@@ -536,9 +536,9 @@ can affect that client's view of the DNS. This is no different
 than the security implications of HTTP caching for other protocols
 that use HTTP.
 
-In the absence of DNSSEC information about the authenticity of responses
-a DNS API server can give a client invalid data in responses. A
-client MUST NOT use arbitrary DNS API servers.
+In the absence of DNSSEC information, a DNS API server can give a client
+invalid data in response to a DNS query.
+A client MUST NOT use arbitrary DNS API servers.
 Instead, a client MUST only use DNS
 API servers specified using mechanisms such as explicit configuration. This does
 not guarantee protection against invalid data but reduces the risk.
