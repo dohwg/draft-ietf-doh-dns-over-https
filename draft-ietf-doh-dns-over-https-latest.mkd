@@ -514,7 +514,7 @@ Session level encryption has well known weaknesses with respect to
 traffic analysis which might be particularly acute when dealing with
 DNS queries.
 HTTP/2 provides further advice about the use of compression
-(Section 10.6 of {{RFC7540}}) and padding (Section 10.7 of {{RFC7540}}).
+({{RFC7540}} Section 10.6) and padding ({{RFC7540}} Section 10.7 ).
 DNS API Servers can also add DNS padding {{RFC7830}} if the DNS API requests
 it in the DNS query.
 
