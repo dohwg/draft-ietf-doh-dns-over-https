@@ -333,7 +333,9 @@ This protocol MUST be used with the https scheme URI {{RFC7230}}.
 ## Cache Interaction {#caching}
 
 A DOH exchange can pass through a hierarchy of caches that include
-both HTTP and DNS specific caches. HTTP caches are by design generic;
+both HTTP and DNS specific caches.
+These caches may exist beteen the DNS API server and client, or on the DNS API client itself.
+HTTP caches are by design generic;
 that is, they do not understand this protocol. Even if a DNS API
 client has modified its cache implementation to be aware of DOH
 semantics, it does not follow that all upstream caches (for example,
@@ -345,20 +347,21 @@ caching metadata they send in response to GET requests (POST requests
 are not cacheable unless specific response headers are sent; this is
 not widely implemented, and not advised for DOH).
 
-In particular, they are encouraged to assign an explicit freshness
-lifetime (Section 4.2 of {{RFC7234}}), since HTTP caches can assign
-heuristic freshness otherwise (Section x.x of {{RFC7234}}), thereby
-taking control out of the hands of the DNS API server.
+In particular, DNS API servers SHOULD assign an explicit freshness
+lifetime ({{RFC7234}}, Section 4.2)
+so that the DNS API client is more likely to use fresh DNS data.
+This requirement is due to HTTP caches being able to assign
+their own heuristic freshness (such as that described in {{RFC7234}}, Section 4.2.2),
+which would take control of the cache contents out of the hands of the DNS API server.
 
 The assigned freshness lifetime of a DOH HTTP response SHOULD be
 the smallest TTL in the Answer section of the DNS response. For
-example, if a HTTP response carries three RRsets with TTLs of 30, 600
-and 300, the HTTP freshness lifetime should be 30 seconds (e.g.,
+example, if a HTTP response carries three RRsets with TTLs of 30, 600,
+and 300, the HTTP freshness lifetime should be 30 seconds (which could be specified as
 "Cache-Control: max-age=30"). The assigned freshness lifetime MUST NOT
 be greater than the smallest TTL in the Answer section of the DNS
 response.
-
-This assures that none of the RRsets contained within are served stale
+This requirement helps assure that none of the RRsets contained in a DNS response are served stale
 from an HTTP cache.
 
 If the DNS response has no records in the Answer section, and the DNS
@@ -367,9 +370,10 @@ freshness lifetime MUST NOT be greater than the MINIMUM field from
 that SOA record (see {{RFC2308}}).
 
 The stale-while-revalidate and stale-if-error Cache-Control directives
-({{?RFC5861}}) could be well suited to a DOH implementation when
+({{RFC5861}}) could be well suited to a DOH implementation when
 allowed by server policy. Those mechanisms allow a client, at the
 server's discretion, to reuse a cache entry that is no longer fresh.
+In such a case, the client reuses all of a cached entry, or none of it.
 
 DNS API servers also need to consider caching when generating
 responses that are not globally valid. For instance, if a DNS API
