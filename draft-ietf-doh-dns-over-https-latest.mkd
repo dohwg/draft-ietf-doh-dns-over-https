@@ -651,6 +651,7 @@ Martin Thomson,
 and Sam Weiler.
 
 # Previous Work on DNS over HTTP or in Other Formats
+{:numbered="false"}
 
 The following is an incomplete list of earlier work that related to DNS over HTTP/1 or representing DNS
 data in other formats.
