@@ -142,8 +142,8 @@ The protocol described here bases its design on the following protocol requireme
 
 # Selection of DNS API Server
 
-A DNS API client selects the URI, and by extension DNS API server,
-used for resolution via configuration. A client MUST NOT use a DNS API
+A DNS API client uses configuration to select the URI, and thus the DNS API server,
+used for resolution. A client MUST NOT use a DNS API
 server simply because it was discovered, or because the client was
 told to use the DNS API server by an untrusted party.
 
