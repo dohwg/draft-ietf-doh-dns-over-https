@@ -142,12 +142,10 @@ The protocol described here bases its design on the following protocol requireme
 
 # Selection of DNS API Server
 
-Before using a DNS API server for DNS resolution, the client MUST establish that
-the HTTP request URI is a trusted service for the DOH query, in other words, a
-DNS API client MUST only use a DNS API server that is configured as trustworthy.
-
-A client MUST NOT use a DNS API server simply because it was discovered, or
-because the client was told to use the DNS API server by an untrusted party.
+A DNS API client selects the URI, and by extension DNS API server,
+used for resolution via configuration. A client MUST NOT use a DNS API
+server simply because it was discovered, or because the client was
+told to use the DNS API server by an untrusted party.
 
 This specification does not extend DNS resolution privileges to URIs that are
 not recognized by the DNS API client as trusted DNS API servers. As such, use of
