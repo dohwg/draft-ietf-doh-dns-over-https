@@ -44,6 +44,7 @@ normative:
   RFC8174:
 
 informative:
+  RFC2818:
   RFC5280:
   RFC5861:
   RFC6066:
@@ -146,6 +147,7 @@ A DNS API client uses configuration to select the URI, and thus the DNS API serv
 used for resolution. A client MUST NOT use a DNS API
 server simply because it was discovered, or because the client was
 told to use the DNS API server by an untrusted party.
+{{RFC2818}} defines how HTTPS verifies the server's identity.
 
 This specification does not extend DNS resolution privileges to URIs that are
 not recognized by the DNS API client as trusted DNS API servers. As such, use of
