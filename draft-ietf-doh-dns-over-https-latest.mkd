@@ -550,11 +550,6 @@ Instead, a client MUST only use DNS
 API servers specified using mechanisms such as explicit configuration. This does
 not guarantee protection against invalid data but reduces the risk.
 
-A client can use DNS over HTTPS as one of multiple mechanisms to obtain DNS
-data. If a client of this protocol encounters an HTTP error after sending
-a DNS query, and then falls back to a different DNS retrieval mechanism,
-doing so can weaken the privacy and authenticity expected by the user of the client.
-
 # Operational Considerations
 
 Local policy considerations and similar factors mean different DNS
