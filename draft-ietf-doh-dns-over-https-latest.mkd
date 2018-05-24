@@ -143,14 +143,11 @@ The protocol described here bases its design on the following protocol requireme
 
 # Selection of DNS API Server
 
-Before using a DNS API server for DNS resolution, the client MUST establish that
-the HTTP request URI is a trusted service for the DOH query, in other words, a
-DNS API client MUST only use a DNS API server that is configured as
-trustworthy. {{RFC2818}} defines how HTTPS verifies the identity of
-a connection with the trusted service.
-
-A client MUST NOT use a DNS API server simply because it was discovered, or
-because the client was told to use the DNS API server by an untrusted party.
+A DNS API client uses configuration to select the URI, and thus the DNS API server,
+used for resolution. A client MUST NOT use a DNS API
+server simply because it was discovered, or because the client was
+told to use the DNS API server by an untrusted party.
+{{RFC2818}} defines how HTTPS verifies the server's identity.
 
 This specification does not extend DNS resolution privileges to URIs that are
 not recognized by the DNS API client as trusted DNS API servers. As such, use of
@@ -554,11 +551,6 @@ A client MUST NOT use arbitrary DNS API servers.
 Instead, a client MUST only use DNS
 API servers specified using mechanisms such as explicit configuration. This does
 not guarantee protection against invalid data but reduces the risk.
-
-A client can use DNS over HTTPS as one of multiple mechanisms to obtain DNS
-data. If a client of this protocol encounters an HTTP error after sending
-a DNS query, and then falls back to a different DNS retrieval mechanism,
-doing so can weaken the privacy and authenticity expected by the user of the client.
 
 # Operational Considerations
 
