@@ -153,7 +153,8 @@ that appears to be a valid answer to a DNS query. This
 specification does not extend DNS resolution privileges to URIs that
 are not recognized by the DNS API client as configured URIs. Such
 scenarios may create additional operational, tracking, and security
-hazards that require limitations for safe usage.
+hazards that require limitations for safe usage. A future
+specification may support this use case.
 
 # The HTTP Exchange
 
