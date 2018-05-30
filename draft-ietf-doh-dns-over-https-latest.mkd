@@ -144,17 +144,16 @@ The protocol described here bases its design on the following protocol requireme
 # Selection of DNS API Server {#selection}
 
 A DNS API client uses configuration to select the URI, and thus the
-DNS API server, used for resolution. [RFC2818] defines how HTTPS
-verifies the server's identity.
+DNS API server, that is to be used for resolution. [RFC2818] defines how HTTPS
+verifies the DNS API server's identity.
 
-A client MUST NOT use a different URI simply because it was discovered
-outside of configuration, or because it offers an unsolicited response
-that appears to be a valid answer to a DNS query. Specifically, this
+A DNS API client MUST NOT use a different URI simply because it was discovered
+outside of the client's configuration, or because a DNS API server offers an unsolicited response
+that appears to be a valid answer to a DNS query. This
 specification does not extend DNS resolution privileges to URIs that
-are not recognized by the DNS API client as configured URIs. These
+are not recognized by the DNS API client as configured URIs. Such
 scenarios may create additional operational, tracking, and security
-hazards that require limitations for safe usage. A future
-specification may support this case.
+hazards that require limitations for safe usage.
 
 # The HTTP Exchange
 
@@ -550,9 +549,9 @@ that use HTTP.
 
 In the absence of DNSSEC information, a DNS API server can give a
 client invalid data in response to a DNS query. {{selection}}
-disallows use of DOH DNS responses that do not originate from
-configured servers. This does not guarantee protection against invalid
-data but reduces the risk.
+disallows the use of DOH DNS responses that do not originate from
+configured servers. This prohibition does not guarantee protection against invalid
+data, but it does reduce the risk.
 
 # Operational Considerations
 
