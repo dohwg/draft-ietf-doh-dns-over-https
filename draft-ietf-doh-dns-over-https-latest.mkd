@@ -143,6 +143,15 @@ The protocol described here bases its design on the following protocol requireme
 
 # Selection of DNS API Server {#selection}
 
+Configuration, discovery, and updating of the URI Template {{RFC6570}}
+(see {{httprequest}}) is done out of band from this protocol. Note
+that configuration might be manual (such as a user typing URI
+Templates in a user interface for "options") or automatic (such as URI
+Templates being supplied in responses from DHCP or similar
+protocols). DNS API Servers MAY support more than one URI. This allows
+the different endpoints to have different properties such as different
+authentication requirements or service level guarantees.
+
 A DNS API client uses configuration to select the URI, and thus the
 DNS API server, that is to be used for resolution. [RFC2818] defines how HTTPS
 verifies the DNS API server's identity.
@@ -158,19 +167,12 @@ specification may support this use case.
 
 # The HTTP Exchange
 
-## The HTTP Request
+## The HTTP Request {#httprequest}
 
 A DNS API client encodes a single DNS query
 into an HTTP request using either the HTTP GET or POST method and the
 other requirements of this section. The DNS API server defines the URI
-used by the request through the use of a URI Template
-{{RFC6570}}.
-
-Configuration and discovery of the URI Template is done
-out of band from this protocol. DNS API Servers MAY support more
-than one URI. This allows the different endpoints to have different
-properties such as different authentication requirements or service
-level guarantees.
+used by the request through the use of a URI Template.
 
 The URI Template defined in this document is processed without any
 variables when the HTTP method is POST. When the HTTP method is
