@@ -289,7 +289,8 @@ Different response media types will provide more or less information from a DNS
 response. For example, one response type might include the information from the
 DNS header bytes while another might omit it. The amount and type of information
 that a media type gives is solely up to the format, and not defined in
-this protocol.
+this protocol. HTTP defines status code 406 for cases where the server
+cannot generate a representation suitable for the client.
 
 The only response type defined in this document is
 "application/dns-message", but it is possible that other
@@ -444,27 +445,29 @@ DNS query that would normally be sent in DNS over UDP (including queries and
 responses that use DNS extensions, but not those that require multiple
 responses).
 
-# DNS Wire Format {#dnswire}
+# Definition of the application/dns-message media type {#dnswire}
 
-The data payload is the DNS on-the-wire format defined in {{RFC1035}}.
-The format is for DNS over UDP. Note that this is different than the
-wire format used in {{RFC7858}}.
-Also note that while {{RFC1035}} says "Messages carried by UDP are
-restricted to 512 bytes", that was later updated by {{RFC6891}}.
-This protocol allows DNS on-the-wire format payloads of any size.
+The data payload for the application/dns-message media type is a
+single message of the DNS on-the-wire format defined in section 4.2.1
+of {{RFC1035}}. The format was originally for DNS over UDP.  Although
+{{RFC1035}} says "Messages carried by UDP are restricted to 512
+bytes", that was later updated by {{RFC6891}}. This media type
+restricts the maximum size of the DNS message to 65535 bytes. Note
+that the wire format used in this media type is different than the
+wire format used in {{RFC7858}} (which uses the format defined in
+section 4.2.2 of {{RFC1035}}).
 
-When using the GET method, the data payload MUST be encoded with
-base64url {{RFC4648}} and then provided as a variable named
-"dns" to the URI Template expansion. Padding characters for
-base64url MUST NOT be included.
+DNS API clients using this media type MAY have one or more EDNS options
+{{RFC6891}} in the request. DNS API servers using this media type MUST ignore
+the value given for the EDNS UDP payload size in DNS requests.
 
-When using the POST method, the data payload MUST NOT be encoded and
-is used directly as the HTTP message body.
+When using the GET method, the data payload for this media type MUST be
+encoded with base64url {{RFC4648}} and then provided as a variable named
+"dns" to the URI Template expansion. Padding characters for base64url MUST
+NOT be included.
 
-DNS API clients using the DNS wire format MAY have one or more EDNS
-options {{RFC6891}} in the request.
-
-The media type is "application/dns-message".
+When using the POST method, the data payload for this media type MUST NOT
+be encoded and is used directly as the HTTP message body.
 
 # IANA Considerations {#iana}
 
