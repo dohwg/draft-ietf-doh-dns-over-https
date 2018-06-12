@@ -289,8 +289,7 @@ Different response media types will provide more or less information from a DNS
 response. For example, one response type might include the information from the
 DNS header bytes while another might omit it. The amount and type of information
 that a media type gives is solely up to the format, and not defined in
-this protocol. HTTP defines status code 406 for cases where the server
-cannot generate a representation suitable for the client.
+this protocol.
 
 The only response type defined in this document is
 "application/dns-message", but it is possible that other
