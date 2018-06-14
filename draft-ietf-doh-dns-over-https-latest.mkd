@@ -279,8 +279,6 @@ The only response type defined in this document is
 response formats will be defined in the future.
 A DNS API server MUST be able to process application/dns-message
 request messages.
-A DNS API server SHOULD respond with HTTP status code 415 (Unsupported
-Media Type) upon receiving a media type it is unable to process.
 
 Different response media types will provide more or less information from a DNS
 response. For example, one response type might include information from the
@@ -295,28 +293,26 @@ using HTTP's multi-streaming functionality ({{RFC7540}} Section 5).
 {{caching}} discusses the relationship between DNS and HTTP
 response caching.
 
-### Error Handling
+### Handling DNS and HTTP Errors
 
-DNS response codes indicate either success and failure for the DNS query.
-An HTTP response with a 2xx status code ({{RFC7231}} Section 6.3)
-SHOULD be used for any valid DNS response, regardless of the DNS response code.
-For example, a DNS failure response such as SERVFAIL or
-NXDOMAIN will be the message in a successful 2xx HTTP response even
-though there was a failure at the DNS layer.
+DNS response codes indicate either success and failure for the DNS query. An
+HTTP response with a 2xx status code ({{RFC7231}} Section 6.3) can be used for
+any valid DNS response, regardless of the DNS response code. For example, a
+successful 2xx HTTP status code is used even with a DNS message whose DNS
+response code indicates failure, such as SERVFAIL or NXDOMAIN.
 
-Responses with non-successful HTTP status codes SHOULD be used to signal to the
-DNS API client that it might try the same query with a different DNS API
-server. Some of these non-successful HTTP responses (such as redirects or
-authentication failures) could mean that clients need to make new requests to
-satisfy the original question. A DNS API server might use that HTTP response
-code (rather than a DNS error response code) to suggest that the client might
-get a more suitable result from a different DNS API server. For example, HTTP
-defines status code 406 for cases where the server cannot generate a
-representation suitable for the client. 
+DNS API clients SHOULD NOT treat DNS messages in the body of an HTTP response
+with non-successful HTTP status code (that is, one other than a 2xx status
+code) as an answer to the original DNS question.
 
-DNS API clients SHOULD NOT treat DNS messages in the body of an HTTP responses
-with non-successful HTTP status code as an answer to the original DNS
-question.
+DNS API clients need to use the same semantic processing of non-successful
+HTTP status codes as other HTTP clients. This might mean that the DNS API
+client retries the query with the same DNS API server, such as authorization
+failures (HTTP status code 401 {{RFC7235}} Section 3.1). It could also mean
+that the DNS API client retries  with a different DNS API server, such as for
+unsupported media types (HTTP status code 415, {{RFC7231}} Section 6.5.13), or
+where the server cannot generate a representation suitable for the client
+(HTTP status code 406, {{RFC7231}} Section 6.5.6), and so on.
 
 ### HTTP Response Example
 
