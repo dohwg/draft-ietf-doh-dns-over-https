@@ -283,7 +283,7 @@ A DNS API server SHOULD respond with HTTP status code 415 (Unsupported
 Media Type) upon receiving a media type it is unable to process.
 
 Different response media types will provide more or less information from a DNS
-response. For example, one response type might include the information from the
+response. For example, one response type might include information from the
 DNS header bytes while another might omit it. The amount and type of information
 that a media type gives is solely up to the format, and not defined in
 this protocol.
@@ -304,7 +304,7 @@ For example, a DNS failure response such as SERVFAIL or
 NXDOMAIN will be the message in a successful 2xx HTTP response even
 though there was a failure at the DNS layer.
 
-Responses with non-successful HTTP status codes can be used to signal to the
+Responses with non-successful HTTP status codes SHOULD be used to signal to the
 DNS API client that it might try the same query with a different DNS API
 server. Some of these non-successful HTTP responses (such as redirects or
 authentication failures) could mean that clients need to make new requests to
@@ -314,7 +314,9 @@ get a more suitable result from a different DNS API server. For example, HTTP
 defines status code 406 for cases where the server cannot generate a
 representation suitable for the client. 
 
-Responses with non-successful HTTP status codes MUST NOT contain DNS messages.
+DNS API clients SHOULD NOT treat DNS messages in the body of an HTTP responses
+with non-successful HTTP status code as an answer to the original DNS
+question.
 
 ### HTTP Response Example
 
