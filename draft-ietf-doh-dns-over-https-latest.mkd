@@ -1,6 +1,6 @@
 ---
-title: DNS Queries over HTTPS (DOH)
-abbrev: DNS Queries over HTTPS (DOH)
+title: DNS Queries over HTTPS (DoH)
+abbrev: DNS Queries over HTTPS (DoH)
 docname: draft-ietf-doh-dns-over-https
 
 stand_alone: true
@@ -39,6 +39,7 @@ normative:
   RFC7231:
   RFC7232:
   RFC7234:
+  RFC7235:
   RFC7540:
   RFC7541:
   RFC8174:
@@ -97,12 +98,12 @@ system stub resolvers) and recursive resolvers.
 
 # Terminology
 
-A server that supports this protocol is called a "DNS API server" to
+A server that supports this protocol is called a "DoH server" to
 differentiate it from a "DNS server"
 (one that only provides DNS service over one or more of the other transport protocols
 standardized for DNS).
 Similarly, a client that supports this protocol is called a
-"DNS API client".
+"DoH client".
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
 "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY",
@@ -141,26 +142,26 @@ The protocol described here bases its design on the following protocol requireme
 
 * Supporting insecure HTTP
 
-# Selection of DNS API Server {#selection}
+# Selection of DoH Server {#selection}
 
 Configuration, discovery, and updating of the URI Template {{RFC6570}}
 (see {{httprequest}}) is done out of band from this protocol. Note
 that configuration might be manual (such as a user typing URI
 Templates in a user interface for "options") or automatic (such as URI
 Templates being supplied in responses from DHCP or similar
-protocols). DNS API Servers MAY support more than one URI. This allows
+protocols). DoH Servers MAY support more than one URI. This allows
 the different endpoints to have different properties such as different
 authentication requirements or service level guarantees.
 
-A DNS API client uses configuration to select the URI, and thus the
-DNS API server, that is to be used for resolution. [RFC2818] defines how HTTPS
-verifies the DNS API server's identity.
+A DoH client uses configuration to select the URI, and thus the
+DoH server, that is to be used for resolution. [RFC2818] defines how HTTPS
+verifies the DoH server's identity.
 
-A DNS API client MUST NOT use a different URI simply because it was discovered
+A DoH client MUST NOT use a different URI simply because it was discovered
 outside of the client's configuration, or because a server offers an unsolicited response
 that appears to be a valid answer to a DNS query. This
 specification does not extend DNS resolution privileges to URIs that
-are not recognized by the DNS API client as configured URIs. Such
+are not recognized by the DoH client as configured URIs. Such
 scenarios may create additional operational, tracking, and security
 hazards that require limitations for safe usage. A future
 specification may support this use case.
@@ -169,9 +170,9 @@ specification may support this use case.
 
 ## The HTTP Request {#httprequest}
 
-A DNS API client encodes a single DNS query
+A DoH client encodes a single DNS query
 into an HTTP request using either the HTTP GET or POST method and the
-other requirements of this section. The DNS API server defines the URI
+other requirements of this section. The DoH server defines the URI
 used by the request through the use of a URI Template.
 
 The URI Template defined in this document is processed without any
@@ -182,7 +183,7 @@ GET the single variable "dns" is defined as the content of the DNS request
 Future specifications for new media types MUST define the variables
 used for URI Template processing with this protocol.
 
-DNS API servers MUST implement both the POST and GET methods.
+DoH servers MUST implement both the POST and GET methods.
 
 When using the POST method the DNS query is included as the message
 body of the HTTP request and the Content-Type request header indicates
@@ -191,13 +192,13 @@ GET equivalents.
 
 Using the GET method is friendlier to many HTTP cache implementations.
 
-The DNS API client SHOULD include an HTTP "Accept" request header to
+The DoH client SHOULD include an HTTP "Accept" request header to
 indicate what type of content can be understood in
 response. Irrespective of the value of the Accept request header, the
 client MUST be prepared to process "application/dns-message"
 (as described in {{dnswire}}) responses but MAY also process any other type it receives.
 
-In order to maximize cache friendliness, DNS API clients using media
+In order to maximize cache friendliness, DoH clients using media
 formats that include DNS ID, such as application/dns-message,
 SHOULD use a DNS ID of 0 in every DNS request.  HTTP correlates
 the request and response, thus eliminating the need for the ID in a media
@@ -205,14 +206,14 @@ type such as application/dns-message. The use of a varying
 DNS ID can cause semantically equivalent DNS queries to be cached
 separately.
 
-DNS API clients can use HTTP/2 padding and compression in the same way
+DoH clients can use HTTP/2 padding and compression in the same way
 that other HTTP/2 clients use (or don't use) them.
 
 ### HTTP Request Examples
 
 These examples use HTTP/2 style formatting from {{RFC7540}}.
 
-These examples use a DNS API service with a URI Template of
+These examples use a DoH service with a URI Template of
 "https://dnsserver.example.net/dns-query{?dns}" to resolve
 IN A records.
 
@@ -277,7 +278,7 @@ accept = application/dns-message
 The only response type defined in this document is
 "application/dns-message", but it is possible that other
 response formats will be defined in the future.
-A DNS API server MUST be able to process application/dns-message
+A DoH server MUST be able to process application/dns-message
 request messages.
 
 Different response media types will provide more or less information from a DNS
@@ -303,11 +304,11 @@ response code indicates failure, such as SERVFAIL or NXDOMAIN.
 
 HTTP responses with non-successful HTTP status codes do not contain
 replies to the original DNS question in the HTTP request.
-DNS API clients need to use the same semantic processing of non-successful
-HTTP status codes as other HTTP clients. This might mean that the DNS API
-client retries the query with the same DNS API server, such as authorization
+DoH clients need to use the same semantic processing of non-successful
+HTTP status codes as other HTTP clients. This might mean that the DoH
+client retries the query with the same DoH server, such as authorization
 failures (HTTP status code 401 {{RFC7235}} Section 3.1). It could also mean
-that the DNS API client retries  with a different DNS API server, such as for
+that the DoH client retries  with a different DoH server, such as for
 unsupported media types (HTTP status code 415, {{RFC7231}} Section 6.5.13), or
 where the server cannot generate a representation suitable for the client
 (HTTP status code 406, {{RFC7231}} Section 6.5.6), and so on.
@@ -337,29 +338,29 @@ This protocol MUST be used with the https scheme URI {{RFC7230}}.
 
 ## Cache Interaction {#caching}
 
-A DOH exchange can pass through a hierarchy of caches that include
+A DoH exchange can pass through a hierarchy of caches that include
 both HTTP and DNS specific caches.
-These caches may exist beteen the DNS API server and client, or on the DNS API client itself.
+These caches may exist beteen the DoH server and client, or on the DoH client itself.
 HTTP caches are by design generic;
-that is, they do not understand this protocol. Even if a DNS API
-client has modified its cache implementation to be aware of DOH
+that is, they do not understand this protocol. Even if a DoH
+client has modified its cache implementation to be aware of DoH
 semantics, it does not follow that all upstream caches (for example,
 inline proxies, server-side gateways and Content Delivery Networks) will
 be.
 
-As a result, DNS API servers need to carefully consider the HTTP
+As a result, DoH servers need to carefully consider the HTTP
 caching metadata they send in response to GET requests (POST requests
 are not cacheable unless specific response headers are sent; this is
-not widely implemented, and not advised for DOH).
+not widely implemented, and not advised for DoH).
 
-In particular, DNS API servers SHOULD assign an explicit freshness
+In particular, DoH servers SHOULD assign an explicit freshness
 lifetime ({{RFC7234}} Section 4.2)
-so that the DNS API client is more likely to use fresh DNS data.
+so that the DoH client is more likely to use fresh DNS data.
 This requirement is due to HTTP caches being able to assign
 their own heuristic freshness (such as that described in {{RFC7234}} Section 4.2.2),
-which would take control of the cache contents out of the hands of the DNS API server.
+which would take control of the cache contents out of the hands of the DoH server.
 
-The assigned freshness lifetime of a DOH HTTP response SHOULD be
+The assigned freshness lifetime of a DoH HTTP response SHOULD be
 the smallest TTL in the Answer section of the DNS response. For
 example, if a HTTP response carries three RRsets with TTLs of 30, 600,
 and 300, the HTTP freshness lifetime should be 30 seconds (which could be specified as
@@ -375,13 +376,13 @@ freshness lifetime MUST NOT be greater than the MINIMUM field from
 that SOA record (see {{RFC2308}}).
 
 The stale-while-revalidate and stale-if-error Cache-Control directives
-({{RFC5861}}) could be well suited to a DOH implementation when
+({{RFC5861}}) could be well suited to a DoH implementation when
 allowed by server policy. Those mechanisms allow a client, at the
 server's discretion, to reuse a cache entry that is no longer fresh.
 In such a case, the client reuses all of a cached entry, or none of it.
 
-DNS API servers also need to consider caching when generating
-responses that are not globally valid. For instance, if a DNS API
+DoH servers also need to consider caching when generating
+responses that are not globally valid. For instance, if a DoH
 server customizes a response based on the client's identity, it would
 not want to allow global reuse of that response. This could be
 accomplished through a variety of HTTP techniques such as a
@@ -389,20 +390,20 @@ Cache-Control max-age of 0, or by using the Vary response header
 ({{RFC7231}} Section 7.1.4) to establish a secondary cache key
 ({{RFC7234}} Section 4.1).
 
-DNS API clients MUST account for the Age response header's value
+DoH clients MUST account for the Age response header's value
 ({{RFC7234}}) when calculating the DNS TTL of a response. For example,
 if a RRset is received with a DNS TTL of 600, but the Age header
 indicates that the response has been cached for 250 seconds, the
 remaining lifetime of the RRset is 350 seconds.
 
-DNS API clients can request an uncached copy of a response by using
+DoH clients can request an uncached copy of a response by using
 the "no-cache" request cache control directive ({{RFC7234}}, Section
 5.2.1.4) and similar controls. Note that some caches might not honor
 these directives, either due to configuration or interaction with
 traditional DNS caches that do not have such a mechanism.
 
 HTTP conditional requests ({{RFC7232}}) may be of limited value to
-DOH, as revalidation provides only a bandwidth benefit and DNS
+DoH, as revalidation provides only a bandwidth benefit and DNS
 transactions are normally latency bound. Furthermore, the HTTP
 response headers that enable revalidation (such as "Last-Modified" and
 "Etag") are often fairly large when compared to the overall DNS
@@ -413,21 +414,21 @@ from revalidation.
 
 ## HTTP/2
 
-HTTP/2 {{RFC7540}} is the minimum RECOMMENDED version of HTTP for use with DOH.
+HTTP/2 {{RFC7540}} is the minimum RECOMMENDED version of HTTP for use with DoH.
 
 The messages in classic UDP based DNS {{RFC1035}} are inherently
 unordered and have low overhead. A competitive HTTP transport needs to
 support reordering, parallelism, priority, and header compression to
 achieve similar performance. Those features were introduced to HTTP in
 HTTP/2 {{RFC7540}}. Earlier versions of HTTP are capable of conveying
-the semantic requirements of DOH but may result in very poor
+the semantic requirements of DoH but may result in very poor
 performance.
 
 ## Server Push
 
-Before using DOH response data for DNS resolution, the client MUST
-establish that the HTTP request URI may be used for the DOH query.
-For HTTP requests initiated by the DNS API client this is
+Before using DoH response data for DNS resolution, the client MUST
+establish that the HTTP request URI may be used for the DoH query.
+For HTTP requests initiated by the DoH client this is
 implicit in the selection of URI. For HTTP server push ({{RFC7540}}
 Section 8.2) extra care must be taken to ensure that the pushed URI is
 one that the client would have directed the same query to if the
@@ -435,7 +436,7 @@ client had initiated the request.
 
 ## Content Negotiation
 
-In order to maximize interoperability, DNS API clients and DNS API
+In order to maximize interoperability, DoH clients and DoH
 servers MUST support the "application/dns-message" media
 type. Other media types MAY be used as defined by HTTP Content
 Negotiation ({{RFC7231}} Section 3.4).
@@ -456,8 +457,8 @@ that the wire format used in this media type is different than the
 wire format used in {{RFC7858}} (which uses the format defined in
 section 4.2.2 of {{RFC1035}}).
 
-DNS API clients using this media type MAY have one or more EDNS options
-{{RFC6891}} in the request. DNS API servers using this media type MUST ignore
+DoH clients using this media type MAY have one or more EDNS options
+{{RFC6891}} in the request. DoH servers using this media type MUST ignore
 the value given for the EDNS UDP payload size in DNS requests.
 
 When using the GET method, the data payload for this media type MUST be
@@ -531,15 +532,15 @@ traffic analysis which might be particularly acute when dealing with
 DNS queries.
 HTTP/2 provides further advice about the use of compression
 ({{RFC7540}} Section 10.6) and padding ({{RFC7540}} Section 10.7 ).
-DNS API Servers can also add DNS padding {{RFC7830}} if the DNS API requests
+DoH Servers can also add DNS padding {{RFC7830}} if the DoH requests
 it in the DNS query.
 
 The HTTPS connection provides transport security for the interaction between the
-DNS API server and client, but does not provide the response integrity of DNS
-data provided by DNSSEC. DNSSEC and DOH are independent and fully compatible
+DoH server and client, but does not provide the response integrity of DNS
+data provided by DNSSEC. DNSSEC and DoH are independent and fully compatible
 protocols, each solving different problems. The use of one does not diminish the
 need nor the usefulness of the other. It is the choice of a client to either
-perform full DNSSEC validation of answers or to trust the DNS API server to do
+perform full DNSSEC validation of answers or to trust the DoH server to do
 DNSSEC validation and inspect the AD (Authentic Data) bit in the returned
 message to determine whether an answer was authentic or not. As noted in
 {{http-response}}, different response media types will provide more or less
@@ -552,9 +553,9 @@ can affect that client's view of the DNS. This is no different
 than the security implications of HTTP caching for other protocols
 that use HTTP.
 
-In the absence of DNSSEC information, a DNS API server can give a
+In the absence of DNSSEC information, a DoH server can give a
 client invalid data in response to a DNS query. {{selection}}
-disallows the use of DOH DNS responses that do not originate from
+disallows the use of DoH DNS responses that do not originate from
 configured servers. This prohibition does not guarantee protection against invalid
 data, but it does reduce the risk.
 
@@ -570,55 +571,55 @@ For example, in the case of DNS64 {{RFC6147}}, the choice could affect
 whether IPv6/IPv4 translation will work at all.
 
 The HTTPS channel used by this specification establishes secure two
-party communication between the DNS API client and the DNS API server.
+party communication between the DoH client and the DoH server.
 Filtering or inspection systems that rely on unsecured transport of
 DNS will not function in a DNS over HTTPS environment.
 
 Some HTTPS client implementations perform real time third party checks
 of the revocation status of the certificates being used by TLS. If
-this check is done as part of the DNS API server connection procedure
+this check is done as part of the DoH server connection procedure
 and the check itself requires DNS resolution to connect to the third
 party a deadlock can occur. The use of OCSP {{RFC6960}} servers or AIA
 for CRL fetching ({{RFC5280}} Section 4.2.2.1) are examples of how
 this deadlock can happen.  To mitigate the possibility of deadlock,
-DNS API servers SHOULD NOT rely on DNS based references to external
+DoH servers SHOULD NOT rely on DNS based references to external
 resources in the TLS handshake. For OCSP the server can bundle the
 certificate status as part of the handshake using a mechanism
 appropriate to the version of TLS, such as using {{RFC6066}} Section 8
 for TLS version 1.2. AIA deadlocks can be avoided by providing
 intermediate certificates that might otherwise be obtained through
 additional requests. Note that these deadlocks also need to be
-considered for server that a DNS API server might redirect to.
+considered for server that a DoH server might redirect to.
 
-A DNS API client may face a similar bootstrapping problem when the
+A DoH client may face a similar bootstrapping problem when the
 HTTP request needs to resolve the hostname portion of the DNS
 URI. Just as the address of a traditional DNS nameserver cannot be
-originally determined from that same server, a DNS API client cannot use
-its DNS API server to initially resolve the server's host name into an
+originally determined from that same server, a DoH client cannot use
+its DoH server to initially resolve the server's host name into an
 address. Alternative strategies a client might employ include making
 the initial resolution part of the configuration, IP based URIs and
 corresponding IP based certificates for HTTPS, or resolving the DNS
-API server's hostname via traditional DNS or another DNS API server while
+API server's hostname via traditional DNS or another DoH server while
 still authenticating the resulting connection via HTTPS.
 
 HTTP {{RFC7230}} is a stateless application level protocol and
-therefore DOH implementations do not provide stateful ordering
-guarantees between different requests. DOH cannot be used as a
+therefore DoH implementations do not provide stateful ordering
+guarantees between different requests. DoH cannot be used as a
 transport for other protocols that require strict ordering.
 
-A DNS API server is allowed to answer queries with any valid DNS response.
+A DoH server is allowed to answer queries with any valid DNS response.
 For example, a valid DNS response might have the TC (truncation) bit set in
 the DNS header to indicate that the server
 was not able to retrieve a full answer for the query but is providing
 the best answer it could get.
-A DNS API server can reply to queries with an HTTP error
+A DoH server can reply to queries with an HTTP error
 for queries that it cannot fulfill.
-In this same example, a DNS API server could use an HTTP error instead
+In this same example, a DoH server could use an HTTP error instead
 of a non-error response that has the TC bit set.
 
 Many extensions to DNS, using {{RFC6891}}, have been defined over the years.
 Extensions that are specific to the choice of transport, such as {{RFC7828}},
-are not applicable to DOH.
+are not applicable to DoH.
 
 --- back
 
