@@ -532,7 +532,7 @@ traffic analysis which might be particularly acute when dealing with
 DNS queries.
 HTTP/2 provides further advice about the use of compression
 ({{RFC7540}} Section 10.6) and padding ({{RFC7540}} Section 10.7 ).
-DoH Servers can also add DNS padding {{RFC7830}} if the DoH requests
+DoH Servers can also add DNS padding {{RFC7830}} if the DoH client requests
 it in the DNS query.
 
 The HTTPS connection provides transport security for the interaction between the
