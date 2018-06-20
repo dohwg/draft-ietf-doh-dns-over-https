@@ -46,6 +46,7 @@ normative:
 
 informative:
   RFC2818:
+  RFC5077:
   RFC5280:
   RFC5861:
   RFC6066:
@@ -53,6 +54,9 @@ informative:
   RFC6891:
   RFC6950:
   RFC6960:
+  RFC7258:
+  RFC7413:
+  RFC7626:
   RFC7828:
   RFC7830:
   RFC7858:
@@ -448,14 +452,14 @@ responses).
 # Definition of the application/dns-message media type {#dnswire}
 
 The data payload for the application/dns-message media type is a
-single message of the DNS on-the-wire format defined in section 4.2.1
+single message of the DNS on-the-wire format defined in Section 4.2.1
 of {{RFC1035}}. The format was originally for DNS over UDP.  Although
 {{RFC1035}} says "Messages carried by UDP are restricted to 512
 bytes", that was later updated by {{RFC6891}}. This media type
 restricts the maximum size of the DNS message to 65535 bytes. Note
 that the wire format used in this media type is different than the
 wire format used in {{RFC7858}} (which uses the format defined in
-section 4.2.2 of {{RFC1035}}).
+Section 4.2.2 of {{RFC1035}}).
 
 DoH clients using this media type MAY have one or more EDNS options
 {{RFC6891}} in the request. DoH servers using this media type MUST ignore
@@ -471,7 +475,7 @@ be encoded and is used directly as the HTTP message body.
 
 # IANA Considerations {#iana}
 
-## Registration of application/dns-message Media Type
+## Registration of application/dns-message Media Type {#dnsMessageType}
 
 ~~~~~
 To: ietf-types@iana.org
@@ -519,6 +523,69 @@ Author:  Paul Hoffman, paul.hoffman@icann.org
 
 Change controller:  IESG
 ~~~~~
+
+# Privacy Considerations {#PrivacyConsiderations}
+
+{{RFC7626}} discusses DNS Privacy Considerations in both "On the
+wire" (Section 2.4), and "On the server" (Section 2.5) contexts. This
+is also a useful framing for DoH's privacy considerations.
+
+## On The Wire {#OnTheWire}
+
+DoH encrypts DNS traffic and requires authentication of the
+server. This mitigates both passive surveillance {{RFC7258}} and
+active attacks attempting to divert DNS traffic to rogue servers
+({{RFC7626}} Section 2.5.1). DNS over TLS {{RFC7858}} provides
+similar protections, while direct UDP and TCP based transports are
+vulnerable to this class of information leak.
+
+Additionally, the use of the HTTPS default port 443 and the ability to
+mix DoH traffic with other HTTPS traffic on the same connection can
+deter on-path devices from interfering with DNS operations and make
+DNS traffic analysis more difficult.
+
+## On The Server {#OnTheServer}
+
+A DoH application is built on IP, TCP, TLS, and HTTP. Each layer
+contains one or more common features that can be used to correlate
+different queries to the same identity. DoH inherits the privacy
+properties of the HTTPS stack and is not known to introduce new
+concerns beyond that of HTTPS.
+
+At the IP level, the client address provides obvious correlation
+information. This can be mitigated by use of a NAT, proxy, VPN, or
+simple address rotation over time. It may be aggravated by use of a
+DNS server that can correlate real-time addressing information with
+other personal identifiers, such as when a DNS server and DHCP server
+are operated by the same entity.
+
+TCP-based solutions may seek performance through the use of TCP Fast
+Open {{RFC7413}}. The cookies used in TCP Fast Open allow servers to
+correlate different TCP sessions together.
+
+TLS based implementations often achieve better handshake performance
+through the use of some form of session resumption mechanism such as
+session tickets {{RFC5077}}. Session resumption creates trivial
+mechanisms for a server to correlate different TLS connections
+together.
+
+HTTP's feature set can also be used for identification and tracking in
+a number of different ways. For example, authentication request header
+fields explicitly identify profiles in use, and HTTP Cookies are
+designed as an explicit state tracking mechanism between the client
+and serving site and often are used as an authentication mechanism.
+
+Additionally, the User-Agent and Accept-Language request header fields
+often convey specific information about the client version or locale.
+This facilitates content negotiation and operational work-arounds for
+implementation bugs. Request header fields that control caching
+can expose state information about a subset of the client's
+history. Mixing DoH requests with other HTTP requests on the same
+connection also provides an opportunity for richer data correlation.
+
+Implementations of DoH clients and servers need to consider the benefit
+and privacy impact of all these features, and their deployment context,
+when deciding whether or not to enable them.
 
 # Security Considerations {#Security}
 
