@@ -558,7 +558,7 @@ over TLS implementations.
 
 The privacy considerations of using the HTTPS layer in DoH are
 incremental to those of DNS over TLS. DoH is not known to introduce
-new concerns beyond that associated with HTTPS.
+new concerns beyond those associated with HTTPS.
 
 At the IP level, the client address provides obvious correlation
 information. This can be mitigated by use of a NAT, proxy, VPN, or
