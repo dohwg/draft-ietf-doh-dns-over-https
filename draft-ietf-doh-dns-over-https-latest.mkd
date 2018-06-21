@@ -550,7 +550,7 @@ DNS traffic analysis more difficult.
 
 ## In The Server {#InTheServer}
 
-A DoH application is built on IP, TCP, TLS, and HTTP. Each layer
+A DoH implementation is built on IP, TCP, TLS, and HTTP. Each layer
 contains one or more common features that can be used to correlate
 different queries to the same identity. DNS transports will generally
 carry the same privacy properties of the layers used to implement
@@ -600,10 +600,10 @@ context, when deciding whether or not to enable them. Implementations
 should expose the minimal set of data needed to achieve the desired
 feature set.
 
-Determining whether or not a DoH application requires HTTP cookie
-{{RFC6265}} support is particularly important bedcause HTTP cookies are the primary
-state tracking mechanism in HTTP. HTTP Cookies SHOULD NOT be suppoted
-by DOH clients unless they are explicitly required by the DoH application.
+Determining whether or not a DoH implementation requires HTTP cookie
+{{RFC6265}} support is particularly important because HTTP cookies are the primary
+state tracking mechanism in HTTP. HTTP Cookies SHOULD NOT be accepted
+by DOH clients unless they are explicitly required by a use case.
 
 # Security Considerations {#Security}
 
