@@ -538,21 +538,21 @@ is also a useful framing for DoH's privacy considerations.
 
 DoH encrypts DNS traffic and requires authentication of the
 server. This mitigates both passive surveillance {{RFC7258}} and
-active attacks attempting to divert DNS traffic to rogue servers
+active attacks that attempt to divert DNS traffic to rogue servers
 ({{RFC7626}} Section 2.5.1). DNS over TLS {{RFC7858}} provides
 similar protections, while direct UDP and TCP based transports are
-vulnerable to this class of information leak.
+vulnerable to this class of attack.
 
 Additionally, the use of the HTTPS default port 443 and the ability to
 mix DoH traffic with other HTTPS traffic on the same connection can
-deter on-path devices from interfering with DNS operations and make
+deter unprivileged on-path devices from interfering with DNS operations and make
 DNS traffic analysis more difficult.
 
 ## In The Server {#InTheServer}
 
 A DoH implementation is built on IP, TCP, TLS, and HTTP. Each layer
 contains one or more common features that can be used to correlate
-different queries to the same identity. DNS transports will generally
+queries to the same identity. DNS transports will generally
 carry the same privacy properties of the layers used to implement
 them. For example, the properties of IP, TCP, and TLS apply to DNS
 over TLS implementations.
@@ -570,12 +570,12 @@ are operated by the same entity.
 
 TCP-based solutions may seek performance through the use of TCP Fast
 Open {{RFC7413}}. The cookies used in TCP Fast Open allow servers to
-correlate different TCP sessions together.
+correlate TCP sessions together.
 
 TLS based implementations often achieve better handshake performance
 through the use of some form of session resumption mechanism such as
 session tickets {{RFC5077}}. Session resumption creates trivial
-mechanisms for a server to correlate different TLS connections
+mechanisms for a server to correlate TLS connections
 together.
 
 HTTP's feature set can also be used for identification and tracking in
