@@ -601,9 +601,9 @@ should expose the minimal set of data needed to achieve the desired
 feature set.
 
 Determining whether or not a DoH application requires HTTP cookie
-{{RFC6265}} support is particularly important as this is the primary
-state tracking mechanism in HTTP. Cookies SHOULD NOT be suppoted
-unless explicitly required by the DoH application.
+{{RFC6265}} support is particularly important bedcause HTTP cookies are the primary
+state tracking mechanism in HTTP. HTTP Cookies SHOULD NOT be suppoted
+by DOH clients unless they are explicitly required by the DoH application.
 
 # Security Considerations {#Security}
 
