@@ -34,6 +34,7 @@ normative:
   RFC2308:
   RFC4648:
   RFC5246:
+  RFC6265:
   RFC6570:
   RFC7230:
   RFC7231:
@@ -598,6 +599,11 @@ benefit and privacy impact of these features, and their deployment
 context, when deciding whether or not to enable them. Implementations
 should expose the minimal set of data needed to achieve the desired
 feature set.
+
+Determining whether or not a DoH application requires HTTP cookie
+{{RFC6265}} support is particularly important as this is the primary
+state tracking mechanism in HTTP. Cookies SHOULD NOT be suppoted
+unless explicitly required by the DoH application.
 
 # Security Considerations {#Security}
 
