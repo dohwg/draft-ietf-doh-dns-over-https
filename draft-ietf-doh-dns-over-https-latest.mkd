@@ -340,6 +340,9 @@ cache-control = max-age=128
 
 This protocol MUST be used with the https scheme URI {{RFC7230}}.
 
+{{PrivacyConsiderations}} and {{Security}} discuss additional considerations
+for the integration with HTTP.
+
 ## Cache Interaction {#caching}
 
 A DoH exchange can pass through a hierarchy of caches that include
