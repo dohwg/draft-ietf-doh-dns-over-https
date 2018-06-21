@@ -42,6 +42,7 @@ normative:
   RFC7235:
   RFC7540:
   RFC7541:
+  RFC7626:
   RFC8174:
 
 informative:
@@ -56,7 +57,6 @@ informative:
   RFC6960:
   RFC7258:
   RFC7413:
-  RFC7626:
   RFC7828:
   RFC7830:
   RFC7858:
