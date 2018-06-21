@@ -527,7 +527,7 @@ Change controller:  IESG
 # Privacy Considerations {#PrivacyConsiderations}
 
 {{RFC7626}} discusses DNS Privacy Considerations in both "On the
-wire" (Section 2.4), and "On the server" (Section 2.5) contexts. This
+wire" (Section 2.4), and "In the server" (Section 2.5) contexts. This
 is also a useful framing for DoH's privacy considerations.
 
 ## On The Wire {#OnTheWire}
@@ -544,7 +544,7 @@ mix DoH traffic with other HTTPS traffic on the same connection can
 deter on-path devices from interfering with DNS operations and make
 DNS traffic analysis more difficult.
 
-## On The Server {#OnTheServer}
+## In The Server {#InTheServer}
 
 A DoH application is built on IP, TCP, TLS, and HTTP. Each layer
 contains one or more common features that can be used to correlate
