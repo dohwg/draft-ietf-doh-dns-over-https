@@ -551,9 +551,14 @@ DNS traffic analysis more difficult.
 
 A DoH application is built on IP, TCP, TLS, and HTTP. Each layer
 contains one or more common features that can be used to correlate
-different queries to the same identity. DoH inherits the privacy
-properties of the HTTPS stack and is not known to introduce new
-concerns beyond that of HTTPS.
+different queries to the same identity. DNS transports will generally
+carry the same privacy properties of the layers used to implement
+them. For example, the properties of IP, TCP, and TLS apply to DNS
+over TLS implementations.
+
+The privacy considerations of using the HTTPS layer in DoH are
+incremental to those of DNS over TLS. DoH is not known to introduce
+new concerns beyond that associated with HTTPS.
 
 At the IP level, the client address provides obvious correlation
 information. This can be mitigated by use of a NAT, proxy, VPN, or
@@ -586,9 +591,13 @@ can expose state information about a subset of the client's
 history. Mixing DoH requests with other HTTP requests on the same
 connection also provides an opportunity for richer data correlation.
 
-Implementations of DoH clients and servers need to consider the benefit
-and privacy impact of all these features, and their deployment context,
-when deciding whether or not to enable them.
+The DoH protocol design allows applications to fully leverage all the
+features of the HTTP ecosystem, including features not enumerated
+here. Implementations of DoH clients and servers need to consider the
+benefit and privacy impact of these features, and their deployment
+context, when deciding whether or not to enable them. Implementations
+should expose the minimal set of data needed to achieve the desired
+feature set.
 
 # Security Considerations {#Security}
 
