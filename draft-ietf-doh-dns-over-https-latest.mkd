@@ -597,7 +597,7 @@ features of the HTTP ecosystem, including features not enumerated
 here. Implementations of DoH clients and servers need to consider the
 benefit and privacy impact of these features, and their deployment
 context, when deciding whether or not to enable them. Implementations
-should expose the minimal set of data needed to achieve the desired
+are advised to expose the minimal set of data needed to achieve the desired
 feature set.
 
 Determining whether or not a DoH implementation requires HTTP cookie
