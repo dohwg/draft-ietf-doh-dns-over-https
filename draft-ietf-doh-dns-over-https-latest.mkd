@@ -568,9 +568,12 @@ DNS server that can correlate real-time addressing information with
 other personal identifiers, such as when a DNS server and DHCP server
 are operated by the same entity.
 
-TCP-based solutions may seek performance through the use of TCP Fast
-Open {{RFC7413}}. The cookies used in TCP Fast Open allow servers to
-correlate TCP sessions together.
+DNS implementations that use one TCP connection for multiple DNS
+requests directly group those requests. Long lived connections have
+better performance behaviors than short lived connections, but group
+more requests. TCP-based solutions may also seek performance through
+the use of TCP Fast Open {{RFC7413}}. The cookies used in TCP Fast
+Open allow servers to correlate TCP sessions.
 
 TLS based implementations often achieve better handshake performance
 through the use of some form of session resumption mechanism such as
