@@ -552,8 +552,8 @@ DNS traffic analysis more difficult.
 
 The DNS wire format {{RFC1035}} contains no client identifiers, however
 various transports of DNS queries and responses do provide data that can be
-used to correlate requests. HTTPS presents new ways to correlate
-such as explicit HTTP cookies and implicit
+used to correlate requests. HTTPS presents new considerations for
+ correlation such as explicit HTTP cookies and implicit
 fingerprinting of the unique set and ordering of HTTP request headers.
 
 A DoH implementation is built on IP, TCP, TLS, and HTTP. Each layer
