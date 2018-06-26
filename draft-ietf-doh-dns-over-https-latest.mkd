@@ -550,11 +550,11 @@ DNS traffic analysis more difficult.
 
 ## In The Server {#InTheServer}
 
-The DNS wireformat {{RFC1035}} contains no client identifiers, however
-various transports of the DNS wireformat do provide data that can be
-used for request correlation. HTTPS presents new considerations for
-correlation ranging from explicit HTTP cookies to implicit
-fingerprinting of the unique set and ordering of request headers.
+The DNS wire format {{RFC1035}} contains no client identifiers, however
+various transports of DNS queries and responses do provide data that can be
+used to correlate requests. HTTPS presents new ways to correlate
+such as explicit HTTP cookies and implicit
+fingerprinting of the unique set and ordering of HTTP request headers.
 
 A DoH implementation is built on IP, TCP, TLS, and HTTP. Each layer
 contains one or more common features that can be used to correlate
@@ -602,7 +602,7 @@ history. Mixing DoH requests with other HTTP requests on the same
 connection also provides an opportunity for richer data correlation.
 
 The DoH protocol design allows applications to fully leverage the HTTP
-ecosystem, including features not enumerated here. Utilizing the full
+ecosystem, including features that are not enumerated here. Utilizing the full
 set of HTTP features enables DoH to be more than an HTTP tunnel, but
 at the cost of opening up implementations to the full set of privacy
 considerations of HTTP.
