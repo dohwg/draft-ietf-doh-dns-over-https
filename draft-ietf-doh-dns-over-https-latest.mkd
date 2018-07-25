@@ -47,6 +47,7 @@ normative:
   RFC8174:
 
 informative:
+  I-D.ietf-dprive-padding-policy:
   RFC2818:
   RFC5077:
   RFC5280:
@@ -636,7 +637,7 @@ HTTP/2 provides further advice about the use of compression
 ({{RFC7540}} Section 10.6) and padding ({{RFC7540}} Section 10.7 ).
 DoH Servers can also add DNS padding {{RFC7830}} if the DoH client requests
 it in the DNS query. Initial attempts to offer guidance on choosing the padding 
-length can be found in {{draft-ietf-dprive-padding-policy}}.
+length can be found in {{I-D.ietf-dprive-padding-policy}}.
 
 The HTTPS connection provides transport security for the interaction between the
 DoH server and client, but does not provide the response integrity of DNS
