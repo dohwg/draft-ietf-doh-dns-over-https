@@ -67,7 +67,9 @@ informative:
 
 --- abstract
 
-This document describes how to make DNS queries over HTTPS.
+This document defines a specific protocol for sending DNS queries and
+getting DNS responses over HTTPS. Each DNS query-response pair is
+mapped into an HTTP exchange.
 
 --- middle
 
