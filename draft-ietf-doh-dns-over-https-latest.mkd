@@ -76,7 +76,7 @@ This document describes how to make DNS queries over HTTPS.
 This document defines a specific protocol for sending DNS {{RFC1035}}
 queries and getting DNS responses over HTTP {{RFC7540}} using https
 URIs (and therefore TLS {{RFC5246}} security for integrity and
-confidentiality). Each DNS query-response pair is mapped into a HTTP
+confidentiality). Each DNS query-response pair is mapped into an HTTP
 exchange.
 
 The described approach is more than a tunnel over HTTP. It establishes
@@ -154,7 +154,7 @@ Configuration, discovery, and updating of the URI Template {{RFC6570}}
 that configuration might be manual (such as a user typing URI
 Templates in a user interface for "options") or automatic (such as URI
 Templates being supplied in responses from DHCP or similar
-protocols). DoH Servers MAY support more than one URI. This allows
+protocols). DoH Servers MAY support more than one URI Template. This allows
 the different endpoints to have different properties such as different
 authentication requirements or service level guarantees.
 
@@ -191,15 +191,15 @@ used for URI Template processing with this protocol.
 DoH servers MUST implement both the POST and GET methods.
 
 When using the POST method the DNS query is included as the message
-body of the HTTP request and the Content-Type request header indicates
+body of the HTTP request and the Content-Type request header field indicates
 the media type of the message. POST-ed requests are smaller than their
 GET equivalents.
 
 Using the GET method is friendlier to many HTTP cache implementations.
 
-The DoH client SHOULD include an HTTP "Accept" request header to
+The DoH client SHOULD include an HTTP "Accept" request header field to
 indicate what type of content can be understood in
-response. Irrespective of the value of the Accept request header, the
+response. Irrespective of the value of the Accept request header field, the
 client MUST be prepared to process "application/dns-message"
 (as described in {{dnswire}}) responses but MAY also process any other type it receives.
 
@@ -347,7 +347,7 @@ for the integration with HTTP.
 ## Cache Interaction {#caching}
 
 A DoH exchange can pass through a hierarchy of caches that include
-both HTTP and DNS specific caches.
+both HTTP- and DNS-specific caches.
 These caches may exist beteen the DoH server and client, or on the DoH client itself.
 HTTP caches are by design generic;
 that is, they do not understand this protocol. Even if a DoH
@@ -358,7 +358,7 @@ be.
 
 As a result, DoH servers need to carefully consider the HTTP
 caching metadata they send in response to GET requests (POST requests
-are not cacheable unless specific response headers are sent; this is
+are not cacheable unless specific response header fields are sent; this is
 not widely implemented, and not advised for DoH).
 
 In particular, DoH servers SHOULD assign an explicit freshness
@@ -384,7 +384,7 @@ freshness lifetime MUST NOT be greater than the MINIMUM field from
 that SOA record (see {{RFC2308}}).
 
 The stale-while-revalidate and stale-if-error Cache-Control directives
-({{RFC5861}}) could be well suited to a DoH implementation when
+({{RFC5861}}) could be well-suited to a DoH implementation when
 allowed by server policy. Those mechanisms allow a client, at the
 server's discretion, to reuse a cache entry that is no longer fresh.
 In such a case, the client reuses all of a cached entry, or none of it.
@@ -394,13 +394,13 @@ responses that are not globally valid. For instance, if a DoH
 server customizes a response based on the client's identity, it would
 not want to allow global reuse of that response. This could be
 accomplished through a variety of HTTP techniques such as a
-Cache-Control max-age of 0, or by using the Vary response header
+Cache-Control max-age of 0, or by using the Vary response header field
 ({{RFC7231}} Section 7.1.4) to establish a secondary cache key
 ({{RFC7234}} Section 4.1).
 
-DoH clients MUST account for the Age response header's value
+DoH clients MUST account for the Age response header field's value
 ({{RFC7234}}) when calculating the DNS TTL of a response. For example,
-if a RRset is received with a DNS TTL of 600, but the Age header
+if a RRset is received with a DNS TTL of 600, but the Age header field
 indicates that the response has been cached for 250 seconds, the
 remaining lifetime of the RRset is 350 seconds.
 
@@ -413,7 +413,7 @@ traditional DNS caches that do not have such a mechanism.
 HTTP conditional requests ({{RFC7232}}) may be of limited value to
 DoH, as revalidation provides only a bandwidth benefit and DNS
 transactions are normally latency bound. Furthermore, the HTTP
-response headers that enable revalidation (such as "Last-Modified" and
+response header fields that enable revalidation (such as "Last-Modified" and
 "Etag") are often fairly large when compared to the overall DNS
 response size, and have a variable nature that creates constant
 pressure on the HTTP/2 compression dictionary {{RFC7541}}. Other types
@@ -424,7 +424,7 @@ from revalidation.
 
 HTTP/2 {{RFC7540}} is the minimum RECOMMENDED version of HTTP for use with DoH.
 
-The messages in classic UDP based DNS {{RFC1035}} are inherently
+The messages in classic UDP-based DNS {{RFC1035}} are inherently
 unordered and have low overhead. A competitive HTTP transport needs to
 support reordering, parallelism, priority, and header compression to
 achieve similar performance. Those features were introduced to HTTP in
@@ -436,7 +436,7 @@ performance.
 
 Before using DoH response data for DNS resolution, the client MUST
 establish that the HTTP request URI may be used for the DoH query.
-For HTTP requests initiated by the DoH client this is
+For HTTP requests initiated by the DoH client, this is
 implicit in the selection of URI. For HTTP server push ({{RFC7540}}
 Section 8.2) extra care must be taken to ensure that the pushed URI is
 one that the client would have directed the same query to if the
@@ -550,11 +550,11 @@ DNS traffic analysis more difficult.
 
 ## In The Server {#InTheServer}
 
-The DNS wire format {{RFC1035}} contains no client identifiers, however
+The DNS wire format {{RFC1035}} contains no client identifiers; however, 
 various transports of DNS queries and responses do provide data that can be
 used to correlate requests. HTTPS presents new considerations for
- correlation such as explicit HTTP cookies and implicit
-fingerprinting of the unique set and ordering of HTTP request headers.
+correlation, such as explicit HTTP cookies and implicit
+fingerprinting of the unique set and ordering of HTTP request header fields.
 
 A DoH implementation is built on IP, TCP, TLS, and HTTP. Each layer
 contains one or more common features that can be used to correlate
@@ -575,13 +575,13 @@ other personal identifiers, such as when a DNS server and DHCP server
 are operated by the same entity.
 
 DNS implementations that use one TCP connection for multiple DNS
-requests directly group those requests. Long lived connections have
-better performance behaviors than short lived connections, but group
+requests directly group those requests. Long-lived connections have
+better performance behaviors than short-lived connections, but group
 more requests. TCP-based solutions may also seek performance through
 the use of TCP Fast Open {{RFC7413}}. The cookies used in TCP Fast
 Open allow servers to correlate TCP sessions.
 
-TLS based implementations often achieve better handshake performance
+TLS-based implementations often achieve better handshake performance
 through the use of some form of session resumption mechanism such as
 session tickets {{RFC5077}}. Session resumption creates trivial
 mechanisms for a server to correlate TLS connections
@@ -590,7 +590,7 @@ together.
 HTTP's feature set can also be used for identification and tracking in
 a number of different ways. For example, authentication request header
 fields explicitly identify profiles in use, and HTTP Cookies are
-designed as an explicit state tracking mechanism between the client
+designed as an explicit state-tracking mechanism between the client
 and serving site and often are used as an authentication mechanism.
 
 Additionally, the User-Agent and Accept-Language request header fields
@@ -625,7 +625,7 @@ HTTP transport. This mitigates classic amplification
 attacks for UDP-based DNS. Implementations utilizing HTTP/2 benefit from the TLS
 profile defined in {{RFC7540}} Section 9.2.
 
-Session level encryption has well known weaknesses with respect to
+Session-level encryption has well-known weaknesses with respect to
 traffic analysis which might be particularly acute when dealing with
 DNS queries.
 HTTP/2 provides further advice about the use of compression
@@ -662,25 +662,25 @@ data, but it does reduce the risk.
 Local policy considerations and similar factors mean different DNS
 servers may provide different results to the same query: for instance
 in split DNS configurations {{RFC6950}}.  It logically follows that
-the server which is queried can influence the end result.  Therefore a
+the server that is queried can influence the end result.  Therefore a
 client’s choice of DNS server may affect the responses it gets to its
 queries.
 For example, in the case of DNS64 {{RFC6147}}, the choice could affect
 whether IPv6/IPv4 translation will work at all.
 
-The HTTPS channel used by this specification establishes secure two
-party communication between the DoH client and the DoH server.
+The HTTPS channel used by this specification establishes secure
+two-party communication between the DoH client and the DoH server.
 Filtering or inspection systems that rely on unsecured transport of
 DNS will not function in a DNS over HTTPS environment.
 
-Some HTTPS client implementations perform real time third party checks
+Some HTTPS client implementations perform real time third-party checks
 of the revocation status of the certificates being used by TLS. If
 this check is done as part of the DoH server connection procedure
 and the check itself requires DNS resolution to connect to the third
 party a deadlock can occur. The use of OCSP {{RFC6960}} servers or AIA
 for CRL fetching ({{RFC5280}} Section 4.2.2.1) are examples of how
 this deadlock can happen.  To mitigate the possibility of deadlock,
-DoH servers SHOULD NOT rely on DNS based references to external
+DoH servers SHOULD NOT rely on DNS-based references to external
 resources in the TLS handshake. For OCSP the server can bundle the
 certificate status as part of the handshake using a mechanism
 appropriate to the version of TLS, such as using {{RFC6066}} Section 8
@@ -695,12 +695,12 @@ URI. Just as the address of a traditional DNS nameserver cannot be
 originally determined from that same server, a DoH client cannot use
 its DoH server to initially resolve the server's host name into an
 address. Alternative strategies a client might employ include making
-the initial resolution part of the configuration, IP based URIs and
-corresponding IP based certificates for HTTPS, or resolving the DNS
+the initial resolution part of the configuration, IP-based URIs and
+corresponding IP-based certificates for HTTPS, or resolving the DNS
 API server's hostname via traditional DNS or another DoH server while
 still authenticating the resulting connection via HTTPS.
 
-HTTP {{RFC7230}} is a stateless application level protocol and
+HTTP {{RFC7230}} is a stateless application-level protocol and
 therefore DoH implementations do not provide stateful ordering
 guarantees between different requests. DoH cannot be used as a
 transport for other protocols that require strict ordering.
