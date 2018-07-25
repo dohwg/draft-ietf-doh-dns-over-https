@@ -322,21 +322,23 @@ where the server cannot generate a representation suitable for the client
 
 ### HTTP Response Example
 
-This is an example response for a query for the IN A records for
+This is an example response for a query for the IN AAAA records for
 "www.example.com" with recursion turned on. The response bears one
-record with an address of 192.0.2.1 and a TTL of 128 seconds.
+answer record with an address of 2001:db8:abcd:12:1:2:3:4 and a TTL of
+3709 seconds.
 
 ~~~~~
 :status = 200
 content-type = application/dns-message
-content-length = 64
-cache-control = max-age=128
+content-length = 61
+cache-control = max-age=3709
 
-<64 bytes represented by the following hex encoding>
+<61 bytes represented by the following hex encoding>
 00 00 81 80 00 01 00 01  00 00 00 00 03 77 77 77
-07 65 78 61 6d 70 6c 65  03 63 6f 6d 00 00 01 00
-01 03 77 77 77 07 65 78  61 6d 70 6c 65 03 63 6f
-6d 00 00 01 00 01 00 00  00 80 00 04 C0 00 02 01
+07 65 78 61 6d 70 6c 65  03 63 6f 6d 00 00 1c 00
+01 c0 0c 00 1c 00 01 00  00 0e 7d 00 10 20 01 0d
+b8 ab cd 00 12 00 01 00  02 00 03 00 04
+
 ~~~~~
 
 # HTTP Integration
