@@ -254,12 +254,14 @@ content-length = 33
 01
 ~~~~~
 
+In this example, the 33 bytes are the DNS message in DNS wire format.
+
 Finally, a GET based query for
 a.62characterlabel-makes-base64url-distinct-from-standard-base64.example.com
 is shown as an example to emphasize that the encoding alphabet of
 base64url is different than regular base64 and that padding is omitted.
 
-The DNS query is 94 bytes represented by the following hex encoding
+The DNS query, expressed in DNS wire format, is 94 bytes represented by the following:
 
 ~~~~~
 
@@ -353,7 +355,7 @@ for the integration with HTTP.
 
 A DoH exchange can pass through a hierarchy of caches that include
 both HTTP- and DNS-specific caches.
-These caches may exist beteen the DoH server and client, or on the DoH client itself.
+These caches may exist between the DoH server and client, or on the DoH client itself.
 HTTP caches are by design generic;
 that is, they do not understand this protocol. Even if a DoH
 client has modified its cache implementation to be aware of DoH
@@ -462,13 +464,15 @@ responses).
 
 The data payload for the application/dns-message media type is a
 single message of the DNS on-the-wire format defined in Section 4.2.1
-of {{RFC1035}}. The format was originally for DNS over UDP.  Although
-{{RFC1035}} says "Messages carried by UDP are restricted to 512
+of {{RFC1035}}, which in turn refers to the full wire format defined
+in Section 4.1 of that RFC.
+
+Although {{RFC1035}} says "Messages carried by UDP are restricted to 512
 bytes", that was later updated by {{RFC6891}}. This media type
 restricts the maximum size of the DNS message to 65535 bytes. Note
 that the wire format used in this media type is different than the
 wire format used in {{RFC7858}} (which uses the format defined in
-Section 4.2.2 of {{RFC1035}}).
+Section 4.2.2 of {{RFC1035}} that includes two length bytes).
 
 DoH clients using this media type MAY have one or more EDNS options
 {{RFC6891}} in the request. DoH servers using this media type MUST ignore
