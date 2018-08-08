@@ -375,13 +375,14 @@ This requirement is due to HTTP caches being able to assign
 their own heuristic freshness (such as that described in {{RFC7234}} Section 4.2.2),
 which would take control of the cache contents out of the hands of the DoH server.
 
-The assigned freshness lifetime of a DoH HTTP response SHOULD be
-the smallest TTL in the Answer section of the DNS response. For
-example, if a HTTP response carries three RRsets with TTLs of 30, 600,
-and 300, the HTTP freshness lifetime should be 30 seconds (which could be specified as
-"Cache-Control: max-age=30").
-This requirement helps assure that none of the RRsets contained in a DNS response are served stale
-from an HTTP cache.
+The assigned freshness lifetime of a DoH HTTP response MUST be less
+than or equal to the smallest TTL in the Answer section of the DNS
+response. A freshness lifetime equal to the smallest TTL in the Answer
+section is RECOMMENDED. For example, if a HTTP response carries three
+RRsets with TTLs of 30, 600, and 300, the HTTP freshness lifetime
+should be 30 seconds (which could be specified as "Cache-Control:
+max-age=30"). This requirement helps assure that none of the RRsets
+contained in a DNS response are served stale from an HTTP cache.
 
 If the DNS response has no records in the Answer section, and the DNS
 response has an SOA record in the Authority section, the response
@@ -436,7 +437,7 @@ unordered and have low overhead. A competitive HTTP transport needs to
 support reordering, parallelism, priority, and header compression to
 achieve similar performance. Those features were introduced to HTTP in
 HTTP/2 {{RFC7540}}. Earlier versions of HTTP are capable of conveying
-the semantic requirements of DoH but may result in worse
+the semantic requirements of DoH but may result in very poor
 performance.
 
 ## Server Push
