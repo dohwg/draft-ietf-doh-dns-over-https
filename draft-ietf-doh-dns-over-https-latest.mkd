@@ -379,9 +379,7 @@ The assigned freshness lifetime of a DoH HTTP response SHOULD be
 the smallest TTL in the Answer section of the DNS response. For
 example, if a HTTP response carries three RRsets with TTLs of 30, 600,
 and 300, the HTTP freshness lifetime should be 30 seconds (which could be specified as
-"Cache-Control: max-age=30"). The assigned freshness lifetime MUST NOT
-be greater than the smallest TTL in the Answer section of the DNS
-response.
+"Cache-Control: max-age=30").
 This requirement helps assure that none of the RRsets contained in a DNS response are served stale
 from an HTTP cache.
 
@@ -407,9 +405,11 @@ Cache-Control max-age of 0, or by using the Vary response header field
 
 DoH clients MUST account for the Age response header field's value
 ({{RFC7234}}) when calculating the DNS TTL of a response. For example,
-if a RRset is received with a DNS TTL of 600, but the Age header field
+if an RRset is received with a DNS TTL of 600, but the Age header field
 indicates that the response has been cached for 250 seconds, the
 remaining lifetime of the RRset is 350 seconds.
+This requirement applies to both DoH client HTTP caches and
+DoH client DNS caches.
 
 DoH clients can request an uncached copy of a response by using
 the "no-cache" request cache control directive ({{RFC7234}}, Section
@@ -436,13 +436,13 @@ unordered and have low overhead. A competitive HTTP transport needs to
 support reordering, parallelism, priority, and header compression to
 achieve similar performance. Those features were introduced to HTTP in
 HTTP/2 {{RFC7540}}. Earlier versions of HTTP are capable of conveying
-the semantic requirements of DoH but may result in very poor
+the semantic requirements of DoH but may result in worse
 performance.
 
 ## Server Push
 
 Before using DoH response data for DNS resolution, the client MUST
-establish that the HTTP request URI may be used for the DoH query.
+establish that the HTTP request URI can be used for the DoH query.
 For HTTP requests initiated by the DoH client, this is
 implicit in the selection of URI. For HTTP server push ({{RFC7540}}
 Section 8.2) extra care must be taken to ensure that the pushed URI is
@@ -469,8 +469,9 @@ in Section 4.1 of that RFC.
 
 Although {{RFC1035}} says "Messages carried by UDP are restricted to 512
 bytes", that was later updated by {{RFC6891}}. This media type
-restricts the maximum size of the DNS message to 65535 bytes. Note
-that the wire format used in this media type is different than the
+restricts the maximum size of the DNS message to 65535 bytes.
+
+Note that the wire format used in this media type is different than the
 wire format used in {{RFC7858}} (which uses the format defined in
 Section 4.2.2 of {{RFC1035}} that includes two length bytes).
 
@@ -539,7 +540,7 @@ Change controller:  IESG
 
 # Privacy Considerations {#PrivacyConsiderations}
 
-{{RFC7626}} discusses DNS Privacy Considerations in both "On the
+{{RFC7626}} discusses DNS privacy considerations in both "On the
 wire" (Section 2.4), and "In the server" (Section 2.5) contexts. This
 is also a useful framing for DoH's privacy considerations.
 
@@ -640,7 +641,7 @@ DNS queries.
 HTTP/2 provides further advice about the use of compression
 ({{RFC7540}} Section 10.6) and padding ({{RFC7540}} Section 10.7 ).
 DoH Servers can also add DNS padding {{RFC7830}} if the DoH client requests
-it in the DNS query. Initial attempts to offer guidance on choosing the padding 
+it in the DNS query. An experimental effort to offer guidance on choosing the padding 
 length can be found in {{I-D.ietf-dprive-padding-policy}}.
 
 The HTTPS connection provides transport security for the interaction between the
@@ -670,7 +671,7 @@ data, but it does reduce the risk.
 # Operational Considerations
 
 Local policy considerations and similar factors mean different DNS
-servers may provide different results to the same query: for instance
+servers may provide different results to the same query, for instance
 in split DNS configurations {{RFC6950}}.  It logically follows that
 the server that is queried can influence the end result.  Therefore a
 client’s choice of DNS server may affect the responses it gets to its
@@ -691,7 +692,7 @@ party a deadlock can occur. The use of OCSP {{RFC6960}} servers or AIA
 for CRL fetching ({{RFC5280}} Section 4.2.2.1) are examples of how
 this deadlock can happen.  To mitigate the possibility of deadlock,
 DoH servers SHOULD NOT rely on DNS-based references to external
-resources in the TLS handshake. For OCSP the server can bundle the
+resources in the TLS handshake. For OCSP, the server can bundle the
 certificate status as part of the handshake using a mechanism
 appropriate to the version of TLS, such as using {{RFC6066}} Section 8
 for TLS version 1.2. AIA deadlocks can be avoided by providing
@@ -742,7 +743,7 @@ Manu Bretelle,
 Sara Dickinson,
 Tony Finch,
 Daniel Kahn Gilmor,
-Olafur Guomundsson,
+Olafur Gudmundsson,
 Wes Hardaker,
 Rory Hewitt,
 Joe Hildebrand,
