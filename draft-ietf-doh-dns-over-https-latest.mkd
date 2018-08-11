@@ -76,11 +76,11 @@ mapped into an HTTP exchange.
 
 # Introduction
 
-This document defines a specific protocol for sending DNS {{RFC1035}}
-queries and getting DNS responses over HTTP {{RFC7540}} using https
-URIs (and therefore TLS {{RFC5246}} security for integrity and
-confidentiality). Each DNS query-response pair is mapped into an HTTP
-exchange.
+This document defines a specific protocol, DNS over HTTPS (DoH), for
+sending DNS {{RFC1035}} queries and getting DNS responses over HTTP
+{{RFC7540}} using https URIs (and therefore TLS {{RFC5246}} security
+for integrity and confidentiality). Each DNS query-response pair is
+mapped into an HTTP exchange.
 
 The described approach is more than a tunnel over HTTP. It establishes
 default media formatting types for requests and responses but uses
@@ -94,7 +94,7 @@ The integration with HTTP provides a transport suitable for both
 existing DNS clients and native web applications seeking access to
 the DNS.
 
-Two primary uses cases were considered during this protocol's
+Two primary use cases were considered during this protocol's
 development. They included preventing on-path devices from interfering
 with DNS operations and allowing web applications to access DNS
 information via existing browser APIs in a safe way consistent with
@@ -316,7 +316,7 @@ HTTP responses with non-successful HTTP status codes do not contain
 replies to the original DNS question in the HTTP request.
 DoH clients need to use the same semantic processing of non-successful
 HTTP status codes as other HTTP clients. This might mean that the DoH
-client retries the query with the same DoH server, such as authorization
+client retries the query with the same DoH server, such as for authorization
 failures (HTTP status code 401 {{RFC7235}} Section 3.1). It could also mean
 that the DoH client retries  with a different DoH server, such as for
 unsupported media types (HTTP status code 415, {{RFC7231}} Section 6.5.13), or
@@ -699,7 +699,7 @@ appropriate to the version of TLS, such as using {{RFC6066}} Section 8
 for TLS version 1.2. AIA deadlocks can be avoided by providing
 intermediate certificates that might otherwise be obtained through
 additional requests. Note that these deadlocks also need to be
-considered for server that a DoH server might redirect to.
+considered for servers that a DoH server might redirect to.
 
 A DoH client may face a similar bootstrapping problem when the
 HTTP request needs to resolve the hostname portion of the DNS
