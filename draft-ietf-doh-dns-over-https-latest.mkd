@@ -686,7 +686,8 @@ whether IPv6/IPv4 translation will work at all.
 The HTTPS channel used by this specification establishes secure
 two-party communication between the DoH client and the DoH server.
 Filtering or inspection systems that rely on unsecured transport of
-DNS will not function in a DNS over HTTPS environment.
+DNS will not function in a DNS over HTTPS environment
+due to the confidentiality and integrity protection provided by TLS.
 
 Some HTTPS client implementations perform real time third-party checks
 of the revocation status of the certificates being used by TLS. If
