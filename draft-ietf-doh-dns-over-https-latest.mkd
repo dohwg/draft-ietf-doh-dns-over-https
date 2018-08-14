@@ -78,7 +78,7 @@ mapped into an HTTP exchange.
 
 This document defines a specific protocol, DNS over HTTPS (DoH), for
 sending DNS {{RFC1035}} queries and getting DNS responses over HTTP
-{{RFC7540}} using https URIs (and therefore TLS {{RFC5246}} security
+{{RFC7540}} using https {{RFC2818}} URIs (and therefore TLS {{RFC5246}} security
 for integrity and confidentiality). Each DNS query-response pair is
 mapped into an HTTP exchange.
 
@@ -95,7 +95,7 @@ existing DNS clients and native web applications seeking access to
 the DNS.
 
 Two primary use cases were considered during this protocol's
-development. They included preventing on-path devices from interfering
+development. They were preventing on-path devices from interfering
 with DNS operations and allowing web applications to access DNS
 information via existing browser APIs in a safe way consistent with
 Cross Origin Resource Sharing (CORS) {{CORS}}. No special effort has
@@ -152,27 +152,30 @@ The protocol described here bases its design on the following protocol requireme
 
 # Selection of DoH Server {#selection}
 
-Configuration, discovery, and updating of the URI Template {{RFC6570}}
-(see {{httprequest}}) is done out of band from this protocol. Note
-that configuration might be manual (such as a user typing URI
-Templates in a user interface for "options") or automatic (such as URI
-Templates being supplied in responses from DHCP or similar
-protocols). DoH Servers MAY support more than one URI Template. This allows
-the different endpoints to have different properties such as different
-authentication requirements or service level guarantees.
+The DoH client is configured with a URI Template {{RFC6570}} which
+describes how to construct the URL to use for resolution.
+Configuration, discovery, and updating of the URI Template is done out
+of band from this protocol. Note that configuration might be manual
+(such as a user typing URI Templates in a user interface for
+"options") or automatic (such as URI Templates being supplied in
+responses from DHCP or similar protocols). DoH Servers MAY support
+more than one URI Template. This allows the different endpoints to
+have different properties such as different authentication
+requirements or service level guarantees.
 
 A DoH client uses configuration to select the URI, and thus the
-DoH server, that is to be used for resolution. [RFC2818] defines how HTTPS
+DoH server, that is to be used for resolution. {{RFC2818}} defines how HTTPS
 verifies the DoH server's identity.
 
-A DoH client MUST NOT use a different URI simply because it was discovered
-outside of the client's configuration, or because a server offers an unsolicited response
-that appears to be a valid answer to a DNS query. This
-specification does not extend DNS resolution privileges to URIs that
-are not recognized by the DoH client as configured URIs. Such
-scenarios may create additional operational, tracking, and security
-hazards that require limitations for safe usage. A future
-specification may support this use case.
+A DoH client MUST NOT use a different URI simply because it was
+discovered outside of the client's configuration (such as through
+HTTP/2 push), or because a server offers an unsolicited response that
+appears to be a valid answer to a DNS query. This specification does
+not extend DNS resolution privileges to URIs that are not recognized
+by the DoH client as configured URIs. Such scenarios may create
+additional operational, tracking, and security hazards that require
+limitations for safe usage. A future specification may support this
+use case.
 
 # The HTTP Exchange
 
@@ -195,7 +198,7 @@ DoH servers MUST implement both the POST and GET methods.
 
 When using the POST method the DNS query is included as the message
 body of the HTTP request and the Content-Type request header field indicates
-the media type of the message. POST-ed requests are smaller than their
+the media type of the message. POST-ed requests are generally smaller than their
 GET equivalents.
 
 Using the GET method is friendlier to many HTTP cache implementations.
@@ -297,7 +300,7 @@ DNS header bytes while another might omit it. The amount and type of information
 that a media type gives is solely up to the format, and not defined in
 this protocol.
 
-Each DNS request-response pair is matched to one HTTP exchange.
+Each DNS request-response pair is mapped to one HTTP exchange.
 The responses may be processed and transported in any order
 using HTTP's multi-streaming functionality ({{RFC7540}} Section 5).
 
@@ -307,7 +310,7 @@ response caching.
 ### Handling DNS and HTTP Errors
 
 DNS response codes indicate either success or failure for the DNS query. A
-successful HTTP response with a 2xx status code ({{RFC7231}} Section 6.3) can be used for
+successful HTTP response with a 2xx status code ({{RFC7231}} Section 6.3) is used for
 any valid DNS response, regardless of the DNS response code. For example, a
 successful 2xx HTTP status code is used even with a DNS message whose DNS
 response code indicates failure, such as SERVFAIL or NXDOMAIN.
@@ -448,7 +451,8 @@ For HTTP requests initiated by the DoH client, this is
 implicit in the selection of URI. For HTTP server push ({{RFC7540}}
 Section 8.2) extra care must be taken to ensure that the pushed URI is
 one that the client would have directed the same query to if the
-client had initiated the request.
+client had initiated the request (in addition to the other security
+checks normally needed for server push).
 
 ## Content Negotiation
 
@@ -553,6 +557,8 @@ active attacks that attempt to divert DNS traffic to rogue servers
 ({{RFC7626}} Section 2.5.1). DNS over TLS {{RFC7858}} provides
 similar protections, while direct UDP and TCP based transports are
 vulnerable to this class of attack.
+An experimental effort to offer guidance on choosing the padding 
+length can be found in {{I-D.ietf-dprive-padding-policy}}.
 
 Additionally, the use of the HTTPS default port 443 and the ability to
 mix DoH traffic with other HTTPS traffic on the same connection can
