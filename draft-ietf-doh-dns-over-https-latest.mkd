@@ -118,37 +118,6 @@ and "OPTIONAL" in this document are to be interpreted as described in
 BCP 14 {{RFC2119}} {{RFC8174}} when, and only when, they
 appear in all capitals, as shown here.
 
-# Protocol Requirements
-
-\[\[ RFC Editor: Please remove this entire section before publication. \]\]
-
-The protocol described here bases its design on the following protocol requirements:
-
-* The protocol must use normal HTTP semantics.
-
-* The queries and responses must be able to be flexible enough to express every
-  DNS query that would normally be sent in DNS over UDP (including queries and
-  responses that use DNS extensions, but not those that require multiple
-  responses).
-
-* The protocol must permit the addition of new formats for DNS queries and responses.
-
-* The protocol must ensure interoperability by specifying a single format for
-  requests and responses that is mandatory to implement.  That format must be
-  able to support future modifications to the DNS protocol including the
-  inclusion of one or more EDNS options (including those not yet defined).
-
-* The protocol must use a secure transport that meets the
-  requirements for HTTPS.
-
-## Non-requirements
-
-* Supporting network-specific DNS64 {{RFC6147}}
-
-* Supporting other network-specific inferences from plaintext DNS queries
-
-* Supporting insecure HTTP
-
 # Selection of DoH Server {#selection}
 
 The DoH client is configured with a URI Template {{RFC6570}} which
@@ -740,6 +709,57 @@ are not applicable to DoH.
 
 --- back
 
+# Protocol Development
+
+This appendix describes the requirements used to design DoH. These requirements are listed
+here to help readers understand the current protocol, not to limit how the protocol might
+be developed in the future. 
+
+The protocol described in this document based its design on the following protocol requirements:
+
+* The protocol must use normal HTTP semantics.
+
+* The queries and responses must be able to be flexible enough to express every
+  DNS query that would normally be sent in DNS over UDP (including queries and
+  responses that use DNS extensions, but not those that require multiple
+  responses).
+
+* The protocol must permit the addition of new formats for DNS queries and responses.
+
+* The protocol must ensure interoperability by specifying a single format for
+  requests and responses that is mandatory to implement.  That format must be
+  able to support future modifications to the DNS protocol including the
+  inclusion of one or more EDNS options (including those not yet defined).
+
+* The protocol must use a secure transport that meets the
+  requirements for HTTPS.
+
+The following were considered non-requirements:
+
+* Supporting network-specific DNS64 {{RFC6147}}
+
+* Supporting other network-specific inferences from plaintext DNS queries
+
+* Supporting insecure HTTP
+
+# Previous Work on DNS over HTTP or in Other Formats
+
+The following is an incomplete list of earlier work that related to DNS over HTTP/1 or representing DNS
+data in other formats.
+
+The list includes links to the tools.ietf.org site (because these documents
+are all expired) and web sites of software.
+
+* https://tools.ietf.org/html/draft-mohan-dns-query-xml
+
+* https://tools.ietf.org/html/draft-daley-dnsxml
+
+* https://tools.ietf.org/html/draft-dulaunoy-dnsop-passive-dns-cof
+
+* https://tools.ietf.org/html/draft-bortzmeyer-dns-json
+
+* https://www.nlnetlabs.nl/projects/dnssec-trigger/
+
 # Acknowledgments
 {:numbered="false"}
 
@@ -770,21 +790,3 @@ Andrew Sullivan,
 Martin Thomson,
 and Sam Weiler.
 
-# Previous Work on DNS over HTTP or in Other Formats
-{:numbered="false"}
-
-The following is an incomplete list of earlier work that related to DNS over HTTP/1 or representing DNS
-data in other formats.
-
-The list includes links to the tools.ietf.org site (because these documents
-are all expired) and web sites of software.
-
-* https://tools.ietf.org/html/draft-mohan-dns-query-xml
-
-* https://tools.ietf.org/html/draft-daley-dnsxml
-
-* https://tools.ietf.org/html/draft-dulaunoy-dnsop-passive-dns-cof
-
-* https://tools.ietf.org/html/draft-bortzmeyer-dns-json
-
-* https://www.nlnetlabs.nl/projects/dnssec-trigger/
