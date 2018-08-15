@@ -49,7 +49,6 @@ normative:
 informative:
   I-D.ietf-dprive-padding-policy:
   RFC2818:
-  RFC5077:
   RFC5280:
   RFC5861:
   RFC6147:
@@ -384,8 +383,9 @@ response. A freshness lifetime equal to the smallest TTL in the Answer
 section is RECOMMENDED. For example, if a HTTP response carries three
 RRsets with TTLs of 30, 600, and 300, the HTTP freshness lifetime
 should be 30 seconds (which could be specified as "Cache-Control:
-max-age=30"). This requirement helps assure that none of the RRsets
-contained in a DNS response are unintentionally served stale from an HTTP cache.
+max-age=30").
+This requirement helps prevent exipred RRsets in messages in an HTTP cache
+from unintentionally being served.
 
 If the DNS response has no records in the Answer section, and the DNS
 response has an SOA record in the Authority section, the response
@@ -600,7 +600,7 @@ Open allow servers to correlate TCP sessions.
 
 TLS-based implementations often achieve better handshake performance
 through the use of some form of session resumption mechanism such as
-session tickets {{RFC5077}}. Session resumption creates trivial
+{{RFC8446}} Section 2.2. Session resumption creates trivial
 mechanisms for a server to correlate TLS connections
 together.
 
