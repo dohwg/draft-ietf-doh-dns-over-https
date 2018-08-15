@@ -713,7 +713,7 @@ are not applicable to DoH.
 
 This appendix describes the requirements used to design DoH. These requirements are listed
 here to help readers understand the current protocol, not to limit how the protocol might
-be developed in the future. 
+be developed in the future. This appendix is non-normative.
 
 The protocol described in this document based its design on the following protocol requirements:
 
