@@ -205,7 +205,8 @@ The DoH client SHOULD include an HTTP "Accept" request header field to
 indicate what type of content can be understood in
 response. Irrespective of the value of the Accept request header field, the
 client MUST be prepared to process "application/dns-message"
-(as described in {{dnswire}}) responses but MAY also process any other type it receives.
+(as described in {{dnswire}}) responses but MAY also process other
+DNS-related media types it receives.
 
 In order to maximize HTTP cache friendliness, DoH clients using media
 formats that include DNS ID, such as application/dns-message,
