@@ -178,7 +178,7 @@ client MUST be prepared to process "application/dns-message"
 DNS-related media types it receives.
 
 In order to maximize HTTP cache friendliness, DoH clients using media
-formats that include DNS ID, such as application/dns-message,
+formats that include the ID field from the DNS message header, such as application/dns-message,
 SHOULD use a DNS ID of 0 in every DNS request.  HTTP correlates
 the request and response, thus eliminating the need for the ID in a media
 type such as application/dns-message. The use of a varying
@@ -484,6 +484,7 @@ DNS message as defined in RFC 1035. The format used here is for DNS
 over UDP, which is the format defined in the diagrams in RFC 1035.
 
 Security considerations:  See \[this document\].
+The content is a DNS message, and thus not executable code.
 
 Interoperability considerations:  None.
 
@@ -669,7 +670,7 @@ and the check itself requires DNS resolution to connect to the third
 party a deadlock can occur. The use of OCSP {{RFC6960}} servers or AIA
 for CRL fetching ({{RFC5280}} Section 4.2.2.1) are examples of how
 this deadlock can happen.  To mitigate the possibility of deadlock,
-DoH servers SHOULD NOT rely on DNS-based references to external
+the authentication given DoH servers SHOULD NOT rely on DNS-based references to external
 resources in the TLS handshake. For OCSP, the server can bundle the
 certificate status as part of the handshake using a mechanism
 appropriate to the version of TLS, such as using {{RFC8446}} Section 4.4.2.1
