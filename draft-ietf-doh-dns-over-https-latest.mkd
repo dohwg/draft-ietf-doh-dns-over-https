@@ -483,8 +483,8 @@ Encoding considerations: This is a binary format. The contents are a
 DNS message as defined in RFC 1035. The format used here is for DNS
 over UDP, which is the format defined in the diagrams in RFC 1035.
 
-Security considerations:  See [this document].
-The content is a DNS message, and thus not executable code.
+Security considerations:  See [this document]. The content is a DNS
+message, and thus not executable code.
 
 Interoperability considerations:  None.
 
