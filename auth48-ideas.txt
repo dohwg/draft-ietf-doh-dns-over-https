@@ -1,0 +1,14 @@
+This document is to help the authors and WG chairs to remember stuff during AUTH48.
+It will be deleted after the document is published as an RFC.
+
+========================
+
+Make sure draft-ietf-dprive-padding-policy is actually an RFC now.
+
+The amount and type of information that a media type gives is solely -> are solely
+
+exipred -> expired
+
+When using the POST method the DNS query -> add comma
+ 
+ 
