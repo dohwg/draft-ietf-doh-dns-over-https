@@ -11,4 +11,5 @@ exipred -> expired
 
 When using the POST method the DNS query -> add comma
  
- 
+Make sure we are consistent about "DNS over HTTPS" and "DNS-over-HTTPS"
+
