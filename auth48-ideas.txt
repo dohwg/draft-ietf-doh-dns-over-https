@@ -14,3 +14,8 @@ When using the POST method the DNS query -> add comma
 Make sure we are consistent about "DNS over HTTPS" and "DNS-over-HTTPS"
 
 New affiliation for Patrick
+
+First use of "push" should be "server push" and the RFC7540 reference attached to it
+
+Check other uses of "push", make sure they say "server push"
+
